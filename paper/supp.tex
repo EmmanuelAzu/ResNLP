@@ -2,7 +2,7 @@
 \section*{Supplementary material}
 \footnotesize
 \subsection*{S1. Concepts, stems and the word forms they match (1 Nov 1884--1888, both papers)}
-Stems are matched as substrings of surface forms; forms are not hand-filtered, so some may be false positives or miss variants. All stems, forms and glosses await review by a first-language isiXhosa speaker. Political concepts were fixed before testing; religion was suggested by the classifier and is exploratory.\\[2pt]
+Stems are matched as substrings of surface forms; forms are not hand-filtered, so some may be false positives or miss variants (our first \emph{law} stem also matched \emph{inteto}, speech, and was dropped). All stems, forms and glosses await review by a first-language isiXhosa speaker. Political concepts were fixed before testing; religion was suggested by the classifier and is exploratory.\\[2pt]
 \begin{tabular}{@{}p{1.9cm}p{1.6cm}p{2.0cm}p{9.6cm}@{}}
 \toprule
 Concept & Type & Stems & Most frequent matched forms (count; number of distinct forms) \\ \midrule
@@ -10,7 +10,7 @@ parliament & political & palamente & palamente (1754), ipalamente (47), palament
 vote & political & voti & ivoti (301), voti (217), evotini (136), abavoti (98), ngevoti (55), levoti (22), nevoti (22); 115 forms \\
 government & political & rulumente & rulumente (1882), rulumenteni (7), urulumente (5), serulumente (1), rulumenteningomsebenzi (1), zikarulumente (1), rulumenteayiko (1); 8 forms \\
 rule & political & mbuso & zombuso (169), umbuso (76), mbuso (60), yombuso (42), kombuso (37), lombuso (28), kulombuso (23); 43 forms \\
-law & political & mteto, nteto & inteto (1558), umteto (724), lomteto (475), mteto (406), nteto (350), lenteto (310), ngenteto (233); 223 forms \\
+law & political & mteto & umteto (724), lomteto (475), mteto (406), ngomteto (167), ngumteto (94), komteto (76), nomteto (76); 82 forms \\
 rights & political & lungelo & amalungelo (315), ilungelo (288), lungelo (113), nelungelo (54), namalungelo (50), lilungelo (39), elilungelo (37); 115 forms \\
 country & political & lizwe & lizwe (646), ilizwe (292), kwelilizwe (201), elilizwe (101), elizwe (96), belilizwe (76), yelilizwe (52); 78 forms \\
 land & political & mhlaba & umhlaba (836), mhlaba (208), lomhlaba (156), nomhlaba (105), komhlaba (99), somhlaba (95), yomhlaba (94); 135 forms \\
@@ -26,14 +26,14 @@ religion & exploratory & tixo, kristu & tixo (684), kristu (207), makristu (7), 
 
 \subsection*{S2. Secondary framing tests across settings}
 Percentile of the observed shift among 2000 frequency-matched word sets, and one-sided $p$ (uncorrected). P+V = \emph{palamente} + \emph{voti}; P+V+R adds \emph{rulumente} (uncertain meaning). Directional $\Delta$: Isigidimi minus Imvo, religious minus political similarity, political concepts, two-sided $p$ against matched sets.\\[2pt]
-\begin{tabular}{@{}lccccccc@{}}
+\begin{tabular}{@{}lcccccccc@{}}
 \toprule
-Setting & P+V profile & P+V Jaccard & P+V+R profile & P+V+R Jaccard & $\Delta$ & $\Delta$ $p$ \\ \midrule
-window 1 (tuned) & 92 ($p$=0.083) & 96 ($p$=0.039) & 93 ($p$=0.069) & 99 ($p$=0.007) & +0.34 & 0.042 \\
-window 1, forms joined & 99 ($p$=0.010) & 95 ($p$=0.053) & 100 ($p$=0.001) & 100 ($p$=0.002) & +0.17 & 0.242 \\
-window 2 & 86 ($p$=0.139) & 94 ($p$=0.061) & 91 ($p$=0.090) & 99 ($p$=0.012) & +0.22 & 0.339 \\
-window 2, forms joined & 91 ($p$=0.094) & 98 ($p$=0.023) & 99 ($p$=0.012) & 100 ($p$=0.001) & +0.14 & 0.500 \\
-window 5 & 62 ($p$=0.382) & 98 ($p$=0.016) & 82 ($p$=0.183) & 100 ($p$=0.002) & +0.14 & 0.635 \\
+Setting & P+V profile & P+V Jaccard & P+V+R profile & P+V+R Jaccard & $\Delta$ & $\Delta$ $p$ & $p$ w/o land \\ \midrule
+window 1 (tuned) & 92 ($p$=0.083) & 96 ($p$=0.039) & 92 ($p$=0.077) & 99 ($p$=0.007) & +0.68 & $<$0.001 & 0.010 \\
+window 1, forms joined & 99 ($p$=0.010) & 95 ($p$=0.053) & 100 ($p$=0.001) & 100 ($p$=0.002) & +0.44 & 0.016 & 0.088 \\
+window 2 & 86 ($p$=0.139) & 94 ($p$=0.061) & 90 ($p$=0.096) & 99 ($p$=0.010) & +0.76 & $<$0.001 & 0.045 \\
+window 2, forms joined & 91 ($p$=0.094) & 98 ($p$=0.023) & 99 ($p$=0.011) & 100 ($p$=0.002) & +0.58 & 0.009 & 0.064 \\
+window 5 & 62 ($p$=0.382) & 98 ($p$=0.016) & 81 ($p$=0.189) & 100 ($p$=0.002) & +0.66 & 0.015 & 0.256 \\
 \bottomrule
 \end{tabular}
 
@@ -44,19 +44,15 @@ Per-million-token rates and ratios (later/earlier, or Imvo/Isigidimi) with issue
 Concept & Comparison & First & Second & Ratio (95\% CI) \\ \midrule
 parliament & Isigidimi: later / earlier era & 214 & 394 & 1.84 (0.96--4.98) \\
 parliament & Imvo: later / earlier era & 1320 & 758 & 0.57 (0.50--0.66) \\
-parliament & Imvo / Isigidimi, same era (main) & 394 & 1320 & 3.35 (2.63--4.53) \\
 parliament & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 214 & 758 & 3.54 (1.98--9.58) \\
 government & Isigidimi: later / earlier era & 1667 & 1088 & 0.65 (0.50--0.85) \\
 government & Imvo: later / earlier era & 1210 & 452 & 0.37 (0.31--0.45) \\
-government & Imvo / Isigidimi, same era (main) & 1088 & 1210 & 1.11 (0.88--1.46) \\
 government & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 1667 & 452 & 0.27 (0.22--0.34) \\
 vote & Isigidimi: later / earlier era & 72 & 614 & 8.55 (3.51--18.94) \\
 vote & Imvo: later / earlier era & 799 & 921 & 1.15 (0.88--1.51) \\
-vote & Imvo / Isigidimi, same era (main) & 614 & 799 & 1.30 (0.75--2.71) \\
 vote & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 72 & 921 & 12.82 (7.85--25.92) \\
 religion & Isigidimi: later / earlier era & 2466 & 1556 & 0.63 (0.46--0.84) \\
 religion & Imvo: later / earlier era & 362 & 547 & 1.51 (1.15--2.03) \\
-religion & Imvo / Isigidimi, same era (main) & 1556 & 362 & 0.23 (0.17--0.33) \\
 religion & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 2466 & 547 & 0.22 (0.18--0.28) \\
 \bottomrule
 \end{tabular}

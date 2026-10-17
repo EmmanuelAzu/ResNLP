@@ -100,7 +100,7 @@ def normalise_rows(m: np.ndarray) -> np.ndarray:
 # Concept stems (matched as substrings of surface forms; old orthography has no aspiration
 # marks, e.g. umteto not umthetho, rulumente not rhulumente).
 THEORY = {"parliament": ["palamente"], "vote": ["voti"], "government": ["rulumente"],
-          "rule": ["mbuso"], "law": ["mteto", "nteto"], "rights": ["lungelo"],
+          "rule": ["mbuso"], "law": ["mteto"], "rights": ["lungelo"],
           "country": ["lizwe"], "land": ["mhlaba"], "freedom": ["kululek"], "humanity": ["buntu"]}
 CONTROL = {"time": ["xesha"], "house": ["ndlu"], "rain": ["mvula"], "cattle": ["nkomo"]}
 

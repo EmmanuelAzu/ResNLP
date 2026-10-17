@@ -51,7 +51,7 @@ For each concept, are these forms really about that concept? Please cross out wr
 - **political: vote** (stems: voti): ivoti (301), voti (217), evotini (136), abavoti (98), ngevoti (55), levoti (22), nevoti (22), yevoti (19), yabavoti (19), ngabavoti (19), ngumvoti (17), wevoti (16), mvoti (15), evoti (15)
 - **political: government** (stems: rulumente): rulumente (1882), rulumenteni (7), urulumente (5)
 - **political: rule** (stems: mbuso): zombuso (169), umbuso (76), mbuso (60), yombuso (42), kombuso (37), lombuso (28), kulombuso (23), ombuso (23), wombuso (19), nombuso (14), kwalombuso (8), ngumbuso (8), ngombuso (7), kumbuso (6)
-- **political: law** (stems: mteto, nteto): inteto (1558), umteto (724), lomteto (475), mteto (406), nteto (350), lenteto (310), ngenteto (233), ngomteto (167), nenteto (154), kwinteto (144), yinteto (116), kwenteto (107), ngumteto (94), lonteto (93)
+- **political: law** (stems: mteto): umteto (724), lomteto (475), mteto (406), ngomteto (167), ngumteto (94), komteto (76), nomteto (76), ngokomteto (55), ngalomteto (42), kulomteto (34), yomteto (25), kumteto (25), salomteto (23), somteto (20)
 - **political: rights** (stems: lungelo): amalungelo (315), ilungelo (288), lungelo (113), nelungelo (54), namalungelo (50), lilungelo (39), elilungelo (37), kulilungelo (27), ngamalungelo (26), zamalungelo (24), kumalungelo (24), malungelo (23), kwilungelo (21), kwamalungelo (16)
 - **political: country** (stems: lizwe): lizwe (646), ilizwe (292), kwelilizwe (201), elilizwe (101), elizwe (96), belilizwe (76), yelilizwe (52), elizweni (49), ngangelizwe (33), zelilizwe (32), kwilizwe (27), kwelizwe (25), lilizwe (22), welilizwe (22)
 - **political: land** (stems: mhlaba): umhlaba (836), mhlaba (208), lomhlaba (156), nomhlaba (105), komhlaba (99), somhlaba (95), yomhlaba (94), zomhlaba (78), kumhlaba (77), ngumhlaba (56), enjengeyomhlaba (45), kulomhlaba (42), ngomhlaba (40), bomhlaba (25)
@@ -220,14 +220,14 @@ A statistical procedure flagged these. For each: what does it mean, and is the d
 | kade | 161 | 72 |
 | olu | 71 | 51 |
 | naku | 25 | 48 |
-| kakuhle | 273 | 220 |
 | apo | 598 | 377 |
+| kakuhle | 273 | 220 |
 | xa | 750 | 726 |
 | etile | 65 | 27 |
 | ekubeni | 127 | 103 |
+| nale | 45 | 27 |
 | ebusuku | 33 | 26 |
 | ange | 25 | 28 |
-| nale | 45 | 27 |
 | ade | 89 | 43 |
 | eza | 33 | 26 |
 | mhlaumbi | 136 | 64 |
@@ -289,3 +289,5 @@ In some places the same word is written as one word, in others split (e.g. 'uku 
 
 1. 'rulumente' / 'urulumente': we treat it as 'government' and 'palamente' as 'parliament'. The archive paper's search example glosses 'Rulumente' as 'parliament'. What did the word mean in the 1880s? Did it differ from 'palamente'?
 2. 'ubuntu' and 'abantsundu' appear in our word lists. In 1880s usage, what did each mean (e.g. 'ubuntu' as humanity vs a political idea)?
+3. 'umteto' vs 'inteto': we treat 'umteto' as 'law' and believe 'inteto' (the commonest form in the archive) is 'intetho', speech. Is that right? Are there other forms of 'law' we are missing or mistaking?
+4. 'indlu' (house) was one of our neutral control words, yet its neighbourhood shifts a lot between the two papers. Does it carry a religious sense here (e.g. a house of God, a mission house)? Likewise 'umhlaba' (land/earth): does it mean 'the world' in a religious sense?

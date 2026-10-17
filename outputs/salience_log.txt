@@ -1,0 +1,47 @@
+
+main: 38+159 issues, 286,663+1,007,473 tokens
+             concept  per_M_Isigidimi  per_M_Imvo  ratio  ci_lo  ci_hi  ci_excludes_1  pseudo_p  pseudo_sd_log2
+   theory:parliament          394.191    1318.149  3.344  2.578  4.562           True     0.018           0.597
+         theory:vote          613.961     872.480  1.421  0.812  2.957          False     0.374           0.669
+   theory:government         1088.386    1009.456  0.927  0.714  1.198          False     0.819           0.568
+         theory:rule          167.444     504.232  3.011  1.904  5.156           True     0.054           0.772
+          theory:law          980.245    1727.093  1.762  1.234  2.609           True     0.109           0.492
+       theory:rights          729.079     846.673  1.161  0.849  1.635          False     0.678           0.688
+      theory:country         1206.992    1008.464  0.836  0.692  1.021          False     0.590           0.576
+         theory:land         1231.411    1397.556  1.135  0.874  1.508          False     0.689           0.562
+      theory:freedom          188.375     140.947  0.748  0.529  1.079          False     0.615           1.186
+     theory:humanity          139.537      70.473  0.505  0.301  0.910           True     0.327           1.309
+        control:time         1813.977    2156.882  1.189  1.024  1.397           True     0.530           0.474
+       control:house         2012.816    1858.114  0.923  0.738  1.171          False     0.767           0.455
+        control:rain          373.261     291.819  0.782  0.510  1.283          False     0.602           0.865
+      control:cattle         1179.085     870.495  0.738  0.596  0.935           True     0.395           0.631
+exploratory:religion         1555.834     369.241  0.237  0.157  0.351           True     0.020           0.725
+
+heldout: 88+306 issues, 737,979+2,514,388 tokens
+             concept  per_M_Isigidimi  per_M_Imvo  ratio  ci_lo  ci_hi  ci_excludes_1  pseudo_p  pseudo_sd_log2
+   theory:parliament          214.098     758.435  3.542  2.003  9.118           True     0.020           0.671
+         theory:vote           71.818     920.701 12.820  7.843 25.118           True     0.002           0.644
+   theory:government         1666.714     452.198  0.271  0.218  0.338           True     0.016           0.696
+         theory:rule           36.586     578.272 15.806  8.647 40.455           True     0.003           0.741
+          theory:law          983.768    2196.956  2.233  1.875  2.688           True     0.021           0.431
+       theory:rights          493.239     772.753  1.567  1.273  1.958           True     0.233           0.635
+      theory:country         1266.974     807.751  0.638  0.549  0.741           True     0.218           0.608
+         theory:land         1332.016    1187.168  0.891  0.777  1.030          False     0.709           0.507
+      theory:freedom          147.701     115.336  0.781  0.601  1.035          False     0.696           1.207
+     theory:humanity           73.173      80.338  1.098  0.694  1.830          False     0.886           1.295
+        control:time         2509.557    2392.232  0.953  0.884  1.033          False     0.850           0.414
+       control:house         1546.114    1445.680  0.935  0.820  1.071          False     0.815           0.464
+        control:rain          169.382     260.103  1.536  1.178  2.081           True     0.404           0.985
+      control:cattle         1254.778     567.534  0.452  0.388  0.529           True     0.069           0.628
+exploratory:religion         2466.195     546.853  0.222  0.180  0.280           True     0.005           0.592
+
+jabavu contrast (per million tokens)
+period                Imvo Nov84-86  Isigidimi 1876-80  Isigidimi 1881-83 (Jabavu)  Isigidimi Nov84-88
+concept                                                                                               
+control:house                1947.0             1534.0                      1564.0              2013.0
+control:time                 2264.0             2475.0                      2563.0              1814.0
+exploratory:religion          352.0             3447.0                       964.0              1556.0
+theory:government            1199.0             1615.0                      1746.0              1088.0
+theory:parliament            1156.0               16.0                       518.0               394.0
+theory:rule                    40.0               54.0                        10.0               167.0
+theory:vote                   367.0               22.0                       148.0               614.0

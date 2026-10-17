@@ -57,7 +57,7 @@ dp_u, dc_u = mt.loc["directional delta: all political concepts"], mt.loc["direct
 dp_j, dc_j = ms.loc["directional delta: all political concepts"], ms.loc["directional delta: all neutral controls"]
 c1 = fc[(fc.measure == "profile") & (fc.forms == 1)]
 floor1 = 1.645 * c1.matched_set_sd.mean()
-big = fc[(fc.measure == "profile") & (fc.forms >= 8)].iloc[0]
+big = fc[fc.measure == "profile"].sort_values("forms", ascending=False).iloc[0]
 floor_big = 1.645 * big.matched_set_sd
 baseline = float(fw.profile_shift.median())
 fcs = pd.read_csv(OUT / "framing_concepts_segnorm.csv")
@@ -120,6 +120,25 @@ def w5_vals():
 
 
 W5 = w5_vals()
+tw5 = pd.read_csv(OUT / "framing_matched_tests_w5.csv").set_index("test")
+five = [mt, ms, w2[0], w2[1], tw5]
+jac5 = [row(t, P2, ja) for t in five]
+prof4 = [row(t, P2, pr) for t in five[:4]]
+dirs5 = [t.loc["directional delta: all political concepts"] for t in five]
+ctl5 = [t.loc["directional delta: all neutral controls"] for t in five]
+nol5 = [t.loc["directional delta: political concepts without land"] for t in five]
+house5 = [t.loc["directional delta: control:house"] for t in five]
+maxc = fc[fc.measure == "profile"].sort_values("forms", ascending=False).iloc[0]
+V2 = {
+ "JPVLO": ordinal(100 * min(c.percentile for c in jac5)), "JPVHI": ordinal(100 * max(c.percentile for c in jac5)),
+ "JPVPLO": pv(min(c.p for c in jac5)), "JPVPHI": pv(max(c.p for c in jac5)),
+ "PROFLO": ordinal(100 * min(c.percentile for c in prof4)), "PROFHI": ordinal(100 * max(c.percentile for c in prof4)),
+ "DIRLO": f"{min(d.obs for d in dirs5):+.2f}", "DIRHI": f"{max(d.obs for d in dirs5):+.2f}",
+ "DIRPHI": pv(max(d.p for d in dirs5)), "CTRLP": f"{min(d.p for d in ctl5):.2f}", "CTRLMAX": f"{max(abs(d.obs) for d in ctl5):.2f}",
+ "NOLANDLO": pv(min(d.p for d in nol5)), "NOLANDHI": pv(max(d.p for d in nol5)),
+ "HOUSELO": f"{min(d.obs for d in house5):.1f}", "HOUSEHI": f"{max(d.obs for d in house5):.1f}",
+ "FLOORN": f"{1.645 * maxc.matched_set_sd:.2f}", "NMAX": str(int(maxc.forms)),
+}
 V = {
  "OBS": f"{obs:.3f}", "NULL": f"{null:.3f}", "GAP1": f"{gap1:.3f}", "GAP2": f"{gap2:.3f}",
  "P1": pct(row(mt, P2, pr)), "J1": pct(row(mt, P2, ja)), "PP1": pv(row(mt, P2, pr).p), "PJ1": pv(row(mt, P2, ja).p),
@@ -147,7 +166,7 @@ V = {
  "PVLO": ordinal(100 * min(c.percentile for c in pool_cells)), "PVHI": ordinal(100 * max(c.percentile for c in pool_cells)),
  "PVPLO": pv(min(c.p for c in pool_cells)), "PVPHI": pv(max(c.p for c in pool_cells)),
  "XW": f"{wordchg('xlm-roberta-base'):.1f}".replace("-", "$-$"), "SW": f"{wordchg('serengeti'):.1f}", "MW": f"{wordchg('mbert-cased'):.1f}".replace("-", "$-$"),
- "TCI": f"{tci:.1f}", **W5,
+ "TCI": f"{tci:.1f}", **W5, **V2,
  "CLFACC": f"{clf[clf.features == 'clean'].bal_acc.mean():.2f}",
 }
 tpl = (ROOT / "paper" / "paper_template.tex").read_text()

@@ -16,7 +16,9 @@ RUN ORDER  (from the repository root; scripts are in src/, results go to outputs
   python src/08_anchors.py             freeze the religious / political anchor lists (from held-out windows) BEFORE step 03
   python src/03_framing.py             profile-shift / Jaccard / directional tests vs permutation null  (~17 min, 4 cores;
                                        --quick = 2-minute smoke test)
-  python src/10_matched_tests.py       calibrate framing against frequency-matched word sets; data-driven word list
+  python src/10_matched_tests.py       calibrate framing against frequency-matched word sets; data-driven word list; leave-one-concept-out directional tests
+  python src/11_reassign_concepts.py   recompute concept membership + concept-level matched tests from an existing per-word table (no retraining);
+                                       used after the 'law' stem was corrected (the old stem 'nteto' also matched 'intetho', speech)
   python src/04_salience.py            per-million rates, issue-bootstrap CIs, pseudo-concept null, held-out replication,
                                        Jabavu-period contrast
   python src/04b_yearly_series.py      yearly rates (religion / parliament figures)

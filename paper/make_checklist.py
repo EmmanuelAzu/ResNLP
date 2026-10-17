@@ -32,7 +32,7 @@ ANSWERS = [
 assert len(ANSWERS) == 15
 ans_iter, just_iter = iter(ANSWERS), iter(ANSWERS)
 body = re.sub(r"\\answerTODO\{\}", lambda m: "\\answer%s{}" % next(ans_iter)[0], body)
-body = re.sub(r"\\justificationTODO\{\}", lambda m: next(just_iter)[1].replace("_", "\\_"), body)
+body = re.sub(r"\\justificationTODO\{\}", lambda m: next(just_iter)[1].replace("_", "\\_").replace("%", "\\%").replace("&", "\\&"), body)
 assert "TODO" not in body
 body = re.sub(r"\s*% Replace by \\answerYes\{\}, \\answerNo\{\}, or \\answerNA\{\}\.", "", body)
 out = "\\section*{NeurIPS Paper Checklist}\n" + body + "\n"

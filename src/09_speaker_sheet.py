@@ -94,7 +94,11 @@ for (a, b), j in sorted(merges.items(), key=lambda kv: -bi[kv[0]])[:40]:
 lines += ["", "## 7. Two specific questions", "",
           "1. 'rulumente' / 'urulumente': we treat it as 'government' and 'palamente' as 'parliament'. The archive paper's search example glosses "
           "'Rulumente' as 'parliament'. What did the word mean in the 1880s? Did it differ from 'palamente'?",
-          "2. 'ubuntu' and 'abantsundu' appear in our word lists. In 1880s usage, what did each mean (e.g. 'ubuntu' as humanity vs a political idea)?", ""]
+          "2. 'ubuntu' and 'abantsundu' appear in our word lists. In 1880s usage, what did each mean (e.g. 'ubuntu' as humanity vs a political idea)?",
+          "3. 'umteto' vs 'inteto': we treat 'umteto' as 'law' and believe 'inteto' (the commonest form in the archive) is 'intetho', speech. Is that right? "
+          "Are there other forms of 'law' we are missing or mistaking?",
+          "4. 'indlu' (house) was one of our neutral control words, yet its neighbourhood shifts a lot between the two papers. Does it carry a religious sense here (e.g. a house of God, a mission house)? "
+          "Likewise 'umhlaba' (land/earth): does it mean 'the world' in a religious sense?", ""]
 (OUT / "speaker_key.json").write_text(json.dumps(key, indent=1))
 (OUT / "speaker_sheet.md").write_text("\n".join(lines))
 print("wrote speaker_sheet.md with", len(key), "blind word pairs")

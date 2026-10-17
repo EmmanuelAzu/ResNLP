@@ -16,7 +16,7 @@ counts = Counter(w for ss in pages.sents for s in ss for w in s)
 
 lines = ["\\clearpage", "\\section*{Supplementary material}", "\\footnotesize",
          "\\subsection*{S1. Concepts, stems and the word forms they match (1 Nov 1884--1888, both papers)}",
-         "Stems are matched as substrings of surface forms; forms are not hand-filtered, so some may be false positives or miss variants. "
+         "Stems are matched as substrings of surface forms; forms are not hand-filtered, so some may be false positives or miss variants (our first \\emph{law} stem also matched \\emph{inteto}, speech, and was dropped). "
          "All stems, forms and glosses await review by a first-language isiXhosa speaker. Political concepts were fixed before testing; religion was suggested by the classifier and is exploratory.\\\\[2pt]",
          "\\begin{tabular}{@{}p{1.9cm}p{1.6cm}p{2.0cm}p{9.6cm}@{}}", "\\toprule", "Concept & Type & Stems & Most frequent matched forms (count; number of distinct forms) \\\\ \\midrule"]
 for kind, table in (("political", THEORY), ("neutral", CONTROL), ("exploratory", EXPLORATORY)):
@@ -39,12 +39,13 @@ def load(tag):
 
 
 ordn = lambda x: f"{100 * x:.0f}"
+fp = lambda p: "$<$0.001" if p < 0.001 else f"{p:.3f}"
 lines += ["\\subsection*{S2. Secondary framing tests across settings}",
           "Percentile of the observed shift among 2000 frequency-matched word sets, and one-sided $p$ (uncorrected). "
           "P+V = \\emph{palamente} + \\emph{voti}; P+V+R adds \\emph{rulumente} (uncertain meaning). Directional $\\Delta$: Isigidimi minus Imvo, "
           "religious minus political similarity, political concepts, two-sided $p$ against matched sets.\\\\[2pt]",
-          "\\begin{tabular}{@{}lccccccc@{}}", "\\toprule",
-          "Setting & P+V profile & P+V Jaccard & P+V+R profile & P+V+R Jaccard & $\\Delta$ & $\\Delta$ $p$ \\\\ \\midrule"]
+          "\\begin{tabular}{@{}lcccccccc@{}}", "\\toprule",
+          "Setting & P+V profile & P+V Jaccard & P+V+R profile & P+V+R Jaccard & $\\Delta$ & $\\Delta$ $p$ & $p$ w/o land \\\\ \\midrule"]
 for label, tag in SETTINGS:
     t = load(tag if not tag.startswith("window2") else tag)
     if t is None:
@@ -53,14 +54,14 @@ for label, tag in SETTINGS:
     d = t.loc["directional delta: all political concepts"]
     lines.append(f"{label} & {cell('profile shift: palamente+voti (parliament, vote)')} & {cell('Jaccard shift: palamente+voti (parliament, vote)')} & "
                  f"{cell('profile shift: palamente+voti+rulumente (adds government)')} & {cell('Jaccard shift: palamente+voti+rulumente (adds government)')} & "
-                 f"{d.obs:+.2f} & {d.p:.3f} \\\\")
+                 f"{d.obs:+.2f} & {fp(d.p)} & {fp(t.loc['directional delta: political concepts without land'].p)} \\\\")
 lines += ["\\bottomrule", "\\end{tabular}", ""]
 
 era = pd.read_csv(OUT / "era_drift.csv")
 lines += ["\\subsection*{S3. Era drift: does a concept's rate move across eras within one paper?}",
           "Per-million-token rates and ratios (later/earlier, or Imvo/Isigidimi) with issue-bootstrap 95\\% CIs.\\\\[2pt]",
           "\\begin{tabular}{@{}llrrl@{}}", "\\toprule", "Concept & Comparison & First & Second & Ratio (95\\% CI) \\\\ \\midrule"]
-for r in era.itertuples():
+for r in era[~era.comparison.str.contains("main")].itertuples():
     lines.append(f"{r.concept} & {r.comparison} & {r.per_M_first:.0f} & {r.per_M_second:.0f} & {r.ratio:.2f} ({r.ci_lo:.2f}--{r.ci_hi:.2f}) \\\\")
 lines += ["\\bottomrule", "\\end{tabular}", "\\normalsize", ""]
 (Path(__file__).resolve().parent / "supp.tex").write_text("\n".join(lines))

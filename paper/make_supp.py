@@ -63,6 +63,17 @@ lines += ["\\subsection*{S3. Era drift: does a concept's rate move across eras w
           "\\begin{tabular}{@{}llrrl@{}}", "\\toprule", "Concept & Comparison & First & Second & Ratio (95\\% CI) \\\\ \\midrule"]
 for r in era[~era.comparison.str.contains("main")].itertuples():
     lines.append(f"{r.concept} & {r.comparison} & {r.per_M_first:.0f} & {r.per_M_second:.0f} & {r.ratio:.2f} ({r.ci_lo:.2f}--{r.ci_hi:.2f}) \\\\")
-lines += ["\\bottomrule", "\\end{tabular}", "\\normalsize", ""]
+lines += ["\\bottomrule", "\\end{tabular}", ""]
+
+import json
+anc = json.load(open(OUT / "anchors.json"))
+tex = lambda ws: ", ".join("\\emph{%s}" % w for w in ws)
+lines += ["\\subsection*{S4. Anchors for the directional test}",
+          "Anchors are the 15 top-PMI neighbours of each seed pair in held-out text (%s), frozen before testing. "
+          "Religious (%d words; seeds \\emph{tixo}, \\emph{kristu}): %s. Political (%d words; seeds \\emph{palamente}, \\emph{voti}): %s. "
+          "Seed words cannot themselves be tested (Fig.~1, right). Political anchors include \\emph{endlu} (`in the house'), "
+          "which may favour the neutral control \\emph{house}, and \\emph{ngalomteto}, which contains the \\emph{law} stem." % (
+              anc["derived_from"], len(anc["religious"]), tex(anc["religious"]), len(anc["political"]), tex(anc["political"])),
+          "\\normalsize", ""]
 (Path(__file__).resolve().parent / "supp.tex").write_text("\n".join(lines))
 print("wrote supp.tex")

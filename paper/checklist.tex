@@ -16,7 +16,7 @@
 \item {\bf Limitations}
     \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The Discussion ends with limitations (two newspapers, one window, 1886 Isigidimi editions missing from the archive, era-confounded held-out windows, no editor metadata in the files used, unreviewed stems and glosses; supplement and code add the domain mismatch of the modern news and the unverified Serengeti pretraining overlap) and states the detection floor of the framing test.
+    \item[] Justification: The Discussion ends with limitations (two newspapers, one window, 1886 Isigidimi editions missing, era-confounded held-out windows, no editor metadata, a modern-news domain mismatch, possible Serengeti pretraining overlap, unreviewed stems and glosses) and states the detection floor of the framing test.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper. 
@@ -46,7 +46,7 @@
     \item {\bf Experimental Result Reproducibility}
     \item[] Question: Does the paper fully disclose all the information needed to reproduce the main experimental results of the paper to the extent that it affects the main claims and/or conclusions of the paper (regardless of whether the code and data are provided or not)?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The Methods give the window, the date-matched subsampling, concept stems, model and hyper-parameter choices, the permutation null, the matched-set tests and the tokenizer conditions. Remaining details (anchor lists, word-joining rules, tokenizer rewrite rules) are in the submitted code and README.txt, which gives the run order; seeds are fixed.
+    \item[] Justification: The Methods give the window, the date-matched subsampling, concept stems, model and hyper-parameter choices, the permutation null, the matched-set tests and the tokenizer conditions. Anchor lists are summarised in Table S4; word-joining and tokenizer rewrite rules are in the submitted code and README.txt, which gives the run order; seeds are fixed.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.
@@ -111,7 +111,7 @@
 \item {\bf Experiments Compute Resources}
     \item[] Question: For each experiment, does the paper provide sufficient information on the computer resources (type of compute workers, memory, time of execution) needed to reproduce the experiments?
     \item[] Answer: \answerYes{}
-    \item[] Justification: All experiments ran on CPU only (no GPU) in roughly three hours in total, including tuning rounds and the earlier framing design that was replaced; the Methods state CPU-only and the runtime, and README.txt gives the four-core setup.
+    \item[] Justification: All experiments ran on CPU only (no GPU) in roughly three hours in total, including tuning rounds and the earlier framing design that was replaced; README.txt gives the four-core setup.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.

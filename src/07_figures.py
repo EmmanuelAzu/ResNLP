@@ -92,7 +92,7 @@ def tokenizer():
     ax.axhline(0, color=MUTED, lw=0.6)
     ax.set_xticks(range(3)); ax.set_xticklabels(["modern", "old\nspelling", "historical"], fontsize=7.5)
     ax.set_xlim(-0.2, 3.1); ax.tick_params(labelsize=7.5)
-    ax.set_ylabel("subwords per character,\n% vs modern", fontsize=7.5)
+    ax.set_ylabel("subwords/char,\n% vs modern", fontsize=7.5)
     fig.savefig(OUT / "fig_tokenizer_cost.png")
 
 

@@ -19,19 +19,23 @@ RUN ORDER  (from the repository root; scripts are in src/, results go to outputs
   python src/10_matched_tests.py       calibrate framing against frequency-matched word sets; data-driven word list
   python src/04_salience.py            per-million rates, issue-bootstrap CIs, pseudo-concept null, held-out replication,
                                        Jabavu-period contrast
-  python src/04b_yearly_series.py      yearly rates (Jabavu figure)
+  python src/04b_yearly_series.py      yearly rates (religion / parliament figures)
+  python src/04c_era_drift.py          within-paper era drift: calibrates the held-out (era-confounded) comparison
   python src/05_fertility.py           tokenizer fertility incl. the aspiration-stripping control (needs MODERN DATA below)
   python src/06_classifier.py          grouped nested-CV classifier (supporting evidence)
   python src/07_figures.py             figures used in the write-up
   python src/09_speaker_sheet.py       sheet for a first-language speaker (outputs/speaker_sheet.md; key in speaker_key.json)
   python src/03_framing.py --segnorm   word-joining control (outputs/*_segnorm.*); run 10_matched_tests.py with the argument _segnorm
+  python src/03_framing.py --window 5 --tag _w5 [--segnorm]   window-5 sensitivity (outputs/*_w5*); then 10_matched_tests.py _w5 / _w5_segnorm
   python paper/make_checklist.py       fill the NeurIPS checklist from the course template (paper/checklist.tex)
+  python paper/make_supp.py            supplementary tables S1-S3 (paper/supp.tex)
   python paper/build_paper.py          write paper/paper.tex from paper_template.tex, taking every number from outputs/
   (cd paper && pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper)
 
 SENSITIVITY
   outputs/window2/ holds the framing results at the earlier tuned setting (dim 300, window 2), kept as a robustness check;
-  the paper quotes the pooled percentile range and the directional p-values from it.
+  the paper quotes the pooled percentile range and the directional p-values from it.  outputs/*_w5* hold window 5.
+  Tokenizer contrasts: spelling alone is judged per WORD (the stripped text has the same words); historical text per CHARACTER.
 
 MODERN DATA" below)
   python src/06_classifier.py     grouped nested-CV classifier (supporting evidence)

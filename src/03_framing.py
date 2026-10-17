@@ -142,6 +142,8 @@ def main():
     ap.add_argument("--draws", type=int, default=10)
     ap.add_argument("--perms-per-draw", type=int, default=5)
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--window", type=int, default=None, help="override the tuned window (sensitivity run)")
+    ap.add_argument("--tag", default="", help="suffix for output files, e.g. _w5")
     ap.add_argument("--segnorm", action="store_true", help="join disjunctively written forms (uku ba -> ukuba) before anything else")
     args = ap.parse_args()
     D, K = (2, 2) if args.quick else (args.draws, args.perms_per_draw)
@@ -149,11 +151,13 @@ def main():
     cfg = {**DEFAULT_CFG}
     if (OUT / "hparams.json").exists():
         cfg.update(json.loads((OUT / "hparams.json").read_text()))
+    if args.window:
+        cfg["window"] = args.window
     print("config:", cfg)
     anchors = json.loads((OUT / "anchors.json").read_text())
 
     pages = load_pages()
-    tag = "_segnorm" if args.segnorm else ""
+    tag = args.tag + ("_segnorm" if args.segnorm else "")
     if args.segnorm:
         merges, _, _ = learn_merges(load_pages(window=None))
         pages["sents"] = pages.sents.map(lambda ss: apply_merges(ss, merges))

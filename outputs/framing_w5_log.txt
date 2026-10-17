@@ -1,0 +1,110 @@
+config: {'kind': 'ft', 'vector_size': 400, 'window': 5, 'epochs': 20, 'min_count': 5, 'min_n': 3, 'max_n': 6, 'bucket': 200000, 'negative': 5, 'sg': 1}
+|V|=1139 |P|=927 |G|=500 rel=15 pol=15
+120 models
+{
+  "config": {
+    "kind": "ft",
+    "vector_size": 400,
+    "window": 5,
+    "epochs": 20,
+    "min_count": 5,
+    "min_n": 3,
+    "max_n": 6,
+    "bucket": 200000,
+    "negative": 5,
+    "sg": 1
+  },
+  "D": 10,
+  "K": 5,
+  "n_V": 1139,
+  "n_P": 927,
+  "n_anchors": 500,
+  "global_profile": {
+    "obs": 0.46001057960733854,
+    "null_mean": 0.34980692045491285,
+    "null_sd": 0.0015206009227315311,
+    "z": 72.47375527989381,
+    "p": 0.0004997501249375312
+  },
+  "n_sig_q05_profile": 924,
+  "spearman_profile_vs_abslogratio": 0.13003982456629906,
+  "global_jaccard": {
+    "obs": 0.565710617019393,
+    "null_mean": 0.4875847718442999,
+    "null_sd": 0.0017923757504263753,
+    "z": 43.587872217367526,
+    "p": 0.0004997501249375312
+  },
+  "n_sig_q05_jaccard": 544,
+  "spearman_jaccard_vs_abslogratio": 0.1140980248744515,
+  "directional_all_theory": {
+    "forms": 16,
+    "delta": 0.14083565771579742,
+    "null_mean": -0.04705830290913582,
+    "null_sd": 0.09743388742208481,
+    "z": 1.9284250736236572,
+    "p_two_sided": 0.05647176411794103
+  },
+  "directional_all_words_mean_delta": 0.006168766878545284,
+  "variant_neighbour_share_isig": 0.1121898597626753,
+  "variant_neighbour_share_imvo": 0.11067961165048544,
+  "real_by_draw": {
+    "profile": [
+      0.4577071152894813,
+      0.4641969924163214,
+      0.4579384996739743,
+      0.4434404264087603,
+      0.46437988293769383,
+      0.4658083355711548,
+      0.45784363270261236,
+      0.46263678838894895,
+      0.46105706692264903,
+      0.4650970557617891
+    ],
+    "jaccard": [
+      0.5643560209547566,
+      0.5725201993975727,
+      0.5616496867110551,
+      0.5566561820957804,
+      0.5663325344084208,
+      0.5662003511302659,
+      0.5650643187238817,
+      0.5684118806394798,
+      0.5664927125721458,
+      0.5694222835605705
+    ]
+  }
+}
+measure   group    concept  forms  shift  matched_set_mean  matched_set_sd  percentile  p_greater
+profile control     cattle      2  0.553             0.442           0.076       0.934      0.067
+profile control      house      4  0.415             0.450           0.051       0.250      0.751
+profile control       rain      1  0.507             0.470           0.121       0.692      0.309
+profile control       time      4  0.450             0.443           0.050       0.568      0.432
+profile  theory    country      2  0.549             0.451           0.068       0.914      0.086
+profile  theory government      1  0.560             0.451           0.096       0.862      0.138
+profile  theory       land      3  0.370             0.452           0.061       0.088      0.912
+profile  theory        law      8  0.372             0.454           0.034       0.006      0.995
+profile  theory parliament      1  0.484             0.488           0.095       0.471      0.529
+profile  theory     rights      2  0.417             0.467           0.079       0.278      0.723
+profile  theory       vote      1  0.521             0.468           0.101       0.735      0.265
+jaccard control     cattle      2  0.616             0.546           0.131       0.703      0.297
+jaccard control      house      4  0.520             0.568           0.089       0.296      0.704
+jaccard control       rain      1  0.918             0.586           0.187       0.978      0.022
+jaccard control       time      4  0.524             0.566           0.090       0.326      0.675
+jaccard  theory    country      2  0.549             0.529           0.148       0.542      0.459
+jaccard  theory government      1  0.813             0.508           0.179       0.938      0.062
+jaccard  theory       land      3  0.510             0.544           0.115       0.378      0.622
+jaccard  theory        law      8  0.340             0.550           0.067       0.002      0.999
+jaccard  theory parliament      1  0.851             0.622           0.204       0.924      0.076
+jaccard  theory     rights      2  0.672             0.586           0.131       0.724      0.276
+jaccard  theory       vote      1  0.862             0.582           0.167       0.986      0.014
+  group    concept  forms  delta_isig_minus_imvo  null_mean  null_sd      z  p_two_sided
+control     cattle      2                 -0.433      0.029    0.218 -2.113        0.034
+control      house      4                  0.839      0.003    0.191  4.389        0.000
+control       rain      1                 -0.468     -0.086    0.372 -1.025        0.308
+control       time      4                  0.074      0.004    0.177  0.393        0.700
+ theory    country      2                  0.763      0.122    0.170  3.779        0.001
+ theory government      1                  0.073      0.043    0.185  0.165        0.865
+ theory       land      3                  1.301     -0.071    0.185  7.425        0.000
+ theory        law      8                 -0.669     -0.096    0.145 -3.945        0.000
+ theory     rights      2                  1.053     -0.031    0.243  4.457        0.000

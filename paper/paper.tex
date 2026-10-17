@@ -43,25 +43,28 @@ The IsiXhosa Intellectual Traditions archive \citep{schoots2023} digitises South
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.95\textwidth]{fig_two_part.png}
-\caption{Salience (a) and framing (b). Circles: political concepts; squares: neutral controls; diamond: religion (exploratory); filled = beyond 2000 frequency-matched sets ($p<0.05$). (a) Imvo/Isigidimi rate ratio, 95\% bootstrap CI. (b) Percentile of the concept's profile shift among matched word sets; none is beyond chance. Too-rare concepts and seed words omitted.}
+\includegraphics[width=3.45in]{fig_salience.png}\hfill
+\includegraphics[width=3.45in]{fig_framing.png}
+\caption{Salience (left) and framing (right) of the same concepts. Left: Imvo/Isigidimi rate ratio with 95\% issue-bootstrap CI; filled = beyond 2000 frequency-matched pseudo-concepts ($p<0.05$). Right: percentile of the concept's profile shift among 2000 frequency-matched word sets; none is beyond chance. Too-rare concepts and seed words are omitted.}
 \label{fig:two}
 \end{figure*}
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=0.95\textwidth]{fig_combo.png}
-\caption{(a,b) Rate per million tokens by year. Grey: Jabavu's Isigidimi years (1881--83; secondary sources, unconfirmed); blue: Isigidimi fortnightly (Jul 1883--Sep 1884); 1886 Isigidimi missing. (c) Subwords per character relative to modern text: aspiration-stripped modern text and historical Isigidimi.}
+\includegraphics[width=2.3in]{fig_religion_by_year.png}\hfill
+\includegraphics[width=2.3in]{fig_parliament_by_year.png}\hfill
+\includegraphics[width=2.3in]{fig_tokenizer_cost.png}
+\caption{Religious (left) and parliamentary (right) vocabulary per million tokens by year (blue: Isigidimi, orange: Imvo; grey: Jabavu's Isigidimi years, secondary sources, unconfirmed; light blue: Isigidimi fortnightly, Jul 1883--Sep 1884; 1886 Isigidimi missing). Right-most: subwords per character relative to modern text for aspiration-stripped modern text (``old spelling'') and historical Isigidimi.}
 \label{fig:two2}
 \end{figure*}
 
 \section{Results}
 \looseness=-1
-\textbf{Salience.} Parliamentary vocabulary is 3.3$\times$ as frequent in Imvo (CI 2.6--4.6; pseudo-concept $p=0.011$); religious vocabulary is four times as frequent in Isigidimi (0.24$\times$, CI 0.16--0.35, $p=0.019$); \emph{mbuso} is borderline ($p=0.064$) and nothing else stands out (Fig.~\ref{fig:two}a). In held-out years religion (0.22$\times$, CI 0.18--0.28, $p=0.007$) and parliament (3.5$\times$, $p=0.017$) replicate; government flips (0.93$\to$0.27) and is not interpreted. Isigidimi's religious vocabulary falls from about 5{,}700 to 800 per million tokens in 1876--83; parliamentary vocabulary is absent until 1883 (Fig.~\ref{fig:two2}a,b).
+\textbf{Salience.} Parliamentary vocabulary is 3.3$\times$ as frequent in Imvo (CI 2.6--4.6; pseudo-concept $p=0.011$); religious vocabulary is four times as frequent in Isigidimi (0.24$\times$, CI 0.16--0.35, $p=0.019$); \emph{mbuso} is borderline ($p=0.064$) and nothing else stands out (Fig.~\ref{fig:two}, left). In held-out years religion (0.22$\times$, CI 0.18--0.28, $p=0.007$) and parliament (3.5$\times$, $p=0.017$) replicate; government flips (0.93$\to$0.27) and is not interpreted. Isigidimi's religious vocabulary falls from about 5{,}700 to 800 per million tokens in 1876--83; parliamentary vocabulary is absent until 1883 (Fig.~\ref{fig:two2}, left and centre).
 
-\textbf{Framing.} Mean profile shift between the papers is 0.383 against a permutation null of 0.263, with every real draw beyond all 50 permutations: the spaces differ systematically. This offset touches almost every word, so words are judged against matched sets, where no single concept is detectable (Fig.~\ref{fig:two}b). Pooled, the electoral words (\emph{palamente}, \emph{voti}, \emph{rulumente}) differ by neighbour Jaccard (0.77 vs 0.55 matched, $p=0.016$) and weakly by profile (0.47 vs 0.39, $p=0.087$). Joining disjunctively written forms leaves the global gap unchanged (0.372 vs null 0.250: a gap of 0.122, against 0.120) but sharpens the pooled electoral result (profile 0.47 vs 0.36, $p=0.012$; Jaccard 0.78 vs 0.52, $p=0.001$); this grouping was chosen after the salience results and is uncorrected. The directional hypothesis fails: political concepts lean $+0.22$ towards religious anchors in Isigidimi vs $+0.04$ for matched words ($p=0.33$), and neutral controls move as much ($+0.19$). \emph{Abantu}, significant against the permutation null alone, is an artefact: its neighbours are its own inflections, identical across papers.
+\textbf{Framing.} Mean profile shift between the papers is 0.383 against a permutation null of 0.263, with every real draw beyond all 50 permutations: the spaces differ systematically. This offset touches almost every word, so words are judged against matched sets, where no single concept is detectable (Fig.~\ref{fig:two}, right). Pooled, the electoral words (\emph{palamente}, \emph{voti}, \emph{rulumente}) differ by neighbour Jaccard (0.77 vs 0.55 matched, $p=0.016$) and weakly by profile (0.47 vs 0.39, $p=0.087$). Joining disjunctively written forms leaves the global gap unchanged (0.372 vs null 0.250: a gap of 0.122, against 0.120) but sharpens the pooled electoral result (profile 0.47 vs 0.36, $p=0.012$; Jaccard 0.78 vs 0.52, $p=0.001$); this grouping was chosen after the salience results and is uncorrected. The directional hypothesis fails: political concepts lean $+0.22$ towards religious anchors in Isigidimi vs $+0.04$ for matched words ($p=0.33$), and neutral controls move as much ($+0.19$). \emph{Abantu}, significant against the permutation null alone, is an artefact: its neighbours are its own inflections, identical across papers.
 
-\textbf{Tokenizers.} Per word, historical text looks cheaper only because its words are shorter (6.2 vs 7.4 characters); per character it costs more (Fig.~\ref{fig:two2}c): relative to modern text, stripped spelling adds 0.8\% for XLM-R and historical text 4.1\%; Serengeti 5.4\% and 12.4\%; mBERT $-0.4\%$ and $+1.7\%$. Spelling explains a fifth of XLM-R's gap and 44\% of Serengeti's.
+\textbf{Tokenizers.} Per word, historical text looks cheaper only because its words are shorter (6.2 vs 7.4 characters); per character it costs more (Fig.~\ref{fig:two2}, right): relative to modern text, stripped spelling adds 0.8\% for XLM-R and historical text 4.1\%; Serengeti 5.4\% and 12.4\%; mBERT $-0.4\%$ and $+1.7\%$. Spelling explains a fifth of XLM-R's gap and 44\% of Serengeti's.
 
 \section{Discussion}
 \looseness=-1

@@ -90,6 +90,7 @@ signed = lambda x: f"{x:+.1f}".replace("-", "$-$")
 
 era = pd.read_csv(OUT / "era_drift.csv")
 drift = lambda concept, lab: float(era[(era.concept == concept) & (era.comparison == lab)].ratio.iloc[0])
+pardrift_hi = float(era[(era.concept == "parliament") & (era.comparison == "Isigidimi: later / earlier era")].ci_hi.iloc[0])
 d_pr = [drift(c, l) for c in ("parliament", "religion") for l in ("Isigidimi: later / earlier era", "Imvo: later / earlier era")]
 d_gov = [drift("government", l) for l in ("Isigidimi: later / earlier era", "Imvo: later / earlier era")]
 pool_cells = [row(t, P2, m) for t in (mt, ms) for m in (pr, ja)]
@@ -165,6 +166,7 @@ V = {
  "FTSTAB": f"{abl[abl.model == 'ft'].stability.mean():.2f}", "W2VSTAB": f"{abl[abl.model == 'w2v'].stability.mean():.2f}",
  "VOTEQ": f"{sal.loc[sal.comparison.eq('main') & sal.index.eq('theory:vote'), 'ratio'].iloc[0]:.2f}" if False else f"{sal[sal.comparison == 'main'].loc['theory:vote', 'ratio']:.2f}",
  "SERTH": f"{vocab.loc['serengeti', 'percent']:.1f}", "XLMTH": f"{vocab.loc['xlm-roberta-base', 'percent']:.1f}",
+ "PARDRIFTHI": f"{pardrift_hi:.1f}", "PARDRIFT": f"{drift('parliament', 'Isigidimi: later / earlier era'):.1f}",
  "ERAPR": f"{min(d_pr):.1f}--{max(d_pr):.1f}", "VOTEDRIFT": f"{drift('vote', 'Isigidimi: later / earlier era'):.1f}", "GOVDRIFT": f"{min(d_gov):.1f}--{max(d_gov):.2f}",
  "PVLO": ordinal(100 * min(c.percentile for c in pool_cells)), "PVHI": ordinal(100 * max(c.percentile for c in pool_cells)),
  "PVPLO": pv(min(c.p for c in pool_cells)), "PVPHI": pv(max(c.p for c in pool_cells)),

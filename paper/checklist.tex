@@ -16,7 +16,7 @@
 \item {\bf Limitations}
     \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The Discussion ends with limitations (two newspapers, one window, 1886 Isigidimi editions missing from the archive, era-confounded held-out windows, no editor metadata in the files used, domain mismatch of the modern news, Serengeti pretraining overlap unverified, speaker review pending) and states the detection floor of the framing test.
+    \item[] Justification: The Discussion ends with limitations (two newspapers, one window, 1886 Isigidimi editions missing from the archive, era-confounded held-out windows, no editor metadata in the files used, unreviewed stems and glosses; supplement and code add the domain mismatch of the modern news and the unverified Serengeti pretraining overlap) and states the detection floor of the framing test.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper. 
@@ -66,7 +66,7 @@
 \item {\bf Open access to data and code}
     \item[] Question: Does the paper provide open access to the data and code, with sufficient instructions to faithfully reproduce the main experimental results, as described in supplemental material?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The code is submitted with requirements.txt and README.txt (exact run order). The newspaper texts are the public IsiXhosa Intellectual Traditions archive: the course-provided zip is read by src/01\_prepare\_data.py and the same texts can be downloaded from the archive DOIs listed in README.txt (Schoots et al., 2023); the modern text is public (MasakhaNEWS) and README.txt gives the download command.
+    \item[] Justification: The code is submitted with requirements.txt and README.txt (exact run order). The newspaper texts are the public IsiXhosa Intellectual Traditions archive: the course-provided zip is read by src/01\_prepare\_data.py and the same texts can be downloaded from the archive DOIs listed in README.txt (Schoots et al., 2023a); the modern text is public (MasakhaNEWS) and README.txt gives the download command.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that paper does not include experiments requiring code.
@@ -94,7 +94,7 @@
 \item {\bf Experiment Statistical Significance}
     \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Salience has issue-level bootstrap CIs; framing uses a permutation null (50 permutations) and 2000 frequency-matched word sets; tokenizer changes have bootstrap CIs (within about 0.5\%, stated in the Results). The 15 salience tests and the framing tests are uncorrected; the paper says so, states that neither salience nor framing results survive correction, and rests its argument on effect size, breadth and corroboration. The held-out comparison is era-confounded and is presented as an era-sensitivity check, with within-paper drift as calibration.
+    \item[] Justification: Salience has issue-level bootstrap CIs; framing uses a permutation null (50 permutations) and 2000 frequency-matched word sets; tokenizer changes have bootstrap CIs (within about 0.5\%, stated in the Results). The 15 salience tests and the framing tests are uncorrected; the paper says so, states that no salience result survives correction while the directional framing test does at windows 1--2 (but depends on one word), and rests its argument on robustness and corroboration. The held-out comparison is era-confounded and is presented as an era-sensitivity check, with within-paper drift (including vote's large drift) as calibration; the classifier was trained on the test window, so religion is exploratory.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.

@@ -1,11 +1,11 @@
-config: {'kind': 'ft', 'vector_size': 300, 'window': 2, 'epochs': 20, 'min_count': 5, 'min_n': 3, 'max_n': 6, 'bucket': 200000, 'negative': 5, 'sg': 1}
+config: {'kind': 'ft', 'vector_size': 400, 'window': 1, 'epochs': 20, 'min_count': 5, 'min_n': 3, 'max_n': 6, 'bucket': 200000, 'negative': 5, 'sg': 1}
 |V|=1139 |P|=927 |G|=500 rel=15 pol=15
 120 models
 {
   "config": {
     "kind": "ft",
-    "vector_size": 300,
-    "window": 2,
+    "vector_size": 400,
+    "window": 1,
     "epochs": 20,
     "min_count": 5,
     "min_n": 3,
@@ -20,91 +20,91 @@ config: {'kind': 'ft', 'vector_size': 300, 'window': 2, 'epochs': 20, 'min_count
   "n_P": 927,
   "n_anchors": 500,
   "global_profile": {
-    "obs": 0.38255429914117156,
-    "null_mean": 0.262602197586239,
-    "null_sd": 0.0012768783763250843,
-    "z": 93.94168135273802,
+    "obs": 0.34753815631163143,
+    "null_mean": 0.22999395892561517,
+    "null_sd": 0.0014922491313022898,
+    "z": 78.76982128542781,
     "p": 0.0004997501249375312
   },
-  "n_sig_q05_profile": 926,
-  "spearman_profile_vs_abslogratio": 0.14338221477532873,
+  "n_sig_q05_profile": 924,
+  "spearman_profile_vs_abslogratio": 0.14614822067638786,
   "global_jaccard": {
-    "obs": 0.5536946406927972,
-    "null_mean": 0.461848127998319,
-    "null_sd": 0.002119426022503151,
-    "z": 43.335559589856665,
+    "obs": 0.5445716190734075,
+    "null_mean": 0.4466068859194403,
+    "null_sd": 0.0021092181802308883,
+    "z": 46.44599315147345,
     "p": 0.0004997501249375312
   },
-  "n_sig_q05_jaccard": 604,
-  "spearman_jaccard_vs_abslogratio": 0.13148632175593475,
+  "n_sig_q05_jaccard": 623,
+  "spearman_jaccard_vs_abslogratio": 0.12202950805684483,
   "directional_all_theory": {
     "forms": 16,
-    "delta": 0.21888947486877441,
-    "null_mean": -0.021785350516438484,
-    "null_sd": 0.10849090665578842,
-    "z": 2.2183871269226074,
-    "p_two_sided": 0.025987006496751622
+    "delta": 0.3394196033477783,
+    "null_mean": -0.040972329676151276,
+    "null_sd": 0.09201239794492722,
+    "z": 4.1341376304626465,
+    "p_two_sided": 0.0004997501249375312
   },
-  "directional_all_words_mean_delta": 0.008204972371459007,
-  "variant_neighbour_share_isig": 0.10852211434735706,
-  "variant_neighbour_share_imvo": 0.10841423948220065,
+  "directional_all_words_mean_delta": 0.014734583906829357,
+  "variant_neighbour_share_isig": 0.10560949298813377,
+  "variant_neighbour_share_imvo": 0.10582524271844661,
   "real_by_draw": {
     "profile": [
-      0.37321953285551657,
-      0.38817402673810675,
-      0.3816475538510365,
-      0.36715732385954597,
-      0.3861962064520389,
-      0.3896849913887235,
-      0.38147904796025744,
-      0.38474859072155154,
-      0.3810361000538992,
-      0.3921996175310395
+      0.34678934351649726,
+      0.355468020366229,
+      0.34004704280632975,
+      0.33555963017759055,
+      0.35526123310292884,
+      0.354454085815793,
+      0.34028060050816844,
+      0.3512399619386186,
+      0.34135311174231403,
+      0.35492853314184464
     ],
     "jaccard": [
-      0.5445122546202631,
-      0.5575875584066392,
-      0.5453763644471711,
-      0.5478658478047299,
-      0.5560529067372274,
-      0.5591362955175113,
-      0.5512085829072614,
-      0.5549940686779786,
-      0.5545449965630915,
-      0.5656675312460977
+      0.5449855181687618,
+      0.5475141094536528,
+      0.5446687488878917,
+      0.5309703753700667,
+      0.552991859425777,
+      0.5494099676496702,
+      0.5460538749135742,
+      0.5431032061153195,
+      0.5393998183356645,
+      0.5466187124136968
     ]
   }
 }
 measure   group    concept  forms  shift  matched_set_mean  matched_set_sd  percentile  p_greater
-profile control     cattle      2  0.504             0.364           0.071       0.964      0.036
-profile control      house      4  0.343             0.371           0.048       0.282      0.719
-profile control       rain      1  0.500             0.383           0.109       0.847      0.153
-profile control       time      4  0.399             0.362           0.046       0.788      0.213
-profile  theory    country      2  0.449             0.377           0.066       0.844      0.157
-profile  theory government      1  0.457             0.380           0.089       0.828      0.173
-profile  theory       land      3  0.346             0.374           0.055       0.322      0.678
-profile  theory        law      8  0.324             0.377           0.032       0.050      0.950
-profile  theory parliament      1  0.466             0.413           0.089       0.733      0.267
-profile  theory     rights      2  0.347             0.376           0.074       0.360      0.640
-profile  theory       vote      1  0.473             0.378           0.098       0.837      0.163
-jaccard control     cattle      2  0.627             0.536           0.141       0.727      0.273
-jaccard control      house      4  0.535             0.554           0.094       0.414      0.586
-jaccard control       rain      1  0.956             0.565           0.203       0.962      0.039
-jaccard control       time      4  0.619             0.555           0.093       0.752      0.248
-jaccard  theory    country      2  0.634             0.527           0.154       0.749      0.251
-jaccard  theory government      1  0.771             0.488           0.171       0.912      0.088
-jaccard  theory       land      3  0.469             0.528           0.113       0.305      0.695
-jaccard  theory        law      8  0.286             0.536           0.067       0.000      1.000
-jaccard  theory parliament      1  0.751             0.613           0.188       0.782      0.218
-jaccard  theory     rights      2  0.630             0.567           0.135       0.656      0.344
-jaccard  theory       vote      1  0.799             0.556           0.168       0.896      0.105
+profile control     cattle      2  0.434             0.336           0.075       0.900      0.101
+profile control      house      4  0.309             0.337           0.048       0.283      0.717
+profile control       rain      1  0.409             0.347           0.103       0.786      0.214
+profile control       time      4  0.374             0.330           0.044       0.847      0.153
+profile  theory    country      2  0.384             0.343           0.062       0.754      0.246
+profile  theory government      1  0.386             0.344           0.083       0.724      0.276
+profile  theory       land      3  0.299             0.343           0.054       0.206      0.795
+profile  theory        law      8  0.299             0.344           0.032       0.078      0.922
+profile  theory parliament      1  0.516             0.372           0.079       0.966      0.035
+profile  theory     rights      2  0.320             0.343           0.073       0.408      0.593
+profile  theory       vote      1  0.399             0.340           0.098       0.773      0.227
+jaccard control     cattle      2  0.635             0.514           0.132       0.811      0.189
+jaccard control      house      4  0.531             0.537           0.094       0.465      0.535
+jaccard control       rain      1  0.915             0.552           0.212       0.984      0.017
+jaccard control       time      4  0.592             0.541           0.093       0.708      0.292
+jaccard  theory    country      2  0.568             0.516           0.150       0.627      0.373
+jaccard  theory government      1  0.755             0.479           0.177       0.942      0.059
+jaccard  theory       land      3  0.598             0.517           0.116       0.738      0.262
+jaccard  theory        law      8  0.404             0.532           0.067       0.030      0.971
+jaccard  theory parliament      1  0.834             0.615           0.217       0.856      0.145
+jaccard  theory     rights      2  0.608             0.546           0.140       0.653      0.347
+jaccard  theory       vote      1  0.787             0.565           0.177       0.841      0.159
   group    concept  forms  delta_isig_minus_imvo  null_mean  null_sd      z  p_two_sided
-control     cattle      2                 -0.312      0.053    0.170 -2.147        0.030
-control      house      4                  1.335     -0.086    0.201  7.086        0.000
-control       rain      1                 -0.874     -0.062    0.302 -2.692        0.009
-control       time      4                 -0.431      0.089    0.181 -2.868        0.004
- theory    country      2                  0.432      0.071    0.199  1.812        0.069
- theory government      1                  0.890      0.008    0.157  5.603        0.000
- theory       land      3                  1.268     -0.125    0.207  6.738        0.000
- theory        law      8                 -0.449     -0.001    0.159 -2.805        0.005
- theory     rights      2                  0.767     -0.056    0.217  3.797        0.000
+control     cattle      2                 -0.914     -0.011    0.187 -4.820        0.000
+control      house      4                  1.084     -0.079    0.174  6.684        0.000
+control       rain      1                 -0.660      0.020    0.193 -3.532        0.000
+control       time      4                 -0.468      0.065    0.181 -2.949        0.002
+ theory    country      2                  0.502      0.002    0.212  2.358        0.019
+ theory government      1                  0.534     -0.043    0.182  3.166        0.003
+ theory       land      3                  0.824     -0.139    0.165  5.837        0.000
+ theory        law      8                 -0.014     -0.014    0.151  0.001        0.999
+ theory     rights      2                  0.765     -0.044    0.194  4.167        0.000

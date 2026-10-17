@@ -39,13 +39,15 @@ def set_test(forms, col, two_sided=False, n=2000):
 
 
 rows = []
-elect = [i for i in range(len(t)) if t.concept[i] in ("parliament", "vote", "government")]
-o = set_test(elect, "profile_shift")
-rows.append({"test": "profile shift: electoral-institutional (parliament, vote, government)", "forms": len(elect),
-             "obs": o[0], "matched_mean": o[1], "matched_sd": o[2], "percentile": o[3], "p": o[4]})
-o = set_test(elect, "jaccard_shift")
-rows.append({"test": "jaccard shift: electoral-institutional", "forms": len(elect),
-             "obs": o[0], "matched_mean": o[1], "matched_sd": o[2], "percentile": o[3], "p": o[4]})
+POOLS = {"palamente+voti (parliament, vote)": ("parliament", "vote"),
+         "palamente+voti+rulumente (adds government)": ("parliament", "vote", "government")}
+for label, concepts in POOLS.items():
+    forms_ = [i for i in range(len(t)) if t.concept[i] in concepts]
+    for col, mname in (("profile_shift", "profile"), ("jaccard_shift", "Jaccard")):
+        o = set_test(forms_, col)
+        rows.append({"test": f"{mname} shift: {label}", "forms": len(forms_), "obs": o[0], "matched_mean": o[1],
+                     "matched_sd": o[2], "percentile": o[3], "p": o[4],
+                     "detectable_excess_95": 1.645 * o[2]})
 for (grp, cn), idx in t[t.group.notna()].groupby(["group", "concept"]).groups.items():
     forms = [i for i in idx if not is_seed[i]]
     if forms:

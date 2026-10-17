@@ -1,0 +1,44 @@
+                                                     test  forms    obs  matched_mean  matched_sd  percentile     p  detectable_excess_95
+         profile shift: palamente+voti (parliament, vote)      2  0.458         0.361       0.067       0.917 0.083                 0.110
+         Jaccard shift: palamente+voti (parliament, vote)      2  0.811         0.586       0.143       0.962 0.039                 0.235
+profile shift: palamente+voti+rulumente (adds government)      3  0.434         0.353       0.052       0.932 0.069                 0.085
+Jaccard shift: palamente+voti+rulumente (adds government)      3  0.792         0.550       0.110       0.993 0.007                 0.181
+                        directional delta: control:cattle      2 -0.914         0.029       0.467       0.022 0.032                   NaN
+                         directional delta: control:house      4  1.084         0.026       0.332       1.000 0.001                   NaN
+                          directional delta: control:rain      1 -0.660         0.016       0.613       0.112 0.249                   NaN
+                          directional delta: control:time      4 -0.468        -0.036       0.317       0.085 0.173                   NaN
+                        directional delta: theory:country      2  0.502         0.125       0.462       0.795 0.404                   NaN
+                     directional delta: theory:government      1  0.534         0.042       0.512       0.806 0.369                   NaN
+                           directional delta: theory:land      3  0.824        -0.055       0.383       0.988 0.022                   NaN
+                            directional delta: theory:law      8 -0.014         0.037       0.241       0.425 0.846                   NaN
+                         directional delta: theory:rights      2  0.765        -0.022       0.479       0.954 0.096                   NaN
+                directional delta: all political concepts     16  0.339         0.018       0.163       0.976 0.042                   NaN
+                  directional delta: all neutral controls     11 -0.002        -0.006       0.194       0.511 0.985                   NaN
+
+most shifted vs matched words (profile):
+    word  n_isig  n_imvo_draw  log2_ratio  profile_shift  z_vs_matched
+   usapo   117.0         29.1       -2.01           0.84          5.64
+  ehamba    51.0         43.9       -0.22           0.72          4.29
+  amehlo    80.0         94.4        0.24           0.60          3.90
+     nje  1038.0        309.3       -1.75           0.67          3.77
+   otile    52.0         33.6       -0.63           0.70          3.74
+    kade   161.0         71.7       -1.17           0.66          3.66
+     olu    71.0         51.3       -0.47           0.60          3.32
+    naku    25.0         47.7        0.93           0.77          3.28
+ kakuhle   273.0        220.5       -0.31           0.61          3.23
+     apo   598.0        377.0       -0.67           0.67          3.23
+      xa   750.0        726.0       -0.05           0.63          3.02
+   etile    65.0         27.2       -1.26           0.59          2.91
+ ekubeni   127.0        102.6       -0.31           0.55          2.89
+ ebusuku    33.0         25.7       -0.36           0.59          2.84
+    ange    25.0         28.0        0.16           0.56          2.71
+    nale    45.0         27.4       -0.72           0.66          2.69
+     ade    89.0         43.4       -1.04           0.59          2.65
+     eza    33.0         25.8       -0.36           0.57          2.58
+mhlaumbi   136.0         64.3       -1.08           0.57          2.56
+   akuko   228.0        203.6       -0.16           0.52          2.53
+ emnandi    29.0         25.1       -0.21           0.56          2.48
+   atile    32.0         32.9        0.04           0.56          2.40
+      sa    31.0         71.6        1.21           0.55          2.37
+ ukwenza    63.0         34.6       -0.86           0.61          2.33
+     aze   121.0         81.5       -0.57           0.51          2.33

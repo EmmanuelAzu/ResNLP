@@ -23,7 +23,7 @@ TARGET = 287_000
 GRID = dict(vector_size=[50, 100, 200], window=[3, 5, 8], epochs=[10, 20])
 # Second round (--extend): the first round's best setting (dim 200, 20 epochs) was at the edge of
 # the grid in two dimensions, so the grid is extended past it and the rows are merged.
-GRID_EXT = dict(vector_size=[300, 400], window=[2], epochs=[20])   # round 3: window 3 was the grid minimum
+GRID_EXT = dict(vector_size=[300, 400], window=[1], epochs=[20])   # round 4: window 2 was the grid minimum
 SEEDS = (1, 2)
 N_PROBE = 300
 

@@ -25,7 +25,7 @@ def _salience_table():
 
 def salience():
     sal, order = _salience_table()
-    fig, ax = plt.subplots(figsize=(3.45, 2.35), layout="constrained")
+    fig, ax = plt.subplots(figsize=(3.45, 1.95), layout="constrained")
     for i, n in enumerate(order):
         r = sal[sal.name == n].iloc[0]
         ax.plot([r.ci_lo, r.ci_hi], [i, i], color=MUTED, lw=1)
@@ -46,7 +46,7 @@ def framing():
     sal, order = _salience_table()
     fc = pd.read_csv(OUT / "framing_concepts.csv")
     fc = fc[fc.measure == "profile"].set_index("concept")
-    fig, ax = plt.subplots(figsize=(3.45, 2.35), layout="constrained")
+    fig, ax = plt.subplots(figsize=(3.45, 1.95), layout="constrained")
     for i, n in enumerate(order):
         g = sal[sal.name == n].iloc[0].group
         if n in fc.index:
@@ -64,35 +64,35 @@ def framing():
 
 def yearly(concept, fname, labels):
     d = pd.read_csv(OUT / "salience_yearly.csv")
-    fig, ax = plt.subplots(figsize=(2.3, 1.6), layout="constrained")
+    fig, ax = plt.subplots(figsize=(2.3, 1.5), layout="constrained")
     for paper, col in (("ISIG", BLUE), ("IMVO", ORANGE)):
         g = d[(d.paper == paper) & (d.concept == concept)].set_index("year").reindex(range(1870, 1895))
         ax.fill_between(g.index, g.ci_lo, g.ci_hi, color=col, alpha=0.15, lw=0)
         ax.plot(g.index, g.per_M, "-o", color=col, lw=1.0, ms=2)
     ax.axvspan(1880.5, 1883.5, color="#c3c2b7", alpha=0.45, lw=0)
     ax.axvspan(1883.5, 1884.75, color=BLUE, alpha=0.12, lw=0)
-    ax.text(1882, ax.get_ylim()[1] * 0.97, "Jabavu 1881-83\n(unconfirmed)", rotation=90, fontsize=5, color=MUTED,
+    ax.text(1882, ax.get_ylim()[1] * 0.97, "Jabavu 1881-83\n(unconfirmed)", rotation=90, fontsize=6, color=MUTED,
             ha="center", va="top")
-    ax.text(*labels["ISIG"], "Isigidimi", fontsize=6.5, color=INK)
-    ax.text(*labels["IMVO"], "Imvo", fontsize=6.5, color=INK)
-    ax.set_xlim(1869, 1896); ax.set_xticks([1870, 1880, 1890]); ax.tick_params(labelsize=6.5)
-    ax.set_ylabel("per million tokens", fontsize=6.5)
+    ax.text(*labels["ISIG"], "Isigidimi", fontsize=7.5, color=INK)
+    ax.text(*labels["IMVO"], "Imvo", fontsize=7.5, color=INK)
+    ax.set_xlim(1869, 1896); ax.set_xticks([1870, 1880, 1890]); ax.tick_params(labelsize=7.5)
+    ax.set_ylabel("per million tokens", fontsize=7.5)
     fig.savefig(OUT / fname)
 
 
 def tokenizer():
     f = pd.read_csv(OUT / "fertility.csv")
     cond = ["modern", "modern, historical spelling", "Isigidimi 1884-88"]
-    fig, ax = plt.subplots(figsize=(2.3, 1.6), layout="constrained")
+    fig, ax = plt.subplots(figsize=(2.3, 1.5), layout="constrained")
     for tok, lab, m_ in (("serengeti", "Serengeti", "s"), ("xlm-roberta-base", "XLM-R", "o"), ("mbert-cased", "mBERT", "^")):
         s_ = f[f.tokenizer == tok].set_index("condition").loc[cond, "subwords_per_100_chars"]
         pct = 100 * (s_ / s_.iloc[0] - 1)
         ax.plot(range(3), pct.values, "-" + m_, color=INK, lw=1, ms=3.5)
-        ax.text(2.1, pct.values[2], lab, fontsize=6.5, color=INK, va="center")
+        ax.text(2.1, pct.values[2], lab, fontsize=7.5, color=INK, va="center")
     ax.axhline(0, color=MUTED, lw=0.6)
-    ax.set_xticks(range(3)); ax.set_xticklabels(["modern", "old\nspelling", "historical"], fontsize=6.5)
-    ax.set_xlim(-0.2, 3.1); ax.tick_params(labelsize=6.5)
-    ax.set_ylabel("subwords per character,\n% vs modern", fontsize=6.5)
+    ax.set_xticks(range(3)); ax.set_xticklabels(["modern", "old\nspelling", "historical"], fontsize=7.5)
+    ax.set_xlim(-0.2, 3.1); ax.tick_params(labelsize=7.5)
+    ax.set_ylabel("subwords per character,\n% vs modern", fontsize=7.5)
     fig.savefig(OUT / "fig_tokenizer_cost.png")
 
 

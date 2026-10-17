@@ -1,0 +1,95 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage{ccn}
+\usepackage{pslatex}
+\usepackage{apacite}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage[labelfont=bf, margin=0.1cm, font=sf, font+=footnotesize, skip=2pt]{caption}
+\graphicspath{{../outputs/}}
+\setlength{\textfloatsep}{6pt plus 2pt minus 2pt}
+\setlength{\floatsep}{5pt plus 2pt minus 2pt}
+% checklist answer macros (as in the course-provided NeurIPS 2024 checklist file)
+\newcommand{\answerYes}[1][]{\textcolor{blue}{[Yes] #1}}
+\newcommand{\answerNo}[1][]{\textcolor{orange}{[No] #1}}
+\newcommand{\answerNA}[1][]{\textcolor{gray}{[NA] #1}}
+
+\title{What Missionary Control Left in the Language of Two 1880s isiXhosa Newspapers}
+
+\author{{\large \bf Author 1 \quad Author 2 \quad Author 3} \\ University of the Witwatersrand, Johannesburg, South Africa}
+
+\begin{document}
+\maketitle
+
+\section{Abstract}
+{\bf \looseness=-1
+Isigidimi sama-Xosa was founded by missionaries; Imvo Zabantsundu (1884) was the first African-owned isiXhosa paper. Did it leave a trace in what each paper covered (salience) or in how it used words (framing)? Comparing Isigidimi with ten date-matched Imvo subsamples against frequency-matched random words, we find that salience separates the papers: Imvo uses parliamentary vocabulary about 3.3 times as often, Isigidimi religious vocabulary about four times as often, and the religious result replicates in held-out years. Framing is weaker and less specific: embedding spaces differ globally and a pooled parliament-and-vote set is suggestively shifted (@@P1@@--@@P2@@ percentile of matched sets), but no concept survives correction and a directional test is significant in one of four conditions. Historical spelling also costs modern tokenizers 2--12\% more subwords per character, most for an African-language model.}
+\begin{quote}\small \textbf{Keywords:} historical isiXhosa; agenda-setting versus framing; tokenizer fairness\end{quote}
+
+\section{Introduction and Background}\label{Intro}
+\looseness=-1
+The IsiXhosa Intellectual Traditions archive \citep{schoots2023} digitises South Africa's earliest African-language press. \emph{Isigidimi sama-Xosa} (monthly, 1870--88) was founded by missionaries; \emph{Imvo Zabantsundu} (from November 1884) was the first African-owned paper, free ``from any missionary control''. The archive's authors describe Isigidimi's missionary foundation as ``revealed in the frequency of church and Bible stories''; earlier studies trace single concepts (\emph{imfundo}, \emph{impucuko}, \emph{umsebenzi}; \citealp{dewet2021,sigenu2021,qazisa2022}). We add a controlled computational complement built on a distinction from communication research: \emph{agenda-setting}, what is covered \citep{mccombs1972}, versus \emph{framing}, how it is presented \citep{entman1993}. We operationalise them as \textbf{salience} (the rate of a concept's vocabulary) and \textbf{framing} (the company a word keeps in embedding space; \citealp{hamilton2016}), and ask whether modern tokenizers penalise historical spelling \citep{petrov2023,rust2021}. Hypotheses: \textbf{H1} the papers differ in the salience of political and religious vocabulary; \textbf{H2} they differ in the framing of political concepts, Isigidimi's lying closer to religious contexts; \textbf{H3} historical spelling raises tokenizer cost.
+
+\section{Methods}
+\looseness=-1
+\textbf{Data.} We use the isiXhosa blocks of the archive's human-corrected transcriptions (no error rate or spell-checking is applied, so spelling and word division are the concern; \citealp{schoots2023}). The window runs from 1 November 1884 (Imvo's first issue) to 1888; Isigidimi's 1886 editions are missing from the archive. Isigidimi has 286{,}663 tokens, Imvo 1.31M. For each year-month with Isigidimi text we draw Imvo pages from that month to match its token count (287k), ten times.
+
+\textbf{Salience.} Concepts are stems (e.g.\ parliament \emph{palamente}, vote \emph{voti}, law \emph{mteto}; 15 in all, with four neutral controls and exploratory religion \emph{tixo}/\emph{kristu}, suggested by an issue-grouped nested-cross-validated classifier: @@CLFACC@@ balanced accuracy once mastheads and datelines are removed). We report rate ratios per million tokens with issue-bootstrap CIs and rank each against 2000 pseudo-concepts (random word-type bags of the same combined frequency). The 15 tests are uncorrected; replication on held-out years (Isigidimi 1876--83 vs Imvo 1889--94) is the safeguard.
+
+\textbf{Framing.} We use fastText skip-gram \citep{bojanowski2017}, more stable than word2vec here (@@FTSTAB@@ vs @@W2VSTAB@@). Hyper-parameters were tuned on out-of-window text by seed stability \citep{antoniak2018} until dimension and epochs plateaued (dim 400, window 1, 20 epochs; 1 is the smallest window). A word's \emph{profile shift} is $1-r$ between its cosine profiles over the 500 most frequent shared words in the two spaces \citep{hamilton2016}. The null pools issues from both papers and reassigns them to two token-balanced groups (50 permutations); because real groups differ in frequency and style but permuted ones do not, each concept is also ranked against 2000 frequency-matched non-concept word sets. A directional test compares similarity to religious and political anchors (top-PMI neighbours of \emph{tixo/kristu} and \emph{palamente/voti} in held-out years). A control joins disjunctively written forms (\emph{uku ba}$\to$\emph{ukuba}).
+
+\textbf{Tokenizers.} On modern isiXhosa news \citep{adelani2023} we measure subwords per 100 characters for XLM-R \citep{conneau2020}, Serengeti \citep{adebara2023} and mBERT in (a) modern text, (b) the same text with aspiration marks (\emph{th, kh, ph, rh, ch, qh, xh}) stripped and (c) historical text. All runs are CPU-only (about three hours, four cores).
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=3.45in]{fig_salience.png}\hfill
+\includegraphics[width=3.45in]{fig_framing.png}
+\caption{Agenda (left) is a clearer signal than framing (right). Left: Imvo/Isigidimi rate ratio, 95\% CI; filled = beyond 2000 frequency-matched pseudo-concepts ($p<0.05$). Right: percentile of profile shift among matched word sets.}
+\label{fig:two}
+\end{figure*}
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=2.3in]{fig_religion_by_year.png}\hfill
+\includegraphics[width=2.3in]{fig_parliament_by_year.png}\hfill
+\includegraphics[width=2.3in]{fig_tokenizer_cost.png}
+\caption{Religious vocabulary was falling in Isigidimi long before 1884 (left); parliamentary vocabulary appears only in 1883 (centre); the African-language tokenizer pays most for historical spelling (right). Per million tokens (grey: Jabavu's probable years, unconfirmed; light blue: fortnightly Isigidimi). Right: subwords per character vs modern text.}
+\label{fig:two2}
+\end{figure*}
+
+\section{Results}
+\looseness=-1
+\textbf{Salience (H1).} Imvo uses parliamentary vocabulary @@SPAR@@$\times$ as often (CI @@SPARLO@@--@@SPARHI@@; pseudo-concept $p=@@SPARP@@$) and Isigidimi religious vocabulary four times as often (@@SREL@@$\times$, $p=@@SRELP@@$); nothing else lies beyond the matched null (Fig.~\ref{fig:two}, left). Both replicate in held-out years (parliament @@HPAR@@$\times$, $p=@@HPARP@@$; religion @@HREL@@$\times$, $p=@@HRELP@@$); government flips (@@GOVM@@$\to$@@GOVH@@) and is not interpreted. Fig.~\ref{fig:two2} shows religious vocabulary already falling in Isigidimi from 1876 (@@RELPEAK@@ to @@RELLOW@@ per million tokens by 1882--83) and parliamentary vocabulary absent until 1883.
+
+\textbf{Framing (H2).} Mean profile shift between the papers is @@OBS@@ against a permutation null of @@NULL@@, so concepts are judged against matched word sets (Fig.~\ref{fig:two}, right). Parliament alone reaches the @@PARU@@ percentile ($p=@@PARUP@@$; @@PARJ@@, $p=@@PARJP@@$, once disjunctively written forms are joined), but a neutral control (cattle) reaches the @@CATLO@@--@@CATHI@@ and no concept survives correction for 15 tests ($p<0.003$). Pooling parliament and vote gives the @@P1@@ (profile) and @@J1@@ (Jaccard) percentile ($p=@@PP1@@$, $@@PJ1@@$), the @@P2@@ and @@J2@@ after joining ($p=@@PP2@@$, $@@PJ2@@$); adding \emph{rulumente}, of uncertain meaning, strengthens it. Joining leaves the global gap unchanged (@@GAP1@@ before, @@GAP2@@ after). The directional lean towards religious anchors is positive in every condition but established in none (political concepts $@@DU@@$ vs $@@DMU@@$ matched, $p=@@DPU@@$; $@@DJ@@$ vs $@@DMJ@@$ after joining, $p=@@DPJ@@$; at window 2, $p=@@DW2A@@$, $@@DW2B@@$). The detection floor is the informative number: a one-word concept must shift by at least @@FLOOR1@@ to register, @@NBIG@@-form concept by @@FLOOR8@@.
+
+\textbf{Tokenizers (H3).} Per character, historical text costs more (Fig.~\ref{fig:two2}, right; CIs within $\pm0.1$): relative to modern text, stripped spelling adds @@XSP@@\% for XLM-R and historical text @@XHI@@\%; Serengeti @@SSP@@\% and @@SHI@@\%; mBERT @@MSP@@\% and @@MHI@@\%, so spelling explains @@XSHARE@@\% of XLM-R's gap and @@SSHARE@@\% of Serengeti's.
+
+\section{Discussion}
+\looseness=-1
+\textbf{Agenda more than framing.} Missionary control is clearest in what the papers covered: Isigidimi's religious vocabulary matches the archive's qualitative account \citep{schoots2023} and replicates out of window. A selection mechanism predicts this: both papers carried correspondents' reports and readers' letters \citep{schoots2023}, so an editor's chief power was choosing what to print, which moves salience (agenda-setting; \citealp{mccombs1972}) without changing how contributors used words (framing; \citealp{entman1993}). Only shifts above the detection floor are excluded, and the pooled parliament--vote shift, consistent across settings but never surviving correction, is suggestive only.
+
+\textbf{Attribution.} Parliamentary vocabulary enters Isigidimi in 1883--84, the end of Jabavu's probable 1881--83 editorship (secondary sources; the archive paper gives no dates), not his arrival in 1881, and coincides with fortnightly publication and the 1884 election; the religious decline began in 1876. An editor effect is not identified.
+
+\textbf{Why framing is hard to see.} Words shift globally but rarely specifically: the most-shifted are function words, verb forms and \emph{xosa}, Isigidimi's spelling of \emph{xhosa}. Joining forms left the gap unchanged, so word division is not the explanation; spelling, register and topic remain open.
+
+\textbf{Responsible NLP.} Historical spelling costs modern tokenizers up to 12\% more subwords per character, most for the African-language model (pretraining data unlisted, overlap unverified). The archive's authors plan to explore machine-learning labelling and named-entity recognition; our result predicts, untested downstream, that such tools will serve 1880s isiXhosa worst, with isiXhosa-speaking researchers and students bearing the errors. Stems, spelling rules and neighbour lists await review by a first-language speaker; \emph{rulumente} is glossed ``parliament'' in the archive paper but treated here as ``government''. Limitations: two papers, one window, a missing year, no editor metadata, a modern-news domain mismatch; voices are mission-educated elites.
+
+\bibliographystyle{apacite}
+\setlength{\bibleftmargin}{.125in}
+\setlength{\bibindent}{-\bibleftmargin}
+\bibliography{paper}
+
+\clearpage
+\onecolumn
+\small
+\section*{Statement on the use of generative AI (Faculty of Science AI Ethics Statement)}
+Generative AI (Claude, by Anthropic, used through the Claude Code tool) helped to write the analysis code (data preparation, embedding experiments, statistics, figure scripts), to draft and edit the text and LaTeX source, and to fill in the checklist below from the course template. All numbers in the paper are produced by the submitted code and were read from its output files. The authors take full responsibility for all code and text submitted, including the accuracy of every claim and citation.
+
+\input{checklist}
+\end{document}

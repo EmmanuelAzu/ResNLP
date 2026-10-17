@@ -119,15 +119,17 @@ def main():
             n_sub = np.array([len(i) for i in ids], float)
             n_w = np.array([len(s) for s in sents], float)
             n_c = np.array([sum(map(len, s)) for s in sents], float)
-            bs = []
+            bs, bc = [], []
             for _ in range(B):
                 r = rng.integers(0, len(sents), len(sents))
                 bs.append(n_sub[r].sum() / n_w[r].sum())
+                bc.append(100 * n_sub[r].sum() / n_c[r].sum())
             rows.append({"tokenizer": name, "condition": cname, "words": int(n_w.sum()),
                          "fertility": n_sub.sum() / n_w.sum(),
                          "chars_per_word": n_c.sum() / n_w.sum(),
                          "subwords_per_100_chars": 100 * n_sub.sum() / n_c.sum(),
-                         "ci_lo": np.percentile(bs, 2.5), "ci_hi": np.percentile(bs, 97.5)})
+                         "ci_lo": np.percentile(bs, 2.5), "ci_hi": np.percentile(bs, 97.5),
+                         "spc_ci_lo": np.percentile(bc, 2.5), "spc_ci_hi": np.percentile(bc, 97.5)})
     df = pd.DataFrame(rows)
     df.to_csv(OUT / "fertility.csv", index=False)
     print(df.round(3).to_string(index=False))

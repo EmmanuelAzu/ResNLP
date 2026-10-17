@@ -75,136 +75,136 @@ These were picked by a statistical procedure (words that co-occur with God/Chris
 For each word, two lists of words that appear in similar contexts, from two different newspapers (X and Y). Please say: (a) are the lists similar in meaning, or does one lean towards a different theme (religious / political / everyday / spelling variants / nonsense)? (b) any word that does not belong?
 
 **abantu**
-- X: ababantu, nabantu, kubantu, yabantu, bantu, kwabantu, ngabantu, zabantu
-- Y: ababantu, nabantu, ngabantu, kubantu, yabantu, bantu, kwabantu, zabantu
+- X: ababantu, nabantu, bantu, kubantu, ngabantu, yabantu, kwabantu, zabantu
+- Y: ababantu, nabantu, ngabantu, bantu, kubantu, yabantu, kwabantu, zabantu
 
 **umntu**
-- X: kumntu, mntu, komntu, ngumntu, lomntu, ntu, umoya, um
-- Y: kumntu, lomntu, mntu, ngumntu, komntu, umfo, ntu, um
+- X: kumntu, mntu, ngumntu, komntu, lomntu, ntu, umzimba, umoya
+- Y: mntu, kumntu, lomntu, komntu, ngumntu, umfo, um, ntu
 
 **abantsundu**
 - X: bantsundu, kwabantsundu, yabantsundu, zabantsundu, antsundu, ntsundu, ontsundu, ezintsundu
-- Y: bantsundu, yabantsundu, kwabantsundu, zabantsundu, antsundu, ntsundu, ndu, ontsundu
+- Y: bantsundu, yabantsundu, kwabantsundu, zabantsundu, antsundu, ntsundu, ontsundu, ndu
 
 **abamnyama**
-- X: mnyama, abamhlope, ababini, ababantu, bam, abatunywa, abaya, abafundi
-- Y: abamhlope, mnyama, abatunywa, abafundi, abantsundu, abase, bam, baninzi
+- X: mnyama, abamhlope, abatunywa, abaya, ababini, abafazi, bam, abafundi
+- Y: abamhlope, abatunywa, abafundi, abafazi, bam, ababantu, bazo, baninzi
 
 **amalungelo**
-- X: amalungu, ilungelo, ngelo, imfanelo, amagama, amasela, amazwe, amanani
-- Y: ilungelo, amalungu, ngelo, amandla, amagama, amapepa, imfanelo, amasela
+- X: amalungu, ilungelo, amagama, amanani, amazwe, amasela, amaninzi, amaxesha
+- Y: ilungelo, amalungu, ngelo, amandla, amapepa, amagama, amazwe, amapolisa
 
 **amaxesha**
-- X: amazwe, amane, amahashe, amanzi, amaninzi, amagama, xesha, amasela
-- Y: xesha, ixesha, igusha, ngexesha, amazwe, amane, amanzi, am
+- X: amazwe, amagama, amanzi, amane, amahashe, amanani, amapolisa, amapepa
+- Y: xesha, ixesha, amazwe, igusha, amanzi, am, amane, amahashe
 
 **ilizwe**
-- X: lizwe, ilizwi, izizwe, xesha, izwi, ixesha, lide, igazi
-- Y: lizwe, ilizwi, izizwe, imfazwe, izwi, ewe, amazwe, yeli
+- X: lizwe, ilizwi, izwi, xesha, ixesha, izizwe, igazi, ewe
+- Y: lizwe, ilizwi, izwi, izizwe, icebo, ewe, imfazwe, tixo
 
 **ilungelo**
-- X: amalungelo, ngelo, ivoti, imfanelo, voti, amalungu, uluvo, uncedo
-- Y: amalungelo, ngelo, amalungu, imfanelo, icebo, elo, kungeko, imilomo
+- X: ngelo, amalungelo, imfanelo, elo, ilizwi, ivoti, izwi, icebo
+- Y: amalungelo, ngelo, elo, lungu, imfanelo, ngeliti, ilizwi, amalungu
 
 **imvula**
-- X: kudala, evela, impahla, tywala, utywala, endala, impi, kubonakala
-- Y: imbangi, imilomo, imvo, impahla, imigudu, imiteto, inxenye, imini
+- X: nkundla, impahla, kudala, yotywala, utywala, impendulo, ivela, impi
+- Y: imilomo, imigudu, imicimbi, impahla, imi, imiteto, imvo, imbangi
 
 **indlu**
-- X: kwindlu, izindlu, nendlu, indlebe, indleko, ndlu, indlela, inkabi
-- Y: ndlu, kwindlu, izindlu, nendlu, indleko, indlebe, indoda, indlela
+- X: kwindlu, indlebe, indleko, izindlu, nendlu, inkabi, ingubo, ndlu
+- Y: kwindlu, ndlu, izindlu, indlebe, nendlu, indleko, indoda, indlela
 
 **inkomo**
-- X: inkabi, inkosi, inkosikazi, nkomo, igusha, zenkomo, intsapo, inqwelo
-- Y: zenkomo, inkabi, nkomo, ingubo, inkosi, inkoliso, izindlu, inqwelo
+- X: inkabi, zenkomo, inkosi, inkosikazi, nkomo, indleko, intliziyo, inkoliso
+- Y: inkabi, zenkomo, nkomo, inkoliso, inkosi, ingubo, izindlu, inqwelo
 
 **inteto**
-- X: kwinteto, nteto, lenteto, nenteto, ngenteto, imiteto, mteto, lomteto
-- Y: kwinteto, nenteto, nteto, lenteto, ngenteto, imiteto, incwadi, ncwadi
+- X: kwinteto, nteto, lenteto, nenteto, imiteto, intliziyo, intsapo, into
+- Y: kwinteto, nenteto, nteto, imiteto, lenteto, incwadi, intliziyo, ngenteto
 
 **ixesha**
-- X: xesha, ngexesha, amaxesha, igusha, omtsha, lide, icebo, ilizwi
-- Y: xesha, ngexesha, amaxesha, lide, ilizwe, icebo, igazi, igusha
+- X: xesha, ngexesha, amaxesha, igusha, omtsha, ilizwi, nqi, icebo
+- Y: xesha, ngexesha, amaxesha, ilizwe, lizwe, ilizwi, igusha, izwi
 
 **izindlu**
-- X: indlu, ndlu, kwindlu, izi, nendlu, izinto, izizwe, indleko
-- Y: indleko, indlu, izi, intliziyo, izizwe, izikolo, indlebe, indlela
+- X: indlu, kwindlu, nendlu, indleko, ndlu, izi, izizwe, indlebe
+- Y: indleko, indlu, indlebe, izi, izizwe, indlela, izikolo, inkomo
 
 **kwindlu**
-- X: indlu, ndlu, nendlu, izindlu, kwindawo, kwinto, endlwini, kwinteto
-- Y: indlu, nendlu, izindlu, ndlu, kwindawo, indlebe, indleko, inkosikazi
+- X: indlu, kwindawo, ndlu, nendlu, izindlu, kwinteto, kwinto, indlebe
+- Y: indlu, nendlu, izindlu, indleko, ndlu, indlebe, kwindawo, inkosikazi
 
 **lenteto**
-- X: nteto, inteto, kwinteto, nenteto, ngenteto, imiteto, lomteto, lencwadi
-- Y: nteto, nenteto, inteto, kwinteto, ngenteto, imiteto, lengxoxo, lomteto
+- X: nteto, imiteto, inteto, kwinteto, lencwadi, nenteto, lento, lomteto
+- Y: nteto, nenteto, inteto, kwinteto, imiteto, lomteto, mteto, ngenteto
 
 **lizwe**
-- X: ilizwe, izizwe, yeli, ilizwi, imfazwe, li, libe, leli
-- Y: ilizwe, ilizwi, izizwe, lide, xesha, li, izwi, labo
+- X: ilizwe, ilizwi, izizwe, izwi, icebo, imfazwe, libe, igazi
+- Y: ilizwe, ilizwi, lide, xesha, izizwe, ixesha, izwi, icebo
 
 **lomhlaba**
-- X: mhlaba, umhlaba, imihlaba, laba, umhla, waba, emhlabeni, ngomhla
-- Y: mhlaba, umhlaba, imihlaba, laba, saba, umzimba, umhla, waba
+- X: mhlaba, umhlaba, imihlaba, laba, waba, umhla, ngomhla, saba
+- Y: umhlaba, mhlaba, imihlaba, lomcimbi, lomzi, laba, umvuzo, umzimba
 
 **lomteto**
-- X: mteto, umteto, nteto, lenteto, imiteto, lomcimbi, umlomo, nenteto
-- Y: mteto, umteto, nteto, imiteto, lenteto, nenteto, luto, kwinteto
+- X: mteto, umteto, nteto, lomcimbi, lenteto, imiteto, imilomo, umlomo
+- Y: mteto, umteto, nteto, lenteto, imiteto, luto, lomcimbi, lomfo
 
 **mhlaba**
-- X: lomhlaba, umhlaba, imihlaba, laba, mhla, umzimba, naba, saba
-- Y: lomhlaba, umhlaba, imihlaba, laba, waba, emhlabeni, umhla, saba
+- X: lomhlaba, umhlaba, imihlaba, laba, umzimba, emhlabeni, mhla, saba
+- Y: lomhlaba, umhlaba, imihlaba, laba, waba, saba, emhlabeni, umhla
 
 **mteto**
-- X: lomteto, umteto, nteto, lenteto, nenteto, imiteto, kwinteto, voti
-- Y: lomteto, umteto, nteto, imiteto, nenteto, lenteto, kwinteto, inteto
+- X: lomteto, umteto, nteto, to, imiteto, lenteto, nenteto, lomcimbi
+- Y: lomteto, umteto, nteto, lenteto, imiteto, nenteto, inteto, luto
 
 **nendlu**
-- X: ndlu, indlu, kwindlu, izindlu, nendawo, endlwini, indleko, nenteto
-- Y: indlu, kwindlu, ndlu, izindlu, endleleni, endlwini, imizi, impi
+- X: ndlu, indlu, kwindlu, izindlu, nenteto, nendawo, indleko, endlwini
+- Y: kwindlu, indlu, izindlu, ndlu, indleko, ingubo, indlebe, inkabi
 
 **nenteto**
-- X: nteto, lenteto, kwinteto, inteto, ngenteto, nento, imiteto, mteto
-- Y: nteto, inteto, ngenteto, kwinteto, lenteto, imiteto, mteto, umteto
+- X: nteto, lenteto, kwinteto, nento, imiteto, inteto, ngenteto, mteto
+- Y: kwinteto, inteto, nteto, imiteto, lenteto, ngenteto, nento, imigudu
 
 **ngenteto**
-- X: nenteto, nteto, ngento, lenteto, kwinteto, inteto, ngxoxo, ngenxa
-- Y: nenteto, lenteto, nteto, inteto, kwinteto, ngento, imiteto, lomteto
+- X: ngento, nteto, kwinteto, ngenxa, nenteto, inteto, ngendlela, ngenye
+- Y: ngento, nenteto, kwinteto, ngenxa, inteto, lenteto, nteto, imiteto
 
 **ngexesha**
-- X: xesha, ixesha, egameni, ngezi, ngelo, ngenye, amaxesha, ngemini
-- Y: ixesha, xesha, amaxesha, omtsha, igusha, ngosuku, ngelo, entsha
+- X: xesha, ixesha, egameni, ngelo, ngezi, igusha, ilizwi, izwi
+- Y: ixesha, xesha, igusha, amaxesha, ngelo, ngeliti, ngenye, ngosuku
 
 **nkomo**
-- X: zenkomo, inkomo, igusha, mpondo, inkosikazi, tsomo, bokwe, inkabi
-- Y: zenkomo, inkomo, inkabi, mpondo, nqi, zizo, inqwelo, ihashe
+- X: zenkomo, inkomo, tsomo, philip, secretary, brownlee, inkabi, nkosazana
+- Y: zenkomo, inkomo, mpondo, zizo, tsomo, inqwelo, igusha, inkabi
 
 **nteto**
-- X: nenteto, lenteto, inteto, kwinteto, ngenteto, imiteto, mteto, lomteto
-- Y: nenteto, lenteto, inteto, kwinteto, mteto, ngenteto, imiteto, lomteto
+- X: lenteto, nenteto, inteto, kwinteto, mteto, imiteto, lomteto, umteto
+- Y: nenteto, mteto, lenteto, inteto, kwinteto, imiteto, lomteto, to
 
 **palamente**
-- X: rulumente, transvaal, victoria, ruluneli, komiti, england, imilomo, amalungelo
-- Y: transkei, koloni, voti, ivoti, pasi, transvaal, ruluneli, komiti
+- X: transvaal, rulumente, tyume, ate, komiti, ruluneli, transkei, ncemera
+- Y: rafu, koloni, transkei, voti, transvaal, nkundla, pasi, england
 
 **rulumente**
-- X: ruluneli, palamente, mteto, ivoti, gordon, sir, don, uluvo
-- Y: ruluneli, palamente, uluvo, tixo, egameni, tyume, dr, gordon
+- X: ruluneli, sprigg, palamente, ivoti, general, gosa, titshala, sir
+- Y: tixo, palamente, uluvo, ruluneli, sprigg, dr, mr, brownlee
 
 **umhlaba**
-- X: mhlaba, lomhlaba, imihlaba, umhla, laba, waba, emhlabeni, um
-- Y: lomhlaba, mhlaba, imihlaba, umzimba, umhla, laba, umvuzo, waba
+- X: mhlaba, lomhlaba, umhla, imihlaba, laba, waba, emhlabeni, saba
+- Y: lomhlaba, mhlaba, umzimba, umvuzo, umhla, imihlaba, umkondo, umsebenzi
 
 **umteto**
-- X: lomteto, mteto, imiteto, nteto, lenteto, nenteto, kwinteto, inteto
-- Y: mteto, lomteto, nteto, nenteto, imiteto, lenteto, umlomo, inteto
+- X: lomteto, mteto, nteto, imiteto, lenteto, umoya, um, lomcimbi
+- Y: lomteto, mteto, nteto, umlomo, imiteto, umvuzo, umsebenzi, umkondo
 
 **voti**
-- X: ivoti, oti, besiti, komiti, imilomo, niti, futi, eti
-- Y: ivoti, transkei, pasi, oti, palamente, komiti, koloni, ilungelo
+- X: ivoti, oti, komiti, besiti, niti, sigidimi, ndati, pasi
+- Y: ivoti, palamente, komiti, ofisi, oti, koloni, pasi, eti
 
 **xesha**
-- X: ixesha, ngexesha, amaxesha, igusha, omtsha, entsha, nqi, pesheya
-- Y: ixesha, ngexesha, amaxesha, ilizwe, lizwe, lide, igusha, icebo
+- X: ixesha, ngexesha, amaxesha, igusha, omtsha, entsha, nqi, ilizwi
+- Y: ixesha, ngexesha, amaxesha, igusha, lizwe, ilizwe, ilizwi, izwi
 
 ## 5. Words whose company differs most between the two papers
 
@@ -213,30 +213,30 @@ A statistical procedure flagged these. For each: what does it mean, and is the d
 | word | uses in Isigidimi | uses in Imvo (same size sample) |
 |---|---|---|
 | usapo | 117 | 29 |
-| apo | 598 | 377 |
-| amehlo | 80 | 94 |
-| otile | 52 | 34 |
 | ehamba | 51 | 44 |
-| pofu | 80 | 44 |
-| naku | 25 | 48 |
-| n | 91 | 147 |
-| mhlope | 99 | 62 |
-| nxa | 36 | 29 |
-| atile | 32 | 33 |
-| kakuhle | 273 | 220 |
+| amehlo | 80 | 94 |
+| nje | 1038 | 309 |
+| otile | 52 | 34 |
 | kade | 161 | 72 |
+| olu | 71 | 51 |
+| naku | 25 | 48 |
+| kakuhle | 273 | 220 |
+| apo | 598 | 377 |
 | xa | 750 | 726 |
 | etile | 65 | 27 |
-| nzima | 46 | 51 |
-| nje | 1038 | 309 |
+| ekubeni | 127 | 103 |
+| ebusuku | 33 | 26 |
 | ange | 25 | 28 |
-| olu | 71 | 51 |
+| nale | 45 | 27 |
+| ade | 89 | 43 |
 | eza | 33 | 26 |
 | mhlaumbi | 136 | 64 |
-| azi | 71 | 30 |
+| akuko | 228 | 204 |
+| emnandi | 29 | 25 |
+| atile | 32 | 33 |
+| sa | 31 | 72 |
 | ukwenza | 63 | 35 |
-| ilizwi | 96 | 45 |
-| mpondo | 50 | 52 |
+| aze | 121 | 82 |
 
 ## 6. Word division
 

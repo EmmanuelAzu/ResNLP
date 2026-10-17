@@ -10,8 +10,9 @@ REQUIREMENTS
 RUN ORDER  (from the repository root; scripts are in src/, results go to outputs/)
   python src/01_prepare_data.py        build data/pages.csv.gz (cleaned, one row per page)
   python src/02_tune_hparams.py        round 1 of the hyper-parameter search, on text OUTSIDE the test window
-  python src/02_tune_hparams.py --extend   rounds 2-3: grid extended past the round-1 optimum (GRID_EXT is edited
-                                       between rounds; rows are merged into outputs/tuning_grid.csv).  ~10 min each, 4 cores
+  python src/02_tune_hparams.py --extend   rounds 2-4: grid extended past the previous optimum (GRID_EXT is edited
+                                       between rounds; rows are merged into outputs/tuning_grid.csv).  Final setting: dim 400,
+                                       window 1 (the smallest possible), 20 epochs.  ~10 min each, 4 cores
   python src/08_anchors.py             freeze the religious / political anchor lists (from held-out windows) BEFORE step 03
   python src/03_framing.py             profile-shift / Jaccard / directional tests vs permutation null  (~17 min, 4 cores;
                                        --quick = 2-minute smoke test)
@@ -23,6 +24,14 @@ RUN ORDER  (from the repository root; scripts are in src/, results go to outputs
   python src/06_classifier.py          grouped nested-CV classifier (supporting evidence)
   python src/07_figures.py             figures used in the write-up
   python src/09_speaker_sheet.py       sheet for a first-language speaker (outputs/speaker_sheet.md; key in speaker_key.json)
+  python src/03_framing.py --segnorm   word-joining control (outputs/*_segnorm.*); run 10_matched_tests.py with the argument _segnorm
+  python paper/make_checklist.py       fill the NeurIPS checklist from the course template (paper/checklist.tex)
+  python paper/build_paper.py          write paper/paper.tex from paper_template.tex, taking every number from outputs/
+  (cd paper && pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper)
+
+SENSITIVITY
+  outputs/window2/ holds the framing results at the earlier tuned setting (dim 300, window 2), kept as a robustness check;
+  the paper quotes the pooled percentile range and the directional p-values from it.
 
 MODERN DATA" below)
   python src/06_classifier.py     grouped nested-CV classifier (supporting evidence)
@@ -32,7 +41,9 @@ MODERN DATA (for 05_fertility.py)
   mkdir -p data/modern && cd data/modern
   for s in train dev test; do curl -L -o xho_$s.tsv \
     https://huggingface.co/datasets/masakhane/masakhanews/resolve/main/data/xho/$s.tsv; done
-  MasakhaNEWS is released for non-commercial research use; cite Adelani et al. (2023).
+  MasakhaNEWS: AFL-3.0 per its Hugging Face dataset card; cite Adelani et al. (2023).
+  Other assets: XLM-R (MIT) and mBERT (Apache-2.0) per their Hub cards; Serengeti states no licence on its model
+  card and is only used to count tokens; gensim (LGPL), scikit-learn (BSD).
 
 DESIGN IN ONE PARAGRAPH
   Window: 1 Nov 1884 - 1888 (Imvo's first issue is 3 Nov 1884; Isigidimi has no 1886 issues in

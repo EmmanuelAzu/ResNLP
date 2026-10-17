@@ -1,0 +1,108 @@
+{
+  "config": {
+    "kind": "ft",
+    "vector_size": 300,
+    "window": 2,
+    "epochs": 20,
+    "min_count": 5,
+    "min_n": 3,
+    "max_n": 6,
+    "bucket": 200000,
+    "negative": 5,
+    "sg": 1
+  },
+  "D": 10,
+  "K": 5,
+  "n_V": 1152,
+  "n_P": 918,
+  "n_anchors": 500,
+  "anchors_religious": [
+    "sikelela",
+    "sindisa",
+    "ukumkanikazi",
+    "inkosazana",
+    "buka",
+    "oyingcwele",
+    "lilizwi",
+    "msindisi",
+    "nelizwi",
+    "kwelizwi",
+    "wanga",
+    "lika",
+    "yesu",
+    "izono",
+    "yehova"
+  ],
+  "anchors_political": [
+    "emqulwini",
+    "wonyulo",
+    "lonyulo",
+    "elugqatsweni",
+    "eziqingata",
+    "lokunyula",
+    "kwesase",
+    "lokuvota",
+    "endlu",
+    "kwamagama",
+    "ukumela",
+    "izayo",
+    "ngalomteto",
+    "nawupina",
+    "kwabase"
+  ],
+  "global_profile": {
+    "obs": 0.37187331945452917,
+    "null_mean": 0.24988076691581107,
+    "null_sd": 0.001161923136883812,
+    "z": 104.9919299015705,
+    "p": 0.0004997501249375312
+  },
+  "n_sig_q05_profile": 917,
+  "spearman_profile_vs_abslogratio": 0.12624366443513377,
+  "global_jaccard": {
+    "obs": 0.5480599784652882,
+    "null_mean": 0.45175684272226924,
+    "null_sd": 0.0017214298373667526,
+    "z": 55.943689166171616,
+    "p": 0.0004997501249375312
+  },
+  "n_sig_q05_jaccard": 612,
+  "spearman_jaccard_vs_abslogratio": 0.1346120268804254,
+  "directional_all_theory": {
+    "forms": 17,
+    "delta": 0.13904988765716553,
+    "null_mean": -0.09379693865776062,
+    "null_sd": 0.09346649050712585,
+    "z": 2.4912331104278564,
+    "p_two_sided": 0.014992503748125937
+  },
+  "directional_all_words_mean_delta": 0.016002150252461433,
+  "variant_neighbour_share_isig": 0.11721132897603485,
+  "variant_neighbour_share_imvo": 0.11568627450980393,
+  "real_by_draw": {
+    "profile": [
+      0.3692864031751478,
+      0.3754184885573938,
+      0.37166892141075747,
+      0.3575317809604036,
+      0.3740171293138788,
+      0.3791225404396519,
+      0.37033473541139456,
+      0.3691325955188748,
+      0.3704833056303036,
+      0.38173729412748547
+    ],
+    "jaccard": [
+      0.5449465483258153,
+      0.5500495617176449,
+      0.5402278324914356,
+      0.5394379019351196,
+      0.5565261223080078,
+      0.5529996971775437,
+      0.5485544929179968,
+      0.5518586746859273,
+      0.5424884507853608,
+      0.5535105023080296
+    ]
+  }
+}

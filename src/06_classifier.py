@@ -3,9 +3,9 @@
   * Units: ~150-token chunks; every chunk carries its issue date as a group, so no issue is
     ever split across train and test (grouped nested cross-validation).
   * Outer loop: 5-fold GroupKFold = test; inner loop: 3-fold GroupKFold = tuning of C.
-  * Feature sets (to separate framing from orthography/OCR):
+  * Feature sets (to separate framing from orthography and transcription conventions):
       words  : word uni+bigrams (min_df=3)
-      chars  : character 2-5-grams (captures spelling, segmentation and OCR habits)
+      chars  : character 2-5-grams (captures spelling, word-division and transcription habits)
       shared : unigrams restricted to words with >=20 uses in BOTH papers, tokens <=2 chars removed
       clean  : shared minus masthead / dateline / title tokens (the first run showed these leak the label)
   * Permutation baseline: issue-level label shuffles (30), same pipeline with C fixed to the modal choice.

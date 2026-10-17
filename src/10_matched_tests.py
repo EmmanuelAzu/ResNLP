@@ -13,7 +13,9 @@ from common import OUT
 
 SEED = ("tixo", "kristu", "palamente", "voti")
 rng = np.random.default_rng(5)
-t = pd.read_csv(OUT / "framing_words.csv")
+import sys
+TAG = sys.argv[1] if len(sys.argv) > 1 else ""
+t = pd.read_csv(OUT / f"framing_words{TAG}.csv")
 feat = np.c_[np.log10((t.n_isig + t.n_imvo_draw) / 2), np.abs(t.log2_ratio)]
 feat = (feat - feat.mean(0)) / feat.std(0)
 is_concept = t.group.notna().values
@@ -56,7 +58,7 @@ for label, sel in (("all political concepts", lambda g: g == "theory"), ("all ne
     rows.append({"test": f"directional delta: {label}", "forms": len(forms), "obs": o[0], "matched_mean": o[1],
                  "matched_sd": o[2], "percentile": o[3], "p": o[4]})
 res = pd.DataFrame(rows)
-res.to_csv(OUT / "framing_matched_tests.csv", index=False)
+res.to_csv(OUT / f"framing_matched_tests{TAG}.csv", index=False)
 print(res.round(3).to_string(index=False))
 
 # data-driven list
@@ -64,6 +66,6 @@ v = t.profile_shift.values
 zm = np.array([(v[i] - v[near[i]].mean()) / v[near[i]].std() for i in range(len(t))])
 t["z_vs_matched"] = zm
 top = t[~is_seed].sort_values("z_vs_matched", ascending=False).head(25)
-top[["word", "n_isig", "n_imvo_draw", "log2_ratio", "profile_shift", "z_vs_matched", "jaccard_shift"]].round(3).to_csv(OUT / "most_shifted_words.csv", index=False)
+top[["word", "n_isig", "n_imvo_draw", "log2_ratio", "profile_shift", "z_vs_matched", "jaccard_shift"]].round(3).to_csv(OUT / f"most_shifted_words{TAG}.csv", index=False)
 print("\nmost shifted vs matched words (profile):")
 print(top[["word", "n_isig", "n_imvo_draw", "log2_ratio", "profile_shift", "z_vs_matched"]].round(2).to_string(index=False))

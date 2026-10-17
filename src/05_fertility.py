@@ -3,7 +3,7 @@
   (b) the SAME modern text rewritten in historical spelling by stripping aspiration marks
   (c) actual historical text (Isigidimi and a date-matched Imvo draw, Nov 1884-1888)
 a-b isolates the cost of orthography with content held fixed; b-c is everything else
-(vocabulary, register, OCR noise, domain).
+(vocabulary, register, domain, transcription conventions).
 
 Rules (modern -> historical): th->t, kh->k, ph->p, rh->r, ch->c, qh->q, xh->x.
 sh, hl, tsh, bh etc. are left alone: not verified against the old orthography and

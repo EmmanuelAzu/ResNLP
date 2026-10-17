@@ -11,7 +11,7 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 
-from common import CONTROL, EXPLORATORY, OUT, THEORY, DATA, load_pages
+from common import CONTROL, EXPLORATORY, OUT, THEORY, DATA, learn_merges, load_pages
 import importlib.util
 
 spec = importlib.util.spec_from_file_location("fert", str(OUT.parent / "src" / "05_fertility.py"))
@@ -79,11 +79,22 @@ for w in focus:
 ms = pd.read_csv(OUT / "most_shifted_words.csv")
 lines += ["## 5. Words whose company differs most between the two papers", "",
           "A statistical procedure flagged these. For each: what does it mean, and is the difference about content, "
-          "grammar/spelling convention (e.g. written as one word in one paper and two in the other), or OCR damage?", "",
+          "grammar/spelling convention (e.g. written as one word in one paper and two in the other), or a typing slip in the transcription?", "",
           "| word | uses in Isigidimi | uses in Imvo (same size sample) |", "|---|---|---|"]
 for r in ms.itertuples():
     lines.append(f"| {r.word} | {int(r.n_isig)} | {r.n_imvo_draw:.0f} |")
 lines += [""]
+lines += ["## 6. Word division", "",
+          "In some places the same word is written as one word, in others split (e.g. 'uku ba' vs 'ukuba'). We join pairs automatically when "
+          "the joined form is common elsewhere. Are these really one word written apart? Please cross out wrong ones.", "",
+          "| written apart | joined | times apart (archive) | times joined |", "|---|---|---|---|"]
+merges, uni, bi = learn_merges(pages)
+for (a, b), j in sorted(merges.items(), key=lambda kv: -bi[kv[0]])[:40]:
+    lines.append(f"| {a} {b} | {j} | {bi[(a, b)]} | {uni[j]} |")
+lines += ["", "## 7. Two specific questions", "",
+          "1. 'rulumente' / 'urulumente': we treat it as 'government' and 'palamente' as 'parliament'. The archive paper's search example glosses "
+          "'Rulumente' as 'parliament'. What did the word mean in the 1880s? Did it differ from 'palamente'?",
+          "2. 'ubuntu' and 'abantsundu' appear in our word lists. In 1880s usage, what did each mean (e.g. 'ubuntu' as humanity vs a political idea)?", ""]
 (OUT / "speaker_key.json").write_text(json.dumps(key, indent=1))
 (OUT / "speaker_sheet.md").write_text("\n".join(lines))
 print("wrote speaker_sheet.md with", len(key), "blind word pairs")

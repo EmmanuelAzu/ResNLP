@@ -208,7 +208,7 @@ For each word, two lists of words that appear in similar contexts, from two diff
 
 ## 5. Words whose company differs most between the two papers
 
-A statistical procedure flagged these. For each: what does it mean, and is the difference about content, grammar/spelling convention (e.g. written as one word in one paper and two in the other), or OCR damage?
+A statistical procedure flagged these. For each: what does it mean, and is the difference about content, grammar/spelling convention (e.g. written as one word in one paper and two in the other), or a typing slip in the transcription?
 
 | word | uses in Isigidimi | uses in Imvo (same size sample) |
 |---|---|---|
@@ -237,3 +237,55 @@ A statistical procedure flagged these. For each: what does it mean, and is the d
 | ukwenza | 63 | 35 |
 | ilizwi | 96 | 45 |
 | mpondo | 50 | 52 |
+
+## 6. Word division
+
+In some places the same word is written as one word, in others split (e.g. 'uku ba' vs 'ukuba'). We join pairs automatically when the joined form is common elsewhere. Are these really one word written apart? Please cross out wrong ones.
+
+| written apart | joined | times apart (archive) | times joined |
+|---|---|---|---|
+| u mr | umr | 15634 | 106 |
+| e qonce | eqonce | 6447 | 418 |
+| kwe nciba | kwenciba | 2658 | 28 |
+| e kapa | ekapa | 2354 | 33 |
+| e rini | erini | 2256 | 48 |
+| e komani | ekomani | 1869 | 108 |
+| u rulumeni | urulumeni | 1866 | 51 |
+| u rulumente | urulumente | 1538 | 68 |
+| e monti | emonti | 1386 | 191 |
+| ngo mgqibelo | ngomgqibelo | 1182 | 54 |
+| ke ngoko | kengoko | 1158 | 410 |
+| ngo mvulo | ngomvulo | 1117 | 74 |
+| nge yadi | ngeyadi | 1090 | 340 |
+| e dikeni | edikeni | 950 | 83 |
+| i ruluneli | iruluneli | 866 | 233 |
+| uku ba | ukuba | 787 | 77837 |
+| king williamstown | kingwilliamstown | 786 | 1426 |
+| e koloni | ekoloni | 778 | 42 |
+| i palamente | ipalamente | 665 | 156 |
+| we mvo | wemvo | 656 | 34 |
+| i printi | iprinti | 638 | 777 |
+| nge cawa | ngecawa | 629 | 84 |
+| king williams | kingwilliams | 622 | 33 |
+| e ngqushwa | engqushwa | 569 | 184 |
+| ze kodi | zekodi | 559 | 520 |
+| i blankete | iblankete | 558 | 991 |
+| i ofisi | iofisi | 550 | 37 |
+| ye mantyi | yemantyi | 523 | 170 |
+| ngo boya | ngoboya | 511 | 171 |
+| ke leyo | keleyo | 505 | 35 |
+| e bhai | ebhai | 505 | 26 |
+| aba ntsundu | abantsundu | 488 | 5287 |
+| ama ngesi | amangesi | 485 | 422 |
+| so mteto | somteto | 467 | 126 |
+| i jaji | ijaji | 448 | 503 |
+| nge posi | ngeposi | 444 | 311 |
+| sama xosa | samaxosa | 387 | 1446 |
+| kule koloni | kulekoloni | 373 | 38 |
+| kwa oko | kwaoko | 370 | 467 |
+| ama bhulu | amabhulu | 364 | 161 |
+
+## 7. Two specific questions
+
+1. 'rulumente' / 'urulumente': we treat it as 'government' and 'palamente' as 'parliament'. The archive paper's search example glosses 'Rulumente' as 'parliament'. What did the word mean in the 1880s? Did it differ from 'palamente'?
+2. 'ubuntu' and 'abantsundu' appear in our word lists. In 1880s usage, what did each mean (e.g. 'ubuntu' as humanity vs a political idea)?

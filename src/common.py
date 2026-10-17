@@ -107,3 +107,36 @@ CONTROL = {"time": ["xesha"], "house": ["ndlu"], "rain": ["mvula"], "cattle": ["
 
 # Exploratory concept: suggested by the classifier's top features, NOT pre-specified.
 EXPLORATORY = {"religion": ["tixo", "kristu"]}
+
+
+# ---- word-division normalisation ---------------------------------------------------------------
+def learn_merges(pages, min_concat=25, min_bigram=5, max_first_len=4):
+    """Merge rules for disjunctive writing (e.g. 'uku ba' -> 'ukuba').
+
+    A bigram (a, b) is merged when a is a short particle/prefix (<= max_first_len characters), the
+    bigram occurs at least `min_bigram` times and the concatenation a+b is an established single
+    word (>= `min_concat` occurrences) somewhere in the archive. Counted on the whole archive so
+    the rules do not depend on the comparison window; applied identically to both papers.
+    """
+    uni, bi = Counter(), Counter()
+    for ss in pages["sents"]:
+        for s in ss:
+            uni.update(s)
+            bi.update(zip(s, s[1:]))
+    return {(a, b): a + b for (a, b), n in bi.items()
+            if n >= min_bigram and len(a) <= max_first_len and len(b) >= 2 and uni.get(a + b, 0) >= min_concat}, uni, bi
+
+
+def apply_merges(sents, merges):
+    out = []
+    for s in sents:
+        for _ in range(2):                       # twice, to catch three-part words
+            res, i = [], 0
+            while i < len(s):
+                if i + 1 < len(s) and (s[i], s[i + 1]) in merges:
+                    res.append(merges[(s[i], s[i + 1])]); i += 2
+                else:
+                    res.append(s[i]); i += 1
+            s = res
+        out.append(s)
+    return out

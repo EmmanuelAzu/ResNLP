@@ -27,7 +27,7 @@ from concurrent.futures import ProcessPoolExecutor
 import numpy as np
 import pandas as pd
 
-from common import CONTROL, OUT, THEORY, count_tokens, draw_imvo_subsample, flatten, load_pages
+from common import CONTROL, OUT, THEORY, apply_merges, count_tokens, draw_imvo_subsample, flatten, learn_merges, load_pages
 from emb import DEFAULT_CFG, jaccard_shift, neighbours, train, variant_share, vectors
 
 MIN_V, MIN_P, K_NB, N_ANCHOR = 20, 25, 10, 500
@@ -142,6 +142,7 @@ def main():
     ap.add_argument("--draws", type=int, default=10)
     ap.add_argument("--perms-per-draw", type=int, default=5)
     ap.add_argument("--quick", action="store_true")
+    ap.add_argument("--segnorm", action="store_true", help="join disjunctively written forms (uku ba -> ukuba) before anything else")
     args = ap.parse_args()
     D, K = (2, 2) if args.quick else (args.draws, args.perms_per_draw)
 
@@ -152,6 +153,12 @@ def main():
     anchors = json.loads((OUT / "anchors.json").read_text())
 
     pages = load_pages()
+    tag = "_segnorm" if args.segnorm else ""
+    if args.segnorm:
+        merges, _, _ = learn_merges(load_pages(window=None))
+        pages["sents"] = pages.sents.map(lambda ss: apply_merges(ss, merges))
+        pages["n_tok"] = pages.sents.map(lambda ss: sum(len(x) for x in ss))
+        print(f"segmentation normalisation: {len(merges)} merge rules")
     isig_pages = pages[pages.paper == "ISIG"]
     isig_units, isig_sents = units_by_issue(isig_pages), flatten(isig_pages)
     c_isig = count_tokens(isig_sents)
@@ -261,9 +268,9 @@ def main():
                                          "null_sd": float(nul.std(ddof=1)), "z": float((obs - nul.mean()) / nul.std(ddof=1)),
                                          "p_two_sided": float((1 + (np.abs(nul - nul.mean()) >= abs(obs - nul.mean())).sum()) / (NRESAMPLE + 1))}
     summary["directional_all_words_mean_delta"] = float(Td.mean())
-    table.to_csv(OUT / "framing_words.csv", index=False)
-    pd.DataFrame(concept_rows).to_csv(OUT / "framing_concepts.csv", index=False)
-    dir_tab.to_csv(OUT / "directional_by_concept.csv", index=False)
+    table.to_csv(OUT / f"framing_words{tag}.csv", index=False)
+    pd.DataFrame(concept_rows).to_csv(OUT / f"framing_concepts{tag}.csv", index=False)
+    dir_tab.to_csv(OUT / f"directional_by_concept{tag}.csv", index=False)
 
     # stable neighbours (for the speaker sheet and for abantu): share of real models listing each neighbour
     disp = sorted({w for w in pw if concept(w)[0] is not None} | {"abantu", "umntu", "abantsundu", "abamnyama"} & set(words))
@@ -277,13 +284,13 @@ def main():
                     c[words[j]] = c.get(words[j], 0) + 1
             for nb_w, cnt in sorted(c.items(), key=lambda kv: -kv[1])[:12]:
                 nbr.append({"word": w, "paper": side, "neighbour": nb_w, "in_models": cnt, "of": D})
-    pd.DataFrame(nbr).to_csv(OUT / "neighbours_stable.csv", index=False)
+    pd.DataFrame(nbr).to_csv(OUT / f"neighbours_stable{tag}.csv", index=False)
 
     summary["variant_neighbour_share_isig"] = variant_share(words, at[("ri", 0)]["nb"], probe)
     summary["variant_neighbour_share_imvo"] = variant_share(words, at[("rm", 0)]["nb"], probe)
     summary["real_by_draw"] = {n: [float(r[probe].mean()) for r in stat[n][0]] for n in ("profile", "jaccard")}
-    (OUT / "framing_summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False))
-    np.savez_compressed(OUT / "framing_raw.npz", words=np.array(words), probe=probe,
+    (OUT / f"framing_summary{tag}.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False))
+    np.savez_compressed(OUT / f"framing_raw{tag}.npz", words=np.array(words), probe=probe,
                         **{f"real_{k}": v[0] for k, v in stat.items()}, **{f"null_{k}": v[1] for k, v in stat.items()})
     print(json.dumps({k: v for k, v in summary.items() if not k.startswith("anchors")}, indent=2))
     print(pd.DataFrame(concept_rows).round(3).to_string(index=False))

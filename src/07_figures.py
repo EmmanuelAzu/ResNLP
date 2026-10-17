@@ -22,7 +22,7 @@ def two_part():
     sal["name"] = sal.concept.str.split(":").str[1]
     order = sal.sort_values("ratio")["name"].tolist()          # bottom -> top
     mk = {"theory": "o", "control": "s", "exploratory": "D"}
-    fig, (a, b) = plt.subplots(1, 2, figsize=(6.8, 3.3), dpi=200, sharey=True, gridspec_kw={"wspace": 0.08})
+    fig, (a, b) = plt.subplots(1, 2, figsize=(7.0, 2.0), dpi=200, sharey=True, gridspec_kw={"wspace": 0.08})
     for i, n in enumerate(order):
         r = sal[sal.name == n].iloc[0]
         sig = r.pseudo_p < 0.05
@@ -41,10 +41,6 @@ def two_part():
     b.set_xlim(-0.02, 1.02); b.set_xlabel("Framing: percentile of the concept's profile shift\namong 2000 frequency-matched word sets")
     a.set_title("(a) How often", loc="left", fontsize=7.5, color=INK); b.set_title("(b) How differently", loc="left", fontsize=7.5, color=INK)
     b.tick_params(axis="y", left=False)
-    handles = [plt.Line2D([], [], ls="", marker=m_, mfc=INK, mec=INK, label=lab) for lab, m_ in
-               (("political concept", "o"), ("neutral control", "s"), ("religion (exploratory)", "D"))]
-    handles.append(plt.Line2D([], [], ls="", marker="o", mfc="white", mec=INK, label="open = within matched null (p >= 0.05)"))
-    fig.legend(handles=handles, loc="lower center", ncol=4, frameon=False, fontsize=6, bbox_to_anchor=(0.5, -0.19))
     fig.savefig(OUT / "fig_two_part.png", bbox_inches="tight")
 
 
@@ -84,6 +80,40 @@ def jabavu():
     fig.savefig(OUT / "fig_jabavu.png", bbox_inches="tight")
 
 
+def combo():
+    """Figure 2 of the paper: religion and parliament over time (a, b) and tokenizer cost (c)."""
+    d = pd.read_csv(OUT / "salience_yearly.csv")
+    f = pd.read_csv(OUT / "fertility.csv")
+    fig, axes = plt.subplots(1, 3, figsize=(7.0, 1.45), dpi=200, gridspec_kw={"width_ratios": [1, 1, 0.95], "wspace": 0.42})
+    for ax, concept, title in zip(axes[:2], ("religion", "parliament"), ("(a) religious vocabulary", "(b) parliamentary vocabulary")):
+        for paper, col, lab in (("ISIG", BLUE, "Isigidimi"), ("IMVO", ORANGE, "Imvo")):
+            g = d[(d.paper == paper) & (d.concept == concept)].set_index("year").reindex(range(1870, 1895))
+            ax.fill_between(g.index, g.ci_lo, g.ci_hi, color=col, alpha=0.15, lw=0)
+            ax.plot(g.index, g.per_M, "-o", color=col, lw=1.0, ms=2)
+        ax.axvspan(1880.5, 1883.5, color="#c3c2b7", alpha=0.45, lw=0)
+        ax.axvspan(1883.5, 1884.75, color=BLUE, alpha=0.12, lw=0)
+        pos = {("religion", "ISIG"): (1870.5, 4300), ("religion", "IMVO"): (1888.5, 1300),
+               ("parliament", "ISIG"): (1870.5, 400), ("parliament", "IMVO"): (1890.5, 1250)}
+        ax.text(*pos[(concept, "ISIG")], "Isigidimi", fontsize=6, color=INK)
+        ax.text(*pos[(concept, "IMVO")], "Imvo", fontsize=6, color=INK)
+        ax.set_title(title, loc="left", fontsize=7, color=INK)
+        ax.set_xlim(1869, 1896); ax.set_xticks([1870, 1880, 1890]); ax.tick_params(labelsize=6)
+    axes[0].set_ylabel("per million tokens", fontsize=6.5)
+    ax = axes[2]
+    cond = ["modern", "modern, historical spelling", "Isigidimi 1884-88", "Imvo 1884-88 (draw)"]
+    for tok, lab, m_ in (("serengeti", "Serengeti", "s"), ("xlm-roberta-base", "XLM-R", "o"), ("mbert-cased", "mBERT", "^")):
+        s_ = f[f.tokenizer == tok].set_index("condition").loc[cond, "subwords_per_100_chars"]
+        pct = 100 * (s_ / s_.iloc[0] - 1)
+        ax.plot(range(3), pct.values[:3], "-" + m_, color=INK, lw=1, ms=3.5)
+        ax.text(2.08, pct.values[2], lab, fontsize=6, color=INK, va="center")
+    ax.axhline(0, color=MUTED, lw=0.6)
+    ax.set_xticks(range(3)); ax.set_xticklabels(["modern", "old\nspelling", "historical"], fontsize=6)
+    ax.set_xlim(-0.2, 3.1); ax.tick_params(labelsize=6)
+    ax.set_title("(c) tokenizer cost", loc="left", fontsize=7, color=INK)
+    ax.set_ylabel("subwords/char, % vs modern", fontsize=6.5)
+    fig.savefig(OUT / "fig_combo.png", bbox_inches="tight")
+
+
 def fertility():
     d = pd.read_csv(OUT / "fertility.csv")
     cond = ["modern", "modern, historical spelling", "Isigidimi 1884-88", "Imvo 1884-88 (draw)"]
@@ -103,4 +133,4 @@ def fertility():
 
 
 if __name__ == "__main__":
-    two_part(); global_null(); jabavu(); fertility(); print("figures saved")
+    two_part(); global_null(); jabavu(); fertility(); combo(); print("figures saved")

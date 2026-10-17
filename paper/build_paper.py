@@ -67,6 +67,7 @@ cat_u = fc[(fc.measure == "profile") & (fc.concept == "cattle")].iloc[0]
 cat_j = fcs[(fcs.measure == "profile") & (fcs.concept == "cattle")].iloc[0]
 
 sal = pd.read_csv(OUT / "salience.csv").set_index("concept")
+vocab = pd.read_csv(OUT / "vocab_aspiration.csv").set_index("tokenizer")
 held = pd.read_csv(OUT / "salience_heldout.csv").set_index("concept")
 yr = pd.read_csv(OUT / "salience_yearly.csv")
 rel_isig = yr[(yr.paper == "ISIG") & (yr.concept == "religion")].set_index("year").per_M
@@ -162,6 +163,8 @@ V = {
  "MSP": signed(pc("mbert-cased", "modern, historical spelling")), "MHI": f"{pc('mbert-cased', 'Isigidimi 1884-88'):.1f}",
  "XSHARE": f"{share('xlm-roberta-base'):.0f}", "SSHARE": f"{share('serengeti'):.0f}",
  "FTSTAB": f"{abl[abl.model == 'ft'].stability.mean():.2f}", "W2VSTAB": f"{abl[abl.model == 'w2v'].stability.mean():.2f}",
+ "VOTEQ": f"{sal.loc[sal.comparison.eq('main') & sal.index.eq('theory:vote'), 'ratio'].iloc[0]:.2f}" if False else f"{sal[sal.comparison == 'main'].loc['theory:vote', 'ratio']:.2f}",
+ "SERTH": f"{vocab.loc['serengeti', 'percent']:.1f}", "XLMTH": f"{vocab.loc['xlm-roberta-base', 'percent']:.1f}",
  "ERAPR": f"{min(d_pr):.1f}--{max(d_pr):.1f}", "VOTEDRIFT": f"{drift('vote', 'Isigidimi: later / earlier era'):.1f}", "GOVDRIFT": f"{min(d_gov):.1f}--{max(d_gov):.2f}",
  "PVLO": ordinal(100 * min(c.percentile for c in pool_cells)), "PVHI": ordinal(100 * max(c.percentile for c in pool_cells)),
  "PVPLO": pv(min(c.p for c in pool_cells)), "PVPHI": pv(max(c.p for c in pool_cells)),

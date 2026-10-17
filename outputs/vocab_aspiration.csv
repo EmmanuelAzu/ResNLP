@@ -1,0 +1,4 @@
+tokenizer,entries,with_th_kh_ph,percent
+xlm-roberta-base,80046,708,0.8844914174349748
+serengeti,161153,3048,1.8913703126842194
+mbert-cased,53013,702,1.3242034972553902

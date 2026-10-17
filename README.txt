@@ -24,6 +24,7 @@ RUN ORDER  (from the repository root; scripts are in src/, results go to outputs
   python src/04b_yearly_series.py      yearly rates (religion / parliament figures)
   python src/04c_era_drift.py          within-paper era drift: calibrates the held-out (era-confounded) comparison
   python src/05_fertility.py           tokenizer fertility incl. the aspiration-stripping control (needs MODERN DATA below)
+  python src/05b_vocab_aspiration.py   share of vocabulary entries containing th/kh/ph, per tokenizer
   python src/06_classifier.py          grouped nested-CV classifier (supporting evidence)
   python src/07_figures.py             figures used in the write-up
   python src/09_speaker_sheet.py       sheet for a first-language speaker (outputs/speaker_sheet.md; key in speaker_key.json)

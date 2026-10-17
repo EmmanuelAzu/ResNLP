@@ -37,6 +37,8 @@ MODERN DATA" below)
   python src/06_classifier.py     grouped nested-CV classifier (supporting evidence)
   python src/07_figures.py        figures used in the write-up
 
+ARCHIVE DOIs (Schoots et al., 2023): Isigidimi https://doi.org/10.25375/uct.22332271 ; Imvo https://doi.org/10.25375/uct.22332268
+
 MODERN DATA (for 05_fertility.py)
   mkdir -p data/modern && cd data/modern
   for s in train dev test; do curl -L -o xho_$s.tsv \

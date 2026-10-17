@@ -64,7 +64,7 @@ def framing():
 
 def yearly(concept, fname, labels):
     d = pd.read_csv(OUT / "salience_yearly.csv")
-    fig, ax = plt.subplots(figsize=(2.3, 1.5), layout="constrained")
+    fig, ax = plt.subplots(figsize=(2.3, 1.4), layout="constrained")
     for paper, col in (("ISIG", BLUE), ("IMVO", ORANGE)):
         g = d[(d.paper == paper) & (d.concept == concept)].set_index("year").reindex(range(1870, 1895))
         ax.fill_between(g.index, g.ci_lo, g.ci_hi, color=col, alpha=0.15, lw=0)
@@ -83,7 +83,7 @@ def yearly(concept, fname, labels):
 def tokenizer():
     f = pd.read_csv(OUT / "fertility.csv")
     cond = ["modern", "modern, historical spelling", "Isigidimi 1884-88"]
-    fig, ax = plt.subplots(figsize=(2.3, 1.5), layout="constrained")
+    fig, ax = plt.subplots(figsize=(2.3, 1.4), layout="constrained")
     for tok, lab, m_ in (("serengeti", "Serengeti", "s"), ("xlm-roberta-base", "XLM-R", "o"), ("mbert-cased", "mBERT", "^")):
         s_ = f[f.tokenizer == tok].set_index("condition").loc[cond, "subwords_per_100_chars"]
         pct = 100 * (s_ / s_.iloc[0] - 1)

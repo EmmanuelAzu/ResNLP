@@ -1,8 +1,8 @@
 {
   "config": {
     "kind": "ft",
-    "vector_size": 200,
-    "window": 5,
+    "vector_size": 300,
+    "window": 2,
     "epochs": 20,
     "min_count": 5,
     "min_n": 3,
@@ -15,80 +15,94 @@
   "K": 5,
   "n_V": 1139,
   "n_P": 927,
-  "global_tests": [
-    {
-      "draw": 0,
-      "obs_mean_shift": 0.5653183151529961,
-      "p": 0.0196078431372549
-    },
-    {
-      "draw": 1,
-      "obs_mean_shift": 0.5749221915898602,
-      "p": 0.0196078431372549
-    },
-    {
-      "draw": 2,
-      "obs_mean_shift": 0.5595702985891049,
-      "p": 0.0196078431372549
-    },
-    {
-      "draw": 3,
-      "obs_mean_shift": 0.5572073038508257,
-      "p": 0.0196078431372549
-    },
-    {
-      "draw": 4,
-      "obs_mean_shift": 0.5688162750067226,
-      "p": 0.0196078431372549
-    },
-    {
-      "draw": 5,
-      "obs_mean_shift": 0.5680682705114859,
-      "p": 0.0196078431372549
-    },
-    {
-      "draw": 6,
-      "obs_mean_shift": 0.5699015139660585,
-      "p": 0.0196078431372549
-    },
-    {
-      "draw": 7,
-      "obs_mean_shift": 0.570537072095079,
-      "p": 0.0196078431372549
-    },
-    {
-      "draw": 8,
-      "obs_mean_shift": 0.5698219895771169,
-      "p": 0.0196078431372549
-    },
-    {
-      "draw": 9,
-      "obs_mean_shift": 0.5719355949575273,
-      "p": 0.0196078431372549
-    }
+  "n_anchors": 500,
+  "anchors_religious": [
+    "sikelela",
+    "sindisa",
+    "ukumkanikazi",
+    "inkosazana",
+    "buka",
+    "oyingcwele",
+    "lilizwi",
+    "msindisi",
+    "nelizwi",
+    "kwelizwi",
+    "wanga",
+    "lika",
+    "yesu",
+    "izono",
+    "yehova"
   ],
-  "null_mean_shift": [
-    0.4909894302519552,
-    0.005771274248470781
+  "anchors_political": [
+    "emqulwini",
+    "wonyulo",
+    "lonyulo",
+    "elugqatsweni",
+    "eziqingata",
+    "lokunyula",
+    "kwesase",
+    "lokuvota",
+    "endlu",
+    "kwamagama",
+    "ukumela",
+    "izayo",
+    "ngalomteto",
+    "nawupina",
+    "kwabase"
   ],
-  "real_mean_shift_by_draw": [
-    0.5653183151529961,
-    0.5749221915898602,
-    0.5595702985891049,
-    0.5572073038508257,
-    0.5688162750067226,
-    0.5680682705114859,
-    0.5699015139660585,
-    0.570537072095079,
-    0.5698219895771169,
-    0.5719355949575273
-  ],
-  "perm_group_size_ratio_range": [
-    0.9660893795391529,
-    1.0318586641537775
-  ],
-  "variant_neighbour_share_isig": 0.11240560949298814,
-  "variant_neighbour_share_imvo": 0.11121898597626753,
-  "spearman_shift_vs_abs_logratio": 0.11367003421876787,
-  "n_words_sig_all_draws": 1
+  "global_profile": {
+    "obs": 0.38255429914117156,
+    "null_mean": 0.262602197586239,
+    "null_sd": 0.0012768783763250843,
+    "z": 93.94168135273802,
+    "p": 0.0004997501249375312
+  },
+  "n_sig_q05_profile": 926,
+  "spearman_profile_vs_abslogratio": 0.14338221477532873,
+  "global_jaccard": {
+    "obs": 0.5536946406927972,
+    "null_mean": 0.461848127998319,
+    "null_sd": 0.002119426022503151,
+    "z": 43.335559589856665,
+    "p": 0.0004997501249375312
+  },
+  "n_sig_q05_jaccard": 604,
+  "spearman_jaccard_vs_abslogratio": 0.13148632175593475,
+  "directional_all_theory": {
+    "forms": 16,
+    "delta": 0.21888947486877441,
+    "null_mean": -0.021785350516438484,
+    "null_sd": 0.10849090665578842,
+    "z": 2.2183871269226074,
+    "p_two_sided": 0.025987006496751622
+  },
+  "directional_all_words_mean_delta": 0.008204972371459007,
+  "variant_neighbour_share_isig": 0.10852211434735706,
+  "variant_neighbour_share_imvo": 0.10841423948220065,
+  "real_by_draw": {
+    "profile": [
+      0.37321953285551657,
+      0.38817402673810675,
+      0.3816475538510365,
+      0.36715732385954597,
+      0.3861962064520389,
+      0.3896849913887235,
+      0.38147904796025744,
+      0.38474859072155154,
+      0.3810361000538992,
+      0.3921996175310395
+    ],
+    "jaccard": [
+      0.5445122546202631,
+      0.5575875584066392,
+      0.5453763644471711,
+      0.5478658478047299,
+      0.5560529067372274,
+      0.5591362955175113,
+      0.5512085829072614,
+      0.5549940686779786,
+      0.5545449965630915,
+      0.5656675312460977
+    ]
+  }
 }

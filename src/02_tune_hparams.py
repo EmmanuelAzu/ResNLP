@@ -21,6 +21,9 @@ from emb import DEFAULT_CFG, jaccard_shift, neighbours, train, variant_share, ve
 
 TARGET = 287_000
 GRID = dict(vector_size=[50, 100, 200], window=[3, 5, 8], epochs=[10, 20])
+# Second round (--extend): the first round's best setting (dim 200, 20 epochs) was at the edge of
+# the grid in two dimensions, so the grid is extended past it and the rows are merged.
+GRID_EXT = dict(vector_size=[300, 400], window=[2], epochs=[20])   # round 3: window 3 was the grid minimum
 SEEDS = (1, 2)
 N_PROBE = 300
 
@@ -64,7 +67,14 @@ if __name__ == "__main__":
         PROBE_IDX[cid] = rng.choice(probe, size=min(N_PROBE, len(probe)), replace=False)
         print(cid, sum(map(len, sents)), "tokens, vocab(>=30)", len(WORDS[cid]), "probe", len(PROBE_IDX[cid]))
 
-    configs = [dict(zip(GRID, v)) for v in itertools.product(*GRID.values())]
+    extend = "--extend" in sys.argv
+    grid = GRID_EXT if extend else GRID
+    configs = [dict(zip(grid, v)) for v in itertools.product(*grid.values())]
+    prev = pd.read_csv(OUT / "tuning_grid.csv") if extend else None
+    if extend:        # skip settings already evaluated in round 1
+        seen = {(r.vector_size, r.window, r.epochs) for r in prev.itertuples()}
+        configs = [c for c in configs if (c["vector_size"], c["window"], c["epochs"]) not in seen]
+        print("new settings:", len(configs))
     jobs_args = [(cid, cfg, s) for cfg in configs for cid in CORPORA for s in SEEDS]
     with ProcessPoolExecutor(4) as ex:
         mats = list(ex.map(run_one, jobs_args, chunksize=1))
@@ -82,11 +92,14 @@ if __name__ == "__main__":
             scores.append(jac.mean())
         row["stability"] = float(np.mean(scores))
         res.append(row)
-    df = pd.DataFrame(res).sort_values("stability", ascending=False)
+    df = pd.DataFrame(res)
+    if extend:
+        df = pd.concat([prev, df], ignore_index=True)
+    df = df.sort_values("stability", ascending=False)
     OUT.mkdir(exist_ok=True)
     df.to_csv(OUT / "tuning_grid.csv", index=False)
     print(df.round(3).to_string(index=False))
-    best = {k_: (int(v) if k_ != "kind" else v) for k_, v in df.iloc[0][list(GRID)].items()}
+    best = {k_: int(v) for k_, v in df.iloc[0][["vector_size", "window", "epochs"]].items()}
     cfg = {**DEFAULT_CFG, **best}
 
     # word2vec ablation at the chosen setting (no subword information)

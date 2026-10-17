@@ -16,50 +16,72 @@ plt.rcParams.update({"font.size": 7, "axes.edgecolor": MUTED, "axes.labelcolor":
 
 def two_part():
     sal = pd.read_csv(OUT / "salience.csv")
-    fw = pd.read_csv(OUT / "framing_words.csv")
+    fc = pd.read_csv(OUT / "framing_concepts.csv")
+    fc = fc[fc.measure == "profile"].set_index("concept")
+    sal["group"] = sal.concept.str.split(":").str[0]
     sal["name"] = sal.concept.str.split(":").str[1]
-    sal["theory"] = sal.concept.str.startswith("theory")
     order = sal.sort_values("ratio")["name"].tolist()          # bottom -> top
-    fig, (a, b) = plt.subplots(1, 2, figsize=(6.8, 3.0), dpi=200, sharey=True,
-                               gridspec_kw={"wspace": 0.08})
+    mk = {"theory": "o", "control": "s", "exploratory": "D"}
+    fig, (a, b) = plt.subplots(1, 2, figsize=(6.8, 3.3), dpi=200, sharey=True, gridspec_kw={"wspace": 0.08})
     for i, n in enumerate(order):
         r = sal[sal.name == n].iloc[0]
+        sig = r.pseudo_p < 0.05
         a.plot([r.ci_lo, r.ci_hi], [i, i], color=MUTED, lw=1)
-        a.plot(r.ratio, i, "o", ms=5, mfc=INK if r.theory else "white", mec=INK, mew=1)
-        f = fw[fw.concept == n]
-        if len(f):
-            b.plot(f.matched_percentile, [i + (k - (len(f) - 1) / 2) * 0.07 for k in range(len(f))],
-                   "o", ms=2.5, color=MUTED, alpha=0.8)
-            b.plot(f.matched_percentile.mean(), i, "D", ms=5, mfc=INK if r.theory else "white", mec=INK, mew=1)
+        a.plot(r.ratio, i, mk[r.group], ms=5, mfc=INK if sig else "white", mec=INK, mew=1)
+        if n in fc.index:
+            f = fc.loc[n]
+            b.plot(f.percentile, i, mk[r.group], ms=5, mfc=INK if (f.p_greater < 0.05) else "white", mec=INK, mew=1)
         else:
-            b.text(0.5, i, "too rare to embed", ha="center", va="center", fontsize=6, color=MUTED, style="italic",
+            b.text(0.5, i, "too rare / seed word", ha="center", va="center", fontsize=6, color=MUTED, style="italic",
                    bbox=dict(fc="white", ec="none", pad=1.5))
     a.axvline(1, color=MUTED, lw=0.8, ls="--"); b.axvline(0.5, color=MUTED, lw=0.8, ls="--")
-    a.set_xscale("log"); a.set_xticks([0.5, 1, 2, 4]); a.set_xticklabels(["0.5", "1", "2", "4"]); a.minorticks_off()
+    a.set_xscale("log"); a.set_xticks([0.25, 0.5, 1, 2, 4]); a.set_xticklabels(["0.25", "0.5", "1", "2", "4"]); a.minorticks_off()
     a.set_yticks(range(len(order))); a.set_yticklabels(order, color=INK)
     a.set_xlabel("Salience: Imvo / Isigidimi rate\n(95% issue-bootstrap CI)")
-    b.set_xlim(-0.02, 1.02); b.set_xlabel("Framing: shift rank among 50\nfrequency-matched words (0-1)")
+    b.set_xlim(-0.02, 1.02); b.set_xlabel("Framing: percentile of the concept's profile shift\namong 2000 frequency-matched word sets")
     a.set_title("(a) How often", loc="left", fontsize=7.5, color=INK); b.set_title("(b) How differently", loc="left", fontsize=7.5, color=INK)
     b.tick_params(axis="y", left=False)
-    a.plot([], [], "o", mfc=INK, mec=INK, label="political concept"); a.plot([], [], "o", mfc="white", mec=INK, label="neutral control")
-    a.legend(frameon=False, fontsize=6, loc="lower right")
+    handles = [plt.Line2D([], [], ls="", marker=m_, mfc=INK, mec=INK, label=lab) for lab, m_ in
+               (("political concept", "o"), ("neutral control", "s"), ("religion (exploratory)", "D"))]
+    handles.append(plt.Line2D([], [], ls="", marker="o", mfc="white", mec=INK, label="open = within matched null (p >= 0.05)"))
+    fig.legend(handles=handles, loc="lower center", ncol=4, frameon=False, fontsize=6, bbox_to_anchor=(0.5, -0.19))
     fig.savefig(OUT / "fig_two_part.png", bbox_inches="tight")
 
 
 def global_null():
     raw = np.load(OUT / "framing_raw.npz", allow_pickle=True)
-    real, null, probe = raw["real"], raw["null"], raw["probe"]
+    real, null, probe = raw["real_profile"], raw["null_profile"], raw["probe"]
     nm, rm = null[:, probe].mean(1), real[:, probe].mean(1)
     fig, ax = plt.subplots(figsize=(3.3, 1.9), dpi=200)
-    ax.hist(nm, bins=np.linspace(0.47, 0.59, 25), color="#c3c2b7", edgecolor="white", lw=0.5)
+    lo, hi = min(nm.min(), rm.min()), max(nm.max(), rm.max())
+    ax.hist(nm, bins=np.linspace(lo - 0.01, hi + 0.01, 40), color="#c3c2b7", edgecolor="white", lw=0.5)
     for v in rm:
         ax.axvline(v, color=INK, lw=0.9)
-    ax.set_xlim(0.46, 0.65)
-    ax.set_ylim(0, 29)
-    ax.text(0.578, 27, "real: 10 Imvo draws", fontsize=6.5, color=INK, va="top")
-    ax.text(0.465, 27, "permutation null\n(50 permutations)", fontsize=6.5, color=MUTED, va="top")
-    ax.set_xlabel("Mean neighbourhood shift (1 - Jaccard@10) over probe words"); ax.set_ylabel("permutations")
+    top = ax.get_ylim()[1]
+    ax.set_ylim(0, top * 1.35)
+    ax.text(nm.mean(), top * 1.3, "permutation null\n(50 permutations)", fontsize=6.5, color=MUTED, va="top", ha="center")
+    ax.set_xlim(lo - 0.02, hi + 0.075)
+    ax.text(hi + 0.008, top * 1.3, "real: 10\nImvo draws", fontsize=6.5, color=INK, va="top", ha="left")
+    ax.set_xlabel("Mean profile shift (1 - r) over probe words"); ax.set_ylabel("permutations")
     fig.savefig(OUT / "fig_global_null.png", bbox_inches="tight")
+
+
+def jabavu():
+    d = pd.read_csv(OUT / "salience_yearly.csv")
+    fig, axes = plt.subplots(1, 2, figsize=(6.8, 2.4), dpi=200, sharex=True)
+    for ax, concept, title in zip(axes, ("religion", "parliament"), ("(a) religious vocabulary", "(b) parliamentary vocabulary")):
+        for paper, col, lab in (("ISIG", BLUE, "Isigidimi"), ("IMVO", ORANGE, "Imvo")):
+            g = d[(d.paper == paper) & (d.concept == concept)].set_index("year").reindex(range(1870, 1895))
+            ax.fill_between(g.index, g.ci_lo, g.ci_hi, color=col, alpha=0.15, lw=0)
+            ax.plot(g.index, g.per_M, "-o", color=col, lw=1.1, ms=2.5)
+            last = g.per_M.last_valid_index()
+            ax.text(last + 0.4, g.per_M[last], lab, fontsize=6.5, color=INK, va="center")
+        ax.axvspan(1880.5, 1883.5, color="#c3c2b7", alpha=0.45, lw=0)
+        ax.set_title(title, loc="left", fontsize=7.5, color=INK)
+        ax.set_xlim(1869, 1898); ax.set_ylabel("per million tokens")
+    axes[0].text(1882, axes[0].get_ylim()[1] * 0.97, "Jabavu's\nyears\n(provisional)", fontsize=5.5, color=MUTED, ha="center", va="top")
+    fig.tight_layout()
+    fig.savefig(OUT / "fig_jabavu.png", bbox_inches="tight")
 
 
 def fertility():
@@ -81,4 +103,4 @@ def fertility():
 
 
 if __name__ == "__main__":
-    two_part(); global_null(); fertility(); print("figures saved")
+    two_part(); global_null(); jabavu(); fertility(); print("figures saved")

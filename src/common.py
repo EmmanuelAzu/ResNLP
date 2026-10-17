@@ -103,3 +103,7 @@ THEORY = {"parliament": ["palamente"], "vote": ["voti"], "government": ["rulumen
           "rule": ["mbuso"], "law": ["mteto", "nteto"], "rights": ["lungelo"],
           "country": ["lizwe"], "land": ["mhlaba"], "freedom": ["kululek"], "humanity": ["buntu"]}
 CONTROL = {"time": ["xesha"], "house": ["ndlu"], "rain": ["mvula"], "cattle": ["nkomo"]}
+
+
+# Exploratory concept: suggested by the classifier's top features, NOT pre-specified.
+EXPLORATORY = {"religion": ["tixo", "kristu"]}

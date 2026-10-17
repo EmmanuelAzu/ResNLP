@@ -1,0 +1,82 @@
+{
+ "derived_from": "Isigidimi 1876-83 + Imvo 1889-94",
+ "seeds": {
+  "religious": [
+   "tixo",
+   "kristu"
+  ],
+  "political": [
+   "palamente",
+   "voti"
+  ]
+ },
+ "tokens": 3252367,
+ "religious": [
+  "sikelela",
+  "sindisa",
+  "ukumkanikazi",
+  "inkosazana",
+  "buka",
+  "oyingcwele",
+  "lilizwi",
+  "msindisi",
+  "nelizwi",
+  "kwelizwi",
+  "wanga",
+  "lika",
+  "yesu",
+  "izono",
+  "yehova"
+ ],
+ "religious_pmi": {
+  "sikelela": 6.89,
+  "sindisa": 6.85,
+  "ukumkanikazi": 6.55,
+  "inkosazana": 6.28,
+  "buka": 5.73,
+  "oyingcwele": 5.72,
+  "lilizwi": 5.71,
+  "msindisi": 5.66,
+  "nelizwi": 5.64,
+  "kwelizwi": 5.61,
+  "wanga": 5.5,
+  "lika": 5.48,
+  "yesu": 5.47,
+  "izono": 5.44,
+  "yehova": 5.38
+ },
+ "political": [
+  "emqulwini",
+  "wonyulo",
+  "lonyulo",
+  "elugqatsweni",
+  "eziqingata",
+  "lokunyula",
+  "kwesase",
+  "lokuvota",
+  "endlu",
+  "kwamagama",
+  "ukumela",
+  "izayo",
+  "ngalomteto",
+  "nawupina",
+  "kwabase"
+ ],
+ "political_pmi": {
+  "emqulwini": 5.9,
+  "wonyulo": 5.64,
+  "lonyulo": 5.59,
+  "elugqatsweni": 5.55,
+  "eziqingata": 5.48,
+  "lokunyula": 5.47,
+  "kwesase": 5.45,
+  "lokuvota": 5.38,
+  "endlu": 5.31,
+  "kwamagama": 5.3,
+  "ukumela": 5.17,
+  "izayo": 5.06,
+  "ngalomteto": 5.05,
+  "nawupina": 5.01,
+  "kwabase": 4.97
+ }
+}

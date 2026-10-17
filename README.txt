@@ -8,13 +8,23 @@ REQUIREMENTS
   and the tokenizers from the Hugging Face Hub. Everything else runs offline.
 
 RUN ORDER  (from the repository root; scripts are in src/, results go to outputs/)
-  python src/01_prepare_data.py   build data/pages.csv.gz (cleaned, one row per page)
-  python src/02_tune_hparams.py   hyper-parameter search on text OUTSIDE the test window  (~10 min, 4 cores)
-  python src/03_framing.py        embedding shift vs permutation null                       (~20 min, 4 cores)
-                                  add --quick for a 2-minute smoke test
-  python src/04_salience.py       per-million rates of concept stems with issue-bootstrap CIs
-  python src/05_fertility.py      tokenizer fertility, incl. the aspiration-stripping control
-                                  (first download MasakhaNEWS: see "MODERN DATA" below)
+  python src/01_prepare_data.py        build data/pages.csv.gz (cleaned, one row per page)
+  python src/02_tune_hparams.py        round 1 of the hyper-parameter search, on text OUTSIDE the test window
+  python src/02_tune_hparams.py --extend   rounds 2-3: grid extended past the round-1 optimum (GRID_EXT is edited
+                                       between rounds; rows are merged into outputs/tuning_grid.csv).  ~10 min each, 4 cores
+  python src/08_anchors.py             freeze the religious / political anchor lists (from held-out windows) BEFORE step 03
+  python src/03_framing.py             profile-shift / Jaccard / directional tests vs permutation null  (~17 min, 4 cores;
+                                       --quick = 2-minute smoke test)
+  python src/10_matched_tests.py       calibrate framing against frequency-matched word sets; data-driven word list
+  python src/04_salience.py            per-million rates, issue-bootstrap CIs, pseudo-concept null, held-out replication,
+                                       Jabavu-period contrast
+  python src/04b_yearly_series.py      yearly rates (Jabavu figure)
+  python src/05_fertility.py           tokenizer fertility incl. the aspiration-stripping control (needs MODERN DATA below)
+  python src/06_classifier.py          grouped nested-CV classifier (supporting evidence)
+  python src/07_figures.py             figures used in the write-up
+  python src/09_speaker_sheet.py       sheet for a first-language speaker (outputs/speaker_sheet.md; key in speaker_key.json)
+
+MODERN DATA" below)
   python src/06_classifier.py     grouped nested-CV classifier (supporting evidence)
   python src/07_figures.py        figures used in the write-up
 
@@ -29,9 +39,15 @@ DESIGN IN ONE PARAGRAPH
   the archive).  Imvo is subsampled month by month to Isigidimi's token count (287k), drawn 10
   times.  The null is a permutation test: issues from both papers are pooled and reassigned to
   two token-balanced groups within strata, a model is trained on each, and the same shift is
-  measured.  Because the real groups differ in word frequency but the permuted groups do not,
-  each word is also ranked against frequency-matched control words.  Salience (how often) and
-  framing (how differently) are reported separately.
+  measured.  Because the real groups differ in word frequency and in paper-level style but the
+  permuted groups do not, per-word and per-concept framing is judged against frequency-matched
+  word sets (2000 random sets), and salience against 2000 frequency-matched pseudo-concepts.
+  Salience (how often) and framing (how differently) are reported separately.
+
+PROVISIONAL INPUTS TO CHECK
+  * Jabavu's Isigidimi years (1881-83 used in 04_salience / 04b_yearly_series) come from secondary
+    web sources, not from Schoots et al. (not reachable from the build environment): confirm them.
+  * Spelling rules, concept stems, anchors and neighbour lists have not been checked by a speaker.
 
 FILES
   src/common.py   cleaning, loading, strict window, date-matched subsampling, concept stems

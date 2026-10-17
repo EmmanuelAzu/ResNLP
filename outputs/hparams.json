@@ -1,7 +1,7 @@
 {
   "kind": "ft",
-  "vector_size": 200,
-  "window": 5,
+  "vector_size": 300,
+  "window": 2,
   "epochs": 20,
   "min_count": 5,
   "min_n": 3,

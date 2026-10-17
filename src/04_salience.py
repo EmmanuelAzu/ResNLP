@@ -1,104 +1,113 @@
 """Salience: how often does each paper use a concept stem (per million tokens)?
 
-All Isigidimi issues in the window vs ALL Imvo issues from the same year-months (rates do
-not need equal sizes, so no subsampling). Uncertainty: issue-level bootstrap (resample
-issues with replacement within each paper), 4000 replicates; ratio = Imvo / Isigidimi.
+For every comparison the concept's log2(rate ratio) is judged two ways:
+  (1) issue-level bootstrap CI of the ratio (4000 resamples of issues within each period);
+  (2) against 2000 pseudo-concepts: random bags of word types, excluded from all concept lists,
+      whose combined count matches the concept's (+-15%) - the same frequency-matching idea as
+      the framing test.  p = share of pseudo-concepts with |log2 ratio| >= the concept's.
+Comparisons
+  main      Isigidimi vs Imvo, same year-months, Nov 1884-1888
+  heldout   Isigidimi 1876-83 vs Imvo 1889-94 (replication window; time confounded)
+  jabavu    rates by period: Isigidimi 1876-80 | Isigidimi 1881-83 (Jabavu's editorship, provisional) |
+            Isigidimi Nov 1884-88 | Imvo Nov 1884-86
 """
 import numpy as np
 import pandas as pd
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 
-from common import CONTROL, OUT, THEORY, load_pages
+from common import CONTROL, EXPLORATORY, OUT, THEORY, load_pages
 
-B = 4000
+B, NPSEUDO = 4000, 2000
 rng = np.random.default_rng(0)
-pages = load_pages()
-months = set(pages[pages.paper == "ISIG"].ym)
-pages = pages[pages.ym.isin(months)]
-
-stems = {f"{g}:{n}": s for g, t in (("theory", THEORY), ("control", CONTROL)) for n, s in t.items()}
-per_issue = {}
-for (paper, date), g in pages.groupby(["paper", "date"]):
-    toks = [t for ss in g.sents for s in ss for t in s]
-    row = {"tokens": len(toks)}
-    for key, ss in stems.items():
-        row[key] = sum(any(st in t for st in ss) for t in toks)
-    per_issue.setdefault(paper, []).append(row)
-tabs = {p: pd.DataFrame(v) for p, v in per_issue.items()}
-print({p: (len(t), int(t.tokens.sum())) for p, t in tabs.items()})
+STEMS = {f"{g}:{n}": s for g, t in (("theory", THEORY), ("control", CONTROL), ("exploratory", EXPLORATORY))
+         for n, s in t.items()}
+ALL_STEMS = [s for v in STEMS.values() for s in v]
+pages = load_pages(window=None)
+pages["year"] = pages.date.str[:4].astype(int)
 
 
-def rate(t, idx):
-    return 1e6 * t.iloc[idx].drop(columns="tokens").sum() / t.iloc[idx].tokens.sum()
+def select(paper, lo, hi):
+    return pages[(pages.paper == paper) & (pages.date >= lo) & (pages.date <= hi)]
 
 
-out = []
-boot = {p: [] for p in tabs}
-for p, t in tabs.items():
-    for _ in range(B):
-        boot[p].append(rate(t, rng.integers(0, len(t), len(t))))
-for key in stems:
-    ri = rate(tabs["ISIG"], np.arange(len(tabs["ISIG"])))[key]
-    rm = rate(tabs["IMVO"], np.arange(len(tabs["IMVO"])))[key]
-    bi = np.array([b[key] for b in boot["ISIG"]]); bm = np.array([b[key] for b in boot["IMVO"]])
-    ratio = (bm + 1e-9) / (bi + 1e-9)
-    lo, hi = np.percentile(ratio, [2.5, 97.5])
-    out.append({"concept": key, "per_M_isig": ri, "per_M_imvo": rm, "ratio": rm / ri,
-                "ci_lo": lo, "ci_hi": hi, "ci_excludes_1": bool(lo > 1 or hi < 1)})
-df = pd.DataFrame(out).sort_values("ratio", ascending=False)
-df.to_csv(OUT / "salience.csv", index=False)
-print(df.round(2).to_string(index=False))
-
-# forest plot of the ratio on a log axis
-fig, ax = plt.subplots(figsize=(4.2, 3.0), dpi=200)
-ink, muted = "#0b0b0b", "#52514e"
-d = df.iloc[::-1].reset_index(drop=True)
-for i, r in d.iterrows():
-    th = r.concept.startswith("theory")
-    ax.plot([r.ci_lo, r.ci_hi], [i, i], color=muted, lw=1)
-    ax.plot(r.ratio, i, "o", ms=5, mfc=ink if th else "white", mec=ink, mew=1)
-ax.axvline(1, color=muted, lw=0.8, ls="--")
-ax.set_xscale("log")
-ax.set_xticks([0.25, 0.5, 1, 2, 4])
-ax.set_xticklabels(["0.25", "0.5", "1", "2", "4"])
-ax.minorticks_off()
-ax.set_yticks(range(len(d)))
-ax.set_yticklabels([c.split(":")[1] for c in d.concept], fontsize=7, color=ink)
-ax.set_xlabel("Imvo / Isigidimi rate per million tokens (95% issue-bootstrap CI)", fontsize=7, color=ink)
-ax.tick_params(axis="x", labelsize=7)
-for s in ("top", "right"):
-    ax.spines[s].set_visible(False)
-ax.plot([], [], "o", mfc=ink, mec=ink, label="political concept")
-ax.plot([], [], "o", mfc="white", mec=ink, label="neutral control")
-ax.legend(fontsize=7, frameon=False, loc="lower right")
-fig.tight_layout()
-fig.savefig(OUT / "fig_salience.png")
-print("saved fig_salience.png")
+def per_issue(df):
+    rows, types = [], {}
+    for date, g in df.groupby("date"):
+        toks = [t for ss in g.sents for s in ss for t in s]
+        row = {"tokens": len(toks), **{k: sum(any(st in t for st in ss) for t in toks) for k, ss in STEMS.items()}}
+        rows.append(row)
+        for t in toks:
+            types[t] = types.get(t, 0) + 1
+    return pd.DataFrame(rows), types
 
 
-# ---- exploratory: religious vocabulary (suggested by the classifier's top features, so the CI is
-# optimistic: it was chosen BECAUSE it separates the papers). Not part of the pre-specified list.
-EXPLORATORY = {"religion": ["tixo", "kristu"]}
-ex = {}
-for paper, t in per_issue.items():
-    pass
+def rate(t, idx, key):
+    return 1e6 * t.iloc[idx][key].sum() / t.iloc[idx].tokens.sum()
+
+
+def boot_rates(t, key):
+    return np.array([rate(t, rng.integers(0, len(t), len(t)), key) for _ in range(B)])
+
+
+def pseudo_concepts(ta, tb, na, nb, target, n=NPSEUDO):
+    """log2 ratios of random bags of types whose total count matches `target`."""
+    cand = [w for w in set(ta) | set(tb) if ta.get(w, 0) + tb.get(w, 0) >= 10 and not any(s in w for s in ALL_STEMS)]
+    cnt = np.array([ta.get(w, 0) + tb.get(w, 0) for w in cand])
+    ca = np.array([ta.get(w, 0) for w in cand]); cb = np.array([tb.get(w, 0) for w in cand])
+    out = []
+    for _ in range(n):
+        order = rng.permutation(len(cand)); cs = np.cumsum(cnt[order])
+        k = np.searchsorted(cs, target * rng.uniform(0.85, 1.15)) + 1
+        sel = order[:k]
+        out.append(np.log2(((cb[sel].sum() + .5) / nb) / ((ca[sel].sum() + .5) / na)))
+    return np.array(out)
+
+
+def compare(label, a_df, b_df, names=("Isigidimi", "Imvo")):
+    ta, tya = per_issue(a_df); tb, tyb = per_issue(b_df)
+    na, nb = sum(tya.values()), sum(tyb.values())
+    rows = []
+    for key in STEMS:
+        ra, rb = rate(ta, np.arange(len(ta)), key), rate(tb, np.arange(len(tb)), key)
+        ba, bb = boot_rates(ta, key), boot_rates(tb, key)
+        ratio = (bb + 1e-9) / (ba + 1e-9)
+        pseudo = pseudo_concepts(tya, tyb, na, nb, ta[key].sum() + tb[key].sum())
+        l2 = np.log2((rb + 1e-9) / (ra + 1e-9))
+        rows.append({"comparison": label, "concept": key, f"per_M_{names[0]}": ra, f"per_M_{names[1]}": rb,
+                     "ratio": rb / ra if ra else np.nan, "ci_lo": np.percentile(ratio, 2.5), "ci_hi": np.percentile(ratio, 97.5),
+                     "ci_excludes_1": bool(np.percentile(ratio, 2.5) > 1 or np.percentile(ratio, 97.5) < 1),
+                     "pseudo_p": float((1 + (np.abs(pseudo) >= abs(l2)).sum()) / (len(pseudo) + 1)),
+                     "pseudo_sd_log2": float(pseudo.std())})
+    print(f"\n{label}: {len(ta)}+{len(tb)} issues, {na:,}+{nb:,} tokens")
+    df = pd.DataFrame(rows)
+    print(df.drop(columns="comparison").round(3).to_string(index=False))
+    return df
+
+
+# ---- main: same year-months --------------------------------------------------------------
+isig_main = select("ISIG", "1884-11-01", "1888-12-31")
+imvo_main = select("IMVO", "1884-11-01", "1888-12-31")
+imvo_main = imvo_main[imvo_main.date.str[:7].isin(set(isig_main.date.str[:7]))]
+main = compare("main", isig_main, imvo_main)
+main.to_csv(OUT / "salience.csv", index=False)
+
+# ---- replication on held-out windows ---------------------------------------------------------
+held = compare("heldout", select("ISIG", "1876-01-01", "1883-12-31"), select("IMVO", "1889-01-01", "1894-12-31"))
+held.to_csv(OUT / "salience_heldout.csv", index=False)
+
+# ---- Jabavu contrast: rates by period ------------------------------------------------------
+periods = {"Isigidimi 1876-80": select("ISIG", "1876-01-01", "1880-12-31"),
+           "Isigidimi 1881-83 (Jabavu)": select("ISIG", "1881-01-01", "1883-12-31"),
+           "Isigidimi Nov84-88": isig_main,
+           "Imvo Nov84-86": select("IMVO", "1884-11-01", "1886-12-31")}
 rows = []
-for paper, g in pages.groupby("paper"):
-    for date, gi in g.groupby("date"):
-        toks = [t for ss in gi.sents for s in ss for t in s]
-        rows.append({"paper": paper, "tokens": len(toks),
-                     **{k: sum(any(st in t for st in v) for t in toks) for k, v in EXPLORATORY.items()}})
-ex = pd.DataFrame(rows)
-out2 = []
-for k in EXPLORATORY:
-    r = {}
-    for paper, g in ex.groupby("paper"):
-        reps = [1e6 * g.iloc[i][k].sum() / g.iloc[i].tokens.sum() for i in (rng.integers(0, len(g), len(g)) for _ in range(B))]
-        r[paper] = (1e6 * g[k].sum() / g.tokens.sum(), reps)
-    ratio = np.array(r["IMVO"][1]) / (np.array(r["ISIG"][1]) + 1e-9)
-    out2.append({"concept": k, "per_M_isig": r["ISIG"][0], "per_M_imvo": r["IMVO"][0],
-                 "ratio": r["IMVO"][0] / r["ISIG"][0], "ci_lo": np.percentile(ratio, 2.5), "ci_hi": np.percentile(ratio, 97.5)})
-pd.DataFrame(out2).to_csv(OUT / "salience_exploratory.csv", index=False)
-print("exploratory:"); print(pd.DataFrame(out2).round(2).to_string(index=False))
+tabs = {k: per_issue(v)[0] for k, v in periods.items()}
+for key in ("exploratory:religion", "theory:parliament", "theory:vote", "theory:rule", "theory:government",
+            "control:time", "control:house"):
+    for k, t in tabs.items():
+        bt = boot_rates(t, key)
+        rows.append({"concept": key, "period": k, "issues": len(t), "tokens": int(t.tokens.sum()),
+                     "per_M": rate(t, np.arange(len(t)), key), "ci_lo": np.percentile(bt, 2.5), "ci_hi": np.percentile(bt, 97.5)})
+jab = pd.DataFrame(rows)
+jab.to_csv(OUT / "salience_jabavu.csv", index=False)
+print("\njabavu contrast (per million tokens)")
+print(jab.pivot(index="concept", columns="period", values="per_M").round(0).to_string())

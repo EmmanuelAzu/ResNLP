@@ -43,9 +43,10 @@ fp = lambda p: "$<$0.001" if p < 0.001 else f"{p:.3f}"
 lines += ["\\subsection*{S2. Secondary framing tests across settings}",
           "Percentile of the observed shift among 2000 frequency-matched word sets, and one-sided $p$ (uncorrected). "
           "P+V = \\emph{palamente} + \\emph{voti}; P+V+R adds \\emph{rulumente} (uncertain meaning). Directional $\\Delta$: Isigidimi minus Imvo, "
-          "religious minus political similarity, political concepts, two-sided $p$ against matched sets.\\\\[2pt]",
-          "\\begin{tabular}{@{}lcccccccc@{}}", "\\toprule",
-          "Setting & P+V profile & P+V Jaccard & P+V+R profile & P+V+R Jaccard & $\\Delta$ & $\\Delta$ $p$ & $p$ w/o land \\\\ \\midrule"]
+          "religious minus political similarity (in $z$-score units), political concepts, two-sided $p$ against matched sets; the last columns give the control \\emph{house}. "
+          "Three settings survive Bonferroni over five ($p<0.01$): window 1, window 2, and window 2 with forms joined. Joining partly disjunctive forms (\\emph{uku ba}) leaves the global profile gap unchanged. Matched sets are re-drawn for each test; without \\emph{land} the pooled set is smaller, so lower power may contribute to the higher $p$.\\\\[2pt]",
+          "\\begin{tabular}{@{}lcccccccccc@{}}", "\\toprule",
+          "Setting & P+V profile & P+V Jaccard & P+V+R profile & P+V+R Jaccard & $\\Delta$ & $\\Delta$ $p$ & $p$ w/o land & house $\\Delta$ & house $p$ \\\\ \\midrule"]
 for label, tag in SETTINGS:
     t = load(tag if not tag.startswith("window2") else tag)
     if t is None:
@@ -54,7 +55,7 @@ for label, tag in SETTINGS:
     d = t.loc["directional delta: all political concepts"]
     lines.append(f"{label} & {cell('profile shift: palamente+voti (parliament, vote)')} & {cell('Jaccard shift: palamente+voti (parliament, vote)')} & "
                  f"{cell('profile shift: palamente+voti+rulumente (adds government)')} & {cell('Jaccard shift: palamente+voti+rulumente (adds government)')} & "
-                 f"{d.obs:+.2f} & {fp(d.p)} & {fp(t.loc['directional delta: political concepts without land'].p)} \\\\")
+                 f"{d.obs:+.2f} & {fp(d.p)} & {fp(t.loc['directional delta: political concepts without land'].p)} & {t.loc['directional delta: control:house'].obs:+.2f} & {fp(t.loc['directional delta: control:house'].p)} \\\\")
 lines += ["\\bottomrule", "\\end{tabular}", ""]
 
 era = pd.read_csv(OUT / "era_drift.csv")
@@ -72,7 +73,7 @@ lines += ["\\subsection*{S4. Anchors for the directional test}",
           "Anchors are the 15 top-PMI neighbours of each seed pair in held-out text (%s), frozen before testing. "
           "Religious (%d words; seeds \\emph{tixo}, \\emph{kristu}): %s. Political (%d words; seeds \\emph{palamente}, \\emph{voti}): %s. "
           "Seed words cannot themselves be tested (Fig.~1, right). Political anchors include \\emph{endlu} (`in the house'), "
-          "which may favour the neutral control \\emph{house}, and \\emph{ngalomteto}, which contains the \\emph{law} stem." % (
+          "which may favour the neutral control \\emph{house}, and \\emph{ngalomteto}, which contains the \\emph{law} stem. Glosses are unverified: two religious anchors (\\emph{ukumkanikazi}, \\emph{inkosazana}) may reflect royal rather than religious register, and several anchors on both sides (\\emph{lika}, \\emph{buka}; \\emph{nawupina}, \\emph{kwabase}, \\emph{izayo}) may be grammatical rather than topical, consistent with narrow-window PMI capturing grammar. All await speaker review." % (
               anc["derived_from"], len(anc["religious"]), tex(anc["religious"]), len(anc["political"]), tex(anc["political"])),
           "\\normalsize", ""]
 (Path(__file__).resolve().parent / "supp.tex").write_text("\n".join(lines))

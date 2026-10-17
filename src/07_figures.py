@@ -62,18 +62,19 @@ def framing():
     fig.savefig(OUT / "fig_framing.png")
 
 
-def yearly(concept, fname, labels):
+def yearly(concept, fname, labels, tag=""):
     d = pd.read_csv(OUT / "salience_yearly.csv")
     fig, ax = plt.subplots(figsize=(2.3, 1.2), layout="constrained")
     for paper, col in (("ISIG", BLUE), ("IMVO", ORANGE)):
         g = d[(d.paper == paper) & (d.concept == concept)].set_index("year").reindex(range(1870, 1895))
         ax.fill_between(g.index, g.ci_lo, g.ci_hi, color=col, alpha=0.15, lw=0)
         ax.plot(g.index, g.per_M, "-o", color=col, lw=1.0, ms=2)
-    ax.axvspan(1883.5, 1884.75, color=BLUE, alpha=0.12, lw=0)      # Isigidimi fortnightly, Jul 1883-Sep 1884 (Schoots et al. 2023, p. 59)
+    ax.axvspan(1883.5, 1884.75, color=BLUE, alpha=0.12, lw=0)      # Isigidimi twice monthly, Jul 1883-Sep 1884 (Schoots et al. 2023, p. 59)
     ax.text(*labels["ISIG"], "Isigidimi", fontsize=7.5, color=INK)
     ax.text(*labels["IMVO"], "Imvo", fontsize=7.5, color=INK)
     ax.set_xlim(1869, 1896); ax.set_xticks([1870, 1880, 1890]); ax.tick_params(labelsize=7.5)
     ax.set_ylabel("per million tokens", fontsize=7.5)
+    ax.text(0.0, 1.02, tag, transform=ax.transAxes, fontweight="bold", va="bottom", ha="left")
     fig.savefig(OUT / fname)
 
 
@@ -93,6 +94,7 @@ def tokenizer():
     ax.set_xlim(-0.5, 1.5); ax.tick_params(labelsize=7.5, axis="y")
     ax.set_ylabel("% vs modern", fontsize=7.5)
     ax.legend(loc="upper left", frameon=False, fontsize=6.5, handletextpad=0.2, labelspacing=0.2, borderaxespad=0.1)
+    ax.text(0.0, 1.02, "(c)", transform=ax.transAxes, fontweight="bold", va="bottom", ha="left")
     fig.savefig(OUT / "fig_tokenizer_cost.png")
 
 
@@ -115,7 +117,7 @@ def global_null():
 
 if __name__ == "__main__":
     salience(); framing()
-    yearly("religion", "fig_religion_by_year.png", {"ISIG": (1885.5, 3400), "IMVO": (1888.5, 1300)})
-    yearly("parliament", "fig_parliament_by_year.png", {"ISIG": (1870.5, 400), "IMVO": (1890.5, 1250)})
+    yearly("religion", "fig_religion_by_year.png", {"ISIG": (1885.5, 3400), "IMVO": (1888.5, 1300)}, "(a)")
+    yearly("parliament", "fig_parliament_by_year.png", {"ISIG": (1870.5, 400), "IMVO": (1890.5, 1250)}, "(b)")
     tokenizer(); global_null()
     print("figures saved")

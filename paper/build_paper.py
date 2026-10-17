@@ -131,7 +131,10 @@ ctl5 = [t.loc["directional delta: all neutral controls"] for t in five]
 nol5 = [t.loc["directional delta: political concepts without land"] for t in five]
 house5 = [t.loc["directional delta: control:house"] for t in five]
 maxc = fc[fc.measure == "profile"].sort_values("forms", ascending=False).iloc[0]
+W3 = ["no", "one", "two", "three", "four", "five"]
 V2 = {
+ "NJSIG": W3[sum(c.p < 0.05 for c in jac5)], "NPSIG": W3[sum(row(t, P2, pr).p < 0.05 for t in five)],
+ "NBON": W3[sum(d.p < 0.01 for d in dirs5)],
  "JPVLO": ordinal(100 * min(c.percentile for c in jac5)), "JPVHI": ordinal(100 * max(c.percentile for c in jac5)),
  "JPVPLO": pv(min(c.p for c in jac5)), "JPVPHI": pv(max(c.p for c in jac5)),
  "PROFLO": ordinal(100 * min(c.percentile for c in prof4)), "PROFHI": ordinal(100 * max(c.percentile for c in prof4)),

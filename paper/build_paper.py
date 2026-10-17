@@ -61,6 +61,9 @@ big = fc[fc.measure == "profile"].sort_values("forms", ascending=False).iloc[0]
 floor_big = 1.645 * big.matched_set_sd
 baseline = float(fw.profile_shift.median())
 fcs = pd.read_csv(OUT / "framing_concepts_segnorm.csv")
+cat5 = [float(pd.read_csv(OUT / f).query("measure == 'profile' and concept == 'cattle'").percentile.iloc[0])
+        for f in ("framing_concepts.csv", "framing_concepts_segnorm.csv", "window2/framing_concepts.csv",
+                  "window2/framing_concepts_segnorm.csv", "framing_concepts_w5.csv")]
 par_u = fc[(fc.measure == "profile") & (fc.concept == "parliament")].iloc[0]
 par_j = fcs[(fcs.measure == "profile") & (fcs.concept == "parliament")].iloc[0]
 cat_u = fc[(fc.measure == "profile") & (fc.concept == "cattle")].iloc[0]
@@ -141,6 +144,7 @@ V2 = {
  "DIRLO": f"{min(d.obs for d in dirs5):+.2f}", "DIRHI": f"{max(d.obs for d in dirs5):+.2f}",
  "DIRPHI": pv(max(d.p for d in dirs5)), "CTRLP": f"{min(d.p for d in ctl5):.2f}", "CTRLMAX": f"{max(abs(d.obs) for d in ctl5):.2f}",
  "NOLANDLO": pv(min(d.p for d in nol5)), "NOLANDHI": pv(max(d.p for d in nol5)),
+ "HOUSE2LO": f"{min(d.obs for d in house5):+.2f}", "HOUSE2HI": f"{max(d.obs for d in house5):+.2f}", "HOUSEN": W3[sum(d.p < 0.001 for d in house5)],
  "HOUSELO": f"{min(d.obs for d in house5):.1f}", "HOUSEHI": f"{max(d.obs for d in house5):.1f}",
  "FLOORN": f"{1.645 * maxc.matched_set_sd:.2f}", "NMAX": str(int(maxc.forms)),
 }
@@ -151,7 +155,7 @@ V = {
  "PP3": pv(row(mt, P3, pr).p), "PJ3": pv(row(mt, P3, ja).p), "PP4": pv(row(ms, P3, pr).p), "PJ4": pv(row(ms, P3, ja).p),
  "W2LO": ordinal(100 * w2lo), "W2HI": ordinal(100 * w2hi), "W2PLO": pv(w2plo), "W2PHI": pv(w2phi),
  "PARU": ordinal(100 * par_u.percentile), "PARUP": pv(par_u.p_greater), "PARJ": ordinal(100 * par_j.percentile), "PARJP": pv(par_j.p_greater),
- "CATLO": ordinal(100 * cat_u.percentile), "CATHI": ordinal(100 * cat_j.percentile),
+ "CATLO": ordinal(100 * min(cat5)), "CATHI": ordinal(100 * max(cat5)),
  "DU": sg(dp_u.obs), "DMU": sg(dp_u.matched_mean), "DPU": pv(dp_u.p), "DCU": sg(dc_u.obs),
  "DJ": sg(dp_j.obs), "DMJ": sg(dp_j.matched_mean), "DPJ": pv(dp_j.p), "DCJ": sg(dc_j.obs),
  "FLOOR1": f"{floor1:.2f}", "FLOOR8": f"{floor_big:.2f}", "BASE": f"{baseline:.2f}", "NBIG": ("an " if int(big.forms) in (8, 11, 18) else "a ") + str(int(big.forms)),

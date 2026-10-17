@@ -1,0 +1,12 @@
+{
+  "kind": "ft",
+  "vector_size": 200,
+  "window": 5,
+  "epochs": 20,
+  "min_count": 5,
+  "min_n": 3,
+  "max_n": 6,
+  "bucket": 200000,
+  "negative": 5,
+  "sg": 1
+}

@@ -1,0 +1,185 @@
+draw 0: 3633 chunks, 166 issues, shared vocab 1076
+{'draw': 0, 'features': 'words', 'bal_acc': np.float64(0.914), 'bal_acc_sd': np.float64(0.014), 'auc': np.float64(0.975), 'modal_C': 10, 'perm_null_mean': 0.5, 'perm_null_95th': 0.511, 'perm_p': 0.032}
+{'draw': 0, 'features': 'chars', 'bal_acc': np.float64(0.925), 'bal_acc_sd': np.float64(0.01), 'auc': np.float64(0.979), 'modal_C': 10}
+{'draw': 0, 'features': 'shared', 'bal_acc': np.float64(0.86), 'bal_acc_sd': np.float64(0.009), 'auc': np.float64(0.933), 'modal_C': 1, 'perm_null_mean': 0.501, 'perm_null_95th': 0.508, 'perm_p': 0.032}
+{'draw': 0, 'features': 'clean', 'bal_acc': np.float64(0.83), 'bal_acc_sd': np.float64(0.013), 'auc': np.float64(0.907), 'modal_C': 1, 'perm_null_mean': 0.5, 'perm_null_95th': 0.505, 'perm_p': 0.032}
+draw 1: 3637 chunks, 165 issues, shared vocab 1080
+{'draw': 1, 'features': 'words', 'bal_acc': np.float64(0.915), 'bal_acc_sd': np.float64(0.01), 'auc': np.float64(0.975), 'modal_C': 10}
+{'draw': 1, 'features': 'chars', 'bal_acc': np.float64(0.927), 'bal_acc_sd': np.float64(0.013), 'auc': np.float64(0.979), 'modal_C': 10}
+{'draw': 1, 'features': 'shared', 'bal_acc': np.float64(0.854), 'bal_acc_sd': np.float64(0.013), 'auc': np.float64(0.929), 'modal_C': 1}
+{'draw': 1, 'features': 'clean', 'bal_acc': np.float64(0.833), 'bal_acc_sd': np.float64(0.015), 'auc': np.float64(0.91), 'modal_C': 1}
+draw 2: 3632 chunks, 159 issues, shared vocab 1081
+{'draw': 2, 'features': 'words', 'bal_acc': np.float64(0.917), 'bal_acc_sd': np.float64(0.022), 'auc': np.float64(0.978), 'modal_C': 10}
+{'draw': 2, 'features': 'chars', 'bal_acc': np.float64(0.935), 'bal_acc_sd': np.float64(0.022), 'auc': np.float64(0.982), 'modal_C': 10}
+{'draw': 2, 'features': 'shared', 'bal_acc': np.float64(0.863), 'bal_acc_sd': np.float64(0.023), 'auc': np.float64(0.936), 'modal_C': 1}
+{'draw': 2, 'features': 'clean', 'bal_acc': np.float64(0.839), 'bal_acc_sd': np.float64(0.02), 'auc': np.float64(0.918), 'modal_C': 1}
+{
+ "words": {
+  "imvo": [
+   "rulumeni",
+   "ba",
+   "mhlaimbi",
+   "bhulu",
+   "uku",
+   "mr",
+   "u mr",
+   "imvo",
+   "ngolwesi",
+   "bhayi",
+   "abantsundu",
+   "xhosa",
+   "uku ba",
+   "ni",
+   "wa",
+   "pamla",
+   "e",
+   "mvo",
+   "u rulumeni",
+   "ma",
+   "ndi",
+   "co",
+   "zabantsundu",
+   "ndu",
+   "amadoda"
+  ],
+  "isigidimi": [
+   "nje",
+   "ke",
+   "xosa",
+   "isigidimi",
+   "sigidimi",
+   "isigidimi samaxosa",
+   "samaxosa",
+   "lovedale",
+   "kute",
+   "kutiwa",
+   "ezo",
+   "imbali",
+   "kristu",
+   "bulu",
+   "kwa",
+   "tempile",
+   "kunene",
+   "tixo",
+   "ati amapepa",
+   "liti ipepa",
+   "ngqika",
+   "suke",
+   "kulo",
+   "e lovedale",
+   "ngoko"
+  ]
+ },
+ "shared": {
+  "imvo": [
+   "uku",
+   "imvo",
+   "ngolwesi",
+   "qonce",
+   "komani",
+   "zabantsundu",
+   "palamente",
+   "apa",
+   "abantsundu",
+   "oka",
+   "impahla",
+   "imali",
+   "mvo",
+   "ndu",
+   "rini",
+   "ontsundu",
+   "sir",
+   "ukuba",
+   "abamnyama",
+   "pamla",
+   "ndi",
+   "town",
+   "njengokuba",
+   "ingubo",
+   "nga"
+  ],
+  "isigidimi": [
+   "isigidimi",
+   "nje",
+   "sigidimi",
+   "xosa",
+   "lovedale",
+   "kute",
+   "kutiwa",
+   "ezo",
+   "ngqika",
+   "ngoko",
+   "tixo",
+   "kunene",
+   "bulu",
+   "hayi",
+   "iti",
+   "mfundo",
+   "kulo",
+   "ngosuku",
+   "liti",
+   "lendawo",
+   "kwati",
+   "kwa",
+   "kwase",
+   "namhla",
+   "malunga"
+  ]
+ },
+ "clean": {
+  "imvo": [
+   "uku",
+   "palamente",
+   "apa",
+   "impahla",
+   "abantsundu",
+   "imali",
+   "ukuba",
+   "rini",
+   "oka",
+   "ingubo",
+   "pamla",
+   "abamnyama",
+   "ndi",
+   "jabavu",
+   "ofisi",
+   "king",
+   "njengokuba",
+   "yoku",
+   "nga",
+   "mangesi",
+   "kukuba",
+   "hlanu",
+   "abantu",
+   "ngo",
+   "elingu"
+  ],
+  "isigidimi": [
+   "nje",
+   "kute",
+   "kutiwa",
+   "ezo",
+   "ngoko",
+   "tixo",
+   "mfundo",
+   "ngqika",
+   "bulu",
+   "ngosuku",
+   "inani",
+   "iti",
+   "kunene",
+   "kwase",
+   "hayi",
+   "kulo",
+   "lendawo",
+   "kwati",
+   "liti",
+   "lowo",
+   "sama",
+   "namhla",
+   "malunga",
+   "nabanye",
+   "mhlaumbi"
+  ]
+ }
+}

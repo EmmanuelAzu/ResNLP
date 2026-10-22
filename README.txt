@@ -1,5 +1,7 @@
-Imvo Zabantsundu vs Isigidimi sama-Xosa: does missionary control show in how political
-concepts are used and framed?  (COMS4054A / COMS7062A / COMS7066A, Project 2)
+What missionary control left in the language of two 1880s isiXhosa newspapers
+(Isigidimi sama-Xosa vs Imvo Zabantsundu)  -  COMS4054A / COMS7062A / COMS7066A, Project 2
+Question: did missionary control show in WHAT the papers printed (salience), in HOW they used
+words (framing), and does this history still shape how modern tokenizers read the text?
 
 REQUIREMENTS
   Python 3.10+ (developed on 3.13).  pip install -r requirements.txt
@@ -37,7 +39,7 @@ RUN ORDER  (from the repository root; scripts are in src/, results go to outputs
   python src/03_framing.py --segnorm   word-joining control (outputs/*_segnorm.*); run 10_matched_tests.py with the argument _segnorm
   python src/03_framing.py --window 5 --tag _w5 [--segnorm]   window-5 sensitivity (outputs/*_w5*); then 10_matched_tests.py _w5 / _w5_segnorm
   python paper/make_checklist.py       fill the NeurIPS checklist from the course template (paper/checklist.tex)
-  python paper/make_supp.py            supplementary tables S1-S3 (paper/supp.tex)
+  python paper/make_supp.py            supplementary tables S1-S7 and figures S1-S2 (paper/supp.tex)
   python paper/build_paper.py          write paper/paper.tex from paper_template.tex, taking every number from outputs/
   (cd paper && pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper)
 
@@ -46,11 +48,7 @@ SENSITIVITY
   the paper quotes the pooled percentile range and the directional p-values from it.  outputs/*_w5* hold window 5.
   Tokenizer contrasts: spelling alone is judged per WORD (the stripped text has the same words); historical text per CHARACTER.
 
-MODERN DATA" below)
-  python src/06_classifier.py     grouped nested-CV classifier (supporting evidence)
-  python src/07_figures.py        figures used in the write-up
-
-ARCHIVE DOIs (Schoots et al., 2023): Isigidimi https://doi.org/10.25375/uct.22332271 ; Imvo https://doi.org/10.25375/uct.22332268
+ARCHIVE DOIs (Schoots et al., 2023a): Isigidimi https://doi.org/10.25375/uct.22332271 ; Imvo https://doi.org/10.25375/uct.22332268
 
 MODERN DATA (for 05_fertility.py)
   mkdir -p data/modern && cd data/modern

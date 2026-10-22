@@ -147,8 +147,8 @@ ne_path = OUT / "framing_matched_tests_noendlu.csv"
 if ne_path.exists():
     ne = pd.read_csv(ne_path).set_index("test")
     ne_dir, ne_house = ne.loc["directional delta: all political concepts"], ne.loc["directional delta: control:house"]
-    ENDLU = (f"; without the anchor \\emph{{endlu}} (`in the house') the political lean is {ne_dir.obs:+.2f} ($p={pv(ne_dir.p)}$)"
-             f" and \\emph{{house}} {ne_house.obs:+.2f} ($p={pv(ne_house.p)}$)")
+    ENDLU = (f"; dropping the anchor \\emph{{endlu}} (`in the house') leaves both leans in place "
+             f"({ne_dir.obs:+.2f} and {ne_house.obs:+.2f})")
 else:
     ENDLU = ""
 V3 = {"LETPREC": f"{lchk['genuine_letters']} of {lchk['checked']}",

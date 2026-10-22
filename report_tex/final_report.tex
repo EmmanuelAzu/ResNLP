@@ -28,54 +28,77 @@
 
 \section{Abstract}
 {\bf \looseness=-1
-Where did missionary control leave its trace in the earliest isiXhosa press: in what papers covered (salience) or how they used words (framing)? We compare the missionary \emph{Isigidimi sama-Xosa} with \emph{Imvo Zabantsundu}, founded free of missionary control. Salience separates the papers: Imvo uses parliamentary vocabulary 3.3 times as often; Isigidimi religious vocabulary four times as often (exploratory). Neither survives correction for 15 tests; the religious gap exceeds era drift and matches the archive's account, the parliamentary gap exceeds drift on its point estimate only. Framing evidence is weaker: embedding spaces differ globally and no single concept is robustly shifted; a lean of political words towards religious contexts in Isigidimi survives correction in three of five settings, but in at most one without \emph{land}, and a neutral control leans further. Historical text costs modern tokenizers 1.7--12\% more subwords per character; spelling alone raises it only for the African-language model. The papers differ in what they printed; whether missionary control changed how political language was used is below our test's detection floor.}
+From 1884 the missionary \emph{Isigidimi sama-Xosa} and the African-owned \emph{Imvo Zabantsundu} ran side by side, both with African editors. We ask whether missionary control shows in \emph{what} they printed (salience) or in \emph{how} they used words (framing). Isigidimi uses religious words about four times as often (exploratory), and Imvo parliamentary words 3.3 times as often (neither survives correction for 15 tests). The religious gap holds in readers' letters too, so it reflects who wrote to each paper, not only the editors. Framing evidence is weak: a religious lean of Isigidimi's political words rests on one word, \emph{umhlaba}, which the papers use in different senses, and a neutral control leans further. Modern tokenizers charge 1.7--12\% more for this text; old spelling alone penalises only the African-language model. Control shaped what the papers printed; whether it shaped how they wrote lies below our test's detection floor.}
 
 \section{Introduction and Background}\label{Intro}
 \looseness=-1
-\textbf{Where did missionary control leave its trace in the language of the earliest isiXhosa press?} The IsiXhosa Intellectual Traditions archive \citep{schoots2023} holds South Africa's earliest African-language newspapers. \emph{Isigidimi sama-Xosa} was a missionary paper; \emph{Imvo Zabantsundu}, founded in 1884 by Isigidimi's former editor J.\,T.~Jabavu \citep[p.~71]{schoots2023b}, was the first African-owned paper, free ``from any missionary control'' \citep[p.~55]{schoots2023}. The archive's authors see Isigidimi's origin ``revealed in the frequency of church and Bible stories'' \citep[p.~57]{schoots2023}. We add a controlled test, using the communication-research distinction between \emph{agenda-setting}, what is covered \citep{mccombs1972}, and \emph{framing}, how it is presented \citep{entman1993}. We measure the first as \textbf{salience} (a concept's vocabulary rate), the second as the company a word keeps in embedding space \citep{hamilton2016}. Computational work separating them is mainly on modern, high-resource news \citep{card2015,field2018}. For these papers, \citet{schoots2023b} tracked root-word frequencies, showing how editors and elections shaped identity vocabulary. We add frequency-matched baselines for salience, an embedding-based framing test against permuted and matched nulls, and an audit of what historical spelling costs modern tokenizers, which already charge low-resource languages more \citep{petrov2023,rust2021}. \textbf{H1} Salience of political and religious vocabulary differs. \textbf{H2} Framing of political concepts differs, Isigidimi's lying closer to religious contexts. \textbf{H3} Historical text and its spelling raise tokenizer cost.
+\textbf{Where did missionary control leave its trace in the language of the earliest isiXhosa press?} The IsiXhosa Intellectual Traditions archive \citep{schoots2023} makes this testable. \emph{Isigidimi sama-Xosa} was a missionary paper; \emph{Imvo Zabantsundu}, founded in 1884 by Isigidimi's former editor J.\,T.~Jabavu, was the first African-owned isiXhosa paper, free ``from any missionary control'' \citep[p.~55]{schoots2023}. From late 1884 both had African editors, Gqoba and Jabavu \citep[p.~71]{schoots2023b}, so comparing them isolates \emph{control}, not the editor's identity.
+
+Communication research separates \emph{agenda-setting}, what a paper covers \citep{mccombs1972}, from \emph{framing}, how it presents it \citep{entman1993}. We measure the first as \textbf{salience}, how often a topic's words appear, and the second with word embeddings, which place a word by the company it keeps \citep{hamilton2016}. Such studies mostly use modern, high-resource news \citep{card2015,field2018}; for these papers, \citet{schoots2023b} counted root words over time. We add controls that make both kinds of difference testable, a split into readers' letters and the rest to ask \emph{how} control worked, and an audit of what this text costs modern tokenizers \citep{petrov2023,rust2021}. \textbf{H1}: the papers differ in how often they use political and religious words. \textbf{H2}: Isigidimi's political words sit closer to religious contexts. \textbf{H3}: historical text and its spelling raise tokenizer cost.
+
+\begin{table}[t]
+\centering\footnotesize
+\begin{tabular}{@{}p{1.2in}p{2.0in}@{}}
+\toprule
+\textbf{Threat} & \textbf{Response} \\ \midrule
+Papers cover different years & Only Nov 1884--1888; Imvo pages drawn month by month \\
+Imvo is 4.6$\times$ larger & Ten Imvo samples of Isigidimi's size \\
+Frequency distorts comparisons & Rank results among 2000 frequency-matched random word sets (cf.\ \citealp{monroe2008}) \\
+Papers change over time & Measure each paper's own drift in other years \\
+Embeddings vary by run & Tune for stability \citep{antoniak2018}; average ten runs \\
+Effects may not be political & Four neutral control concepts \\
+\bottomrule
+\end{tabular}
+\caption{Threats to a fair comparison, and our response.}
+\label{tab:design}
+\end{table}
 
 \section{Methods}
 \looseness=-1
-\textbf{Data.} We use the isiXhosa blocks of the archive's human-corrected transcriptions (no automated spell-checking; \citealp[p.~59]{schoots2023}); word division varies (Table S1). The window runs from Imvo's first issue (1 November 1884) to 1888; Isigidimi's 1886 editions are missing \citep[p.~59]{schoots2023}. Gqoba edited Isigidimi and Jabavu Imvo in this window \citep[p.~71]{schoots2023b}, so both had African editors; ownership differs. Isigidimi has 286{,}663 tokens, Imvo 1.31M; per month we draw Imvo pages matching Isigidimi's size, ten times.
+\textbf{Data.} We use the archive's human-corrected transcriptions, which were not spell-checked \citep[p.~59]{schoots2023}, from 1 November 1884 to 1888 (Isigidimi's 1886 editions are missing): 286{,}663 tokens of Isigidimi and 1.31M of Imvo.
 
-\textbf{Salience.} Concepts are stems (Table S1) adapting \citet{schoots2023b} and inspecting the most frequent matched forms for false positives: 10 political concepts fixed before testing, four neutral controls, and exploratory religion (\emph{tixo}, \emph{kristu}): anticipated by the archive \citep[p.~57]{schoots2023} but selected by an issue-grouped nested-CV classifier trained on the test window (0.83 balanced accuracy). Rate ratios carry issue-bootstrap CIs and are ranked against 2000 matched sets (random word types of equal combined frequency, an alternative to log-odds ratios, \citealp{monroe2008}); the 15 tests are uncorrected.
+\textbf{Salience.} Concepts are word stems adapted from \citet{schoots2023b} (Table S1): ten political concepts fixed in advance, four neutral controls, and religion (\emph{tixo}, \emph{kristu}). Religion is exploratory: the archive's authors expect it \citep[p.~57]{schoots2023}, but a classifier trained on the same years selected it. Ratios carry issue-bootstrap CIs.
 
-\textbf{Framing.} We use fastText skip-gram \citep{bojanowski2017}, more stable than word2vec here (seed stability, top-10 overlap: 0.83 vs 0.64). Hyper-parameters (dim 400, window 1, 20 epochs) were tuned for seed stability \citep{antoniak2018} on out-of-window text. A word's \emph{profile shift} is $1-r$ between its cosine profiles over the 500 most frequent shared words in the two spaces (adapted from \citealp{hamilton2016b}); a concept's shift is the unweighted mean of its forms' shifts. The null pools issues from both papers and reassigns them to two token-balanced groups (50 permutations; cf.\ \citealp{dubossarsky2017}); concepts are also ranked against 2000 matched sets. Neighbour overlap (Jaccard) follows \citet{gonen2020}; a directional test compares similarity to religious and political anchors (Table S4).
+\textbf{Letters.} A letter opens by addressing the editor (\emph{nkosi mhleli \dots\ kaundifakele}, `sir, editor \dots\ please print') and ends with a signature. This rule found 28 of 30 genuine letters in a random hand check (Table S5); letters are 6\% of Isigidimi and 7\% of Imvo.
 
-\textbf{Tokenizers.} On modern isiXhosa news \citep{adelani2023} we count subwords for XLM-R \citep{conneau2020}, Serengeti \citep{adebara2023} and mBERT for (a) modern text, (b) the same with aspiration stripped and (c) historical text; (a to b) per word, (a to c) per character, since historical word division differs.
+\textbf{Framing.} We train fastText embeddings \citep{bojanowski2017} (window 1, 400 dimensions; more stable than word2vec). A word's \emph{profile shift} is $1-r$ between its similarities to 500 common words in each paper (adapted from \citealp{hamilton2016b}), and a concept's shift is the mean over its forms; \emph{neighbour overlap} compares its ten nearest neighbours \citep{gonen2020}. Chance comes from shuffling issues between papers \citep{dubossarsky2017}. A directional test asks whether political words sit nearer religious or political anchor words (Table S4). To read it, we count religious (heaven, God) and property or political words (title, law) within ten words of \emph{umhlaba}.
+
+\textbf{Tokenizers.} We count subwords for XLM-R \citep{conneau2020}, Serengeti \citep{adebara2023} and mBERT on modern news \citep{adelani2023}, on the same news in old spelling (per word) and on our text (per character, as word division differs).
 
 \begin{figure*}[t]
 \centering
-\includegraphics[width=3.05in]{fig_salience.png}\hfill
-\includegraphics[width=3.05in]{fig_framing.png}
-\caption{Agenda (left) is a clearer signal than framing (right). Left: Imvo/Isigidimi rate ratio (95\% CI); filled = $p<0.05$ uncorrected. Right (markers as left): profile-shift percentile among matched sets; `too rare' = too few occurrences, `seed word' = anchor source, untestable.}
-\label{fig:two}
+\includegraphics[width=3.0in]{fig_salience.png}\hfill
+\includegraphics[width=3.15in]{fig_letters.png}
+\caption{What the papers printed. Left: Imvo/Isigidimi rate ratio (95\% CI); filled: $p<0.05$ against matched sets, uncorrected. Right: the religious gap holds in readers' letters as in the rest of each paper.}
+\label{fig:agenda}
 \end{figure*}
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=2.1in]{fig_religion_by_year.png}\hfill
-\includegraphics[width=2.1in]{fig_parliament_by_year.png}\hfill
+\includegraphics[width=2.1in]{fig_land_senses.png}\hfill
 \includegraphics[width=2.1in]{fig_tokenizer_cost.png}
-\caption{(a) Religious vocabulary (per million tokens) was falling in Isigidimi long before 1884. (b) Parliamentary vocabulary (per million tokens) appears in 1883; light blue: twice-monthly issues \citep[p.~59]{schoots2023}. (c) Subword cost vs modern text: spelling alone (per word) raises it only for Serengeti; historical text (per character) for all.}
-\label{fig:two2}
+\caption{(a) Isigidimi's religious vocabulary was falling long before Imvo (light blue: twice-monthly issues, \citealp[p.~59]{schoots2023}). (b) Isigidimi uses \emph{umhlaba} more often near religious words, Imvo near property and political words. (c) Old spelling (per word) raises cost only for Serengeti; historical text (per character) for all.}
+\label{fig:how}
 \end{figure*}
 
 \section{Results}
 \looseness=-1
-\textbf{Salience (H1).} Imvo uses parliamentary vocabulary 3.3$\times$ as often ($p=0.018$) and Isigidimi religious vocabulary four times as often (0.24$\times$, $p=0.020$); neither survives correction for 15 tests ($p<0.003$) and nothing else lies beyond the matched sets (Fig.~\ref{fig:two}, left). Across held-out eras (Isigidimi 1876--83, Imvo 1889--94), Isigidimi's parliamentary rate moves 1.8$\times$ (CI to 5.0, overlapping the gap); \emph{vote} rises 8.5$\times$ within Isigidimi and government falls in both papers, so we interpret neither (Table S3).
+\textbf{H1: the papers print different things.} Isigidimi uses religious words 4.2 times as often as Imvo ($p=0.020$ against matched sets) and Imvo parliamentary words 3.3 times as often ($p=0.018$; Fig.~\ref{fig:agenda}). No other concept differs beyond chance; neither gap survives correction for 15 tests ($p<0.003$). The religious gap exceeds each paper's own drift between eras; the parliamentary gap may not (Isigidimi drifts 1.8$\times$, CI to 5.0; Table S3). The religious gap holds in letters (Imvo/Isigidimi 0.33, CI 0.17--0.65) as in the rest (0.22); parliament is too rare in Isigidimi's letters to judge (2 uses).
 
-\textbf{Framing (H2).} Mean profile shift (0.348) exceeds the permutation null (0.230): a global gap of 0.118, so we test concepts against matched sets (Fig.~\ref{fig:two}, right). No single concept is robust: parliament reaches the 96th percentile ($p=0.045$), while a neutral control (cattle) reaches the 90th--99th across settings. Pooled parliament and vote exceed matched sets on neighbour overlap (Jaccard; 94th--98th percentile, $p<0.05$ in three of five settings) but less consistently on profile (86th--99th at windows 1--2, 62nd at window 5; $p<0.05$ in one; Table S2). Political concepts lean towards religious anchors in Isigidimi in all five settings (pooled $\Delta$ +0.44 to +0.76 in $z$-score units; $p\leq0.016$), surviving Bonferroni over five settings ($p<0.01$) in three, but without \emph{land} $p$ is 0.010--0.256 and the control \emph{house} leans further ($\Delta$ +0.84 to +1.51, $p<0.001$ in four; Table S2). A one-word concept must shift by 0.15 (1.645 matched-set SDs, normal approximation), above the global gap.
+\textbf{H2: framing differences are weak and not specific.} Word use differs overall (profile shift 0.348 against 0.230 by chance), but no concept stands out: parliament reaches the 96th percentile of matched sets, the control \emph{cattle} the 90th--99th (Fig.~S1). Neighbour overlap for parliament and vote shifts in three of five settings, profile shift in one. Political words lean towards religious anchors in Isigidimi in all five settings ($\Delta$ +0.44 to +0.76 $z$-units; Bonferroni-significant across the five in three; Table S2). But without \emph{land} the lean is rarely significant ($p=0.010$--$0.256$), the control \emph{house} leans further (+0.84 to +1.51); dropping the anchor \emph{endlu} (`in the house') leaves both leans in place (+0.62 and +1.04), and \emph{umhlaba} sits near religious words in 3.4\% of Isigidimi's uses (Imvo 0.9\%) and near property or political words in 13\% (Imvo 27\%; Fig.~\ref{fig:how}b). A one-word concept must shift by 0.15 (1.645 matched-set SDs) to be detected, more than the overall gap (0.118).
 
-\textbf{Tokenizers (H3).} Per word, stripping aspiration raises Serengeti's cost by 2.2\%, lowers XLM-R's and mBERT's ($-$2.2\%, $-$3.4\%); per character, historical text costs 12.4\%, 4.1\% and 1.7\% more for Serengeti, XLM-R and mBERT (CIs $\pm0.5$\%; Fig.~\ref{fig:two2}c).
+\textbf{H3: historical text costs more.} Per character, our text needs 12.4\%, 4.1\% and 1.7\% more subwords with Serengeti, XLM-R and mBERT. Old spelling alone raises Serengeti's cost by 2.2\% per word but lowers XLM-R's and mBERT's ($-$2.2\%, $-$3.4\%; Fig.~\ref{fig:how}c).
 
 \section{Discussion}
 \looseness=-1
-\textbf{Agenda more than framing (H1, H2).} The papers differ clearly in what they printed, as missionary control would predict; whether it changed how contributors wrote, we cannot show. The religious gap matches the archive's account \citep[p.~57]{schoots2023}; the parliamentary gap has no such corroboration. Neither is causal: Isigidimi's religious vocabulary fell from 1876, long before Imvo, and rebounded in 1884--85, coinciding with Gqoba's editorship and Imvo's competition; parliamentary vocabulary enters Isigidimi in 1883--84, late in Jabavu's 1881--84 editorship \citep[p.~71]{schoots2023b}, when it appeared twice monthly \citep[p.~59]{schoots2023} and before the 1884 Cape election \citep{schoots2023b}; editor and election effects cannot be separated. A gap only in editorials would show the editors' voice; one in letters too, different contributor bases (editors' selection or writers' choice, inseparable in print).
+\textbf{How control worked (H1).} Control left a clear trace in what the papers printed, and not only through the editors: readers who wrote to Isigidimi used religious words three times as often as Imvo's, so the papers drew on, or chose, different writers. The gap is not a reaction to Imvo: Isigidimi's religious vocabulary had been falling since 1876, and rose again in 1884--85, around its change of editor and Imvo's arrival (Fig.~\ref{fig:how}a). Parliamentary words entered Isigidimi in 1883--84, late in Jabavu's editorship, when it appeared twice monthly and before the 1884 Cape election \citep{schoots2023b}; these causes cannot be separated (Fig.~S2).
 
-\textbf{What the embeddings see (H2).} The lean is not specific to political words: the control \emph{house} leans further, possibly via the anchor \emph{endlu} (Table S4). Narrow windows favour grammatical similarity; local context may differ, overall position barely. The lean also depends on \emph{land} (\emph{umhlaba}, also `earth', `world') and perhaps mixed-register anchors, for a speaker to check.
+\textbf{What the embeddings see (H2).} The framing signal looks like a difference in meaning, not slant. Isigidimi more often uses \emph{umhlaba} for the earth of creation, Imvo for land under title and law; this alone would place the word differently in each model and could produce the political `lean'. A neutral control behaves similarly, and narrow windows mostly capture grammar. With about 300k tokens per paper, we can rule out large framing differences, not small ones.
 
-\textbf{Responsible NLP (H3).} Spelling alone costs only Serengeti, whose vocabulary has twice XLM-R's share of \emph{th}/\emph{kh}/\emph{ph} entries (1.9\% vs 0.9\%): a one-model hypothesis (MasakhaNEWS overlap possible). Normalising spelling would erase the orthography the archive preserves, irreversibly (old \emph{t} may be modern \emph{t} or \emph{th}). Shifts describe these papers, not isiXhosa speakers; cultural readings without speaker review would be extractive \citep{bird2020}. The archive's proposed machine-learning labelling \citep[p.~61]{schoots2023}, and any model-based analysis of it, would inherit both the subword cost and the extractive risk. Limitations: two papers, one window, a missing year, no editor metadata, era-confounded held-out windows, a modern-news domain mismatch, unreviewed stems and glosses (\emph{rulumente}: `government' here, `parliament' in \citealp[p.~62]{schoots2023}). Whether missionary control changed political language lies below our test's detection floor.
+\textbf{Responsible NLP (H3).} Old spelling penalises only the model built for African languages, perhaps because Serengeti's vocabulary has twice XLM-R's share of \emph{th}/\emph{kh}/\emph{ph} pieces (1.9\% vs 0.9\%); this is a one-model hypothesis, and Serengeti may have seen MasakhaNEWS in training. Normalising spelling is no fix: it would erase the orthography the archive preserves, irreversibly (old \emph{t} may be modern \emph{t} or \emph{th}). The archive's proposed machine-learning labelling \citep[p.~61]{schoots2023} would inherit this cost. Our results describe two papers, not isiXhosa speakers; cultural readings without speaker review would be extractive \citep{bird2020}.
+
+\textbf{Limitations and conclusion.} We study two papers in one window, with a missing year, no editor metadata, a heuristic letter split, a modern-news domain mismatch and stems not yet reviewed by a first-language speaker (\emph{rulumente} is `government' here, `parliament' in \citealp[p.~62]{schoots2023}). Within these limits, control shaped what these papers printed, through their writers as well as their editors; whether it shaped how political language was used lies below our test's detection floor.
 
 \bibliographystyle{apacite}
 \setlength{\bibleftmargin}{.125in}
@@ -94,7 +117,7 @@ Generative AI (Claude, by Anthropic, used through the Claude Code tool) helped t
 \item {\bf Claims}
     \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The abstract and introduction state three hypotheses (H1 salience, H2 framing, H3 tokenizer cost) and report what was found, including the negative results (framing is weak and non-specific; the directional lean survives correction in three of five settings, but in at most one without land, and a neutral control leans further). Claims about meaning are scoped as unreviewed by a first-language speaker.
+    \item[] Justification: The abstract and introduction state three hypotheses (H1 salience, H2 framing, H3 tokenizer cost) and report what was found: the religious gap holds in readers' letters as well as in the rest of each paper; and the negative results (framing is weak and non-specific; the directional lean survives correction in three of five settings, but in at most one without land, and a neutral control leans further; the lean rests on umhlaba, which the two papers use in different senses). Claims about meaning are scoped as unreviewed by a first-language speaker.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the abstract and introduction do not include the claims made in the paper.
@@ -106,7 +129,7 @@ Generative AI (Claude, by Anthropic, used through the Claude Code tool) helped t
 \item {\bf Limitations}
     \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The Discussion ends with limitations (two newspapers, one window, 1886 Isigidimi editions missing, era-confounded held-out windows, no editor metadata, a modern-news domain mismatch, possible Serengeti pretraining overlap, unreviewed stems and glosses) and states the detection floor of the framing test.
+    \item[] Justification: The Discussion ends with limitations (two newspapers, one window, 1886 Isigidimi editions missing, no editor metadata, a heuristic letter split, a modern-news domain mismatch, possible Serengeti pretraining overlap, unreviewed stems and glosses; Table S3 adds the era-confounded held-out windows) and states the detection floor of the framing test.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper. 
@@ -184,7 +207,7 @@ Generative AI (Claude, by Anthropic, used through the Claude Code tool) helped t
 \item {\bf Experiment Statistical Significance}
     \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Salience has issue-level bootstrap CIs; framing uses a permutation null (50 permutations) and 2000 frequency-matched word sets; tokenizer changes have bootstrap CIs (within about 0.5\%, stated in the Results). The 15 salience tests are uncorrected and none survives Bonferroni ($p<0.003$); the framing tests are reported uncorrected, except the directional test, which survives Bonferroni over five settings ($p<0.01$) in three, but in at most one without land, and a neutral control leans further; the paper rests its argument on robustness and corroboration. The held-out comparison is era-confounded and is presented as an era-sensitivity check, with within-paper drift (including vote's large drift) as calibration; the classifier was trained on the test window, so religion is exploratory.
+    \item[] Justification: Salience has issue-level bootstrap CIs; framing uses a permutation null (50 permutations) and 2000 frequency-matched word sets; tokenizer changes have bootstrap CIs (within about 0.5\%, stated in the Results). The 15 salience tests are uncorrected and none survives Bonferroni ($p<0.003$); the framing tests are reported uncorrected, except the directional test, which survives Bonferroni over five settings ($p<0.01$) in three, but in at most one without land, and a neutral control leans further; the paper rests its argument on robustness and corroboration. The held-out comparison is era-confounded and is presented as an era-sensitivity check, with within-paper drift (including vote's large drift) as calibration; the classifier was trained on the test window, so religion is exploratory. The letters/rest comparison and the senses of umhlaba use issue-bootstrap CIs only (not matched sets); the letter detector was checked by hand on 30 random detections (28 genuine), and its recall was not measured.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.
@@ -361,7 +384,40 @@ religion & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 2466 & 547 & 0.22 (0.18
 \end{tabular}
 
 \subsection*{S4. Anchors for the directional test}
-Anchors are the 15 top-PMI neighbours of each seed pair in held-out text (Isigidimi 1876-83 + Imvo 1889-94), frozen before testing. Religious (15 words; seeds \emph{tixo}, \emph{kristu}): \emph{sikelela}, \emph{sindisa}, \emph{ukumkanikazi}, \emph{inkosazana}, \emph{buka}, \emph{oyingcwele}, \emph{lilizwi}, \emph{msindisi}, \emph{nelizwi}, \emph{kwelizwi}, \emph{wanga}, \emph{lika}, \emph{yesu}, \emph{izono}, \emph{yehova}. Political (15 words; seeds \emph{palamente}, \emph{voti}): \emph{emqulwini}, \emph{wonyulo}, \emph{lonyulo}, \emph{elugqatsweni}, \emph{eziqingata}, \emph{lokunyula}, \emph{kwesase}, \emph{lokuvota}, \emph{endlu}, \emph{kwamagama}, \emph{ukumela}, \emph{izayo}, \emph{ngalomteto}, \emph{nawupina}, \emph{kwabase}. Seed words cannot themselves be tested (Fig.~1, right). Political anchors include \emph{endlu} (`in the house'), which may favour the neutral control \emph{house}, and \emph{ngalomteto}, which contains the \emph{law} stem. Glosses are unverified: two religious anchors (\emph{ukumkanikazi}, \emph{inkosazana}) may reflect royal rather than religious register, and several anchors on both sides (\emph{lika}, \emph{buka}; \emph{nawupina}, \emph{kwabase}, \emph{izayo}) may be grammatical rather than topical, consistent with narrow-window PMI capturing grammar. All await speaker review.
+Anchors are the 15 top-PMI neighbours of each seed pair in held-out text (Isigidimi 1876-83 + Imvo 1889-94), frozen before testing. Religious (15 words; seeds \emph{tixo}, \emph{kristu}): \emph{sikelela}, \emph{sindisa}, \emph{ukumkanikazi}, \emph{inkosazana}, \emph{buka}, \emph{oyingcwele}, \emph{lilizwi}, \emph{msindisi}, \emph{nelizwi}, \emph{kwelizwi}, \emph{wanga}, \emph{lika}, \emph{yesu}, \emph{izono}, \emph{yehova}. Political (15 words; seeds \emph{palamente}, \emph{voti}): \emph{emqulwini}, \emph{wonyulo}, \emph{lonyulo}, \emph{elugqatsweni}, \emph{eziqingata}, \emph{lokunyula}, \emph{kwesase}, \emph{lokuvota}, \emph{endlu}, \emph{kwamagama}, \emph{ukumela}, \emph{izayo}, \emph{ngalomteto}, \emph{nawupina}, \emph{kwabase}. Seed words cannot themselves be tested (Fig.~S1). Political anchors include \emph{endlu} (`in the house'), which might have favoured the neutral control \emph{house}; re-running without \emph{endlu} leaves both the political lean and \emph{house}'s lean in place (outputs/framing\_matched\_tests\_noendlu.csv), and \emph{ngalomteto}, which contains the \emph{law} stem. Glosses are unverified: two religious anchors (\emph{ukumkanikazi}, \emph{inkosazana}) may reflect royal rather than religious register, and several anchors on both sides (\emph{lika}, \emph{buka}; \emph{nawupina}, \emph{kwabase}, \emph{izayo}) may be grammatical rather than topical, consistent with narrow-window PMI capturing grammar. All await speaker review.
 \normalsize
+
+\subsection*{S5. Readers' letters versus the rest of each paper}
+Letters are detected by src/12\_letters.py: a letter opens by addressing the editor (vocative \emph{mhleli} or \emph{mcokeli}, not \emph{u/ku/ngu mhleli}, which refer to him) or by asking for insertion (\emph{ndifakele}, \emph{kaundifakele}), and ends at the signature (a run of very short lines). A hand check of 30 random detections found 28 genuine letters; the errors were usifake umkala (horse advert: `put a bit on it'); no mhleli wepepa lama bhulu ('and the editor of the Boer paper'). Recall was not measured. Imvo is restricted to the months in which Isigidimi has text; CIs from 4000 issue resamples; rates are not tested against matched sets. Hits = concept uses.\\[2pt]
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+Part & Concept & Isig.\ tokens & Isig.\ hits & Imvo tokens & Imvo hits & Imvo/Isig. & 95\% CI \\ \midrule
+letters & parliament & 18,344 & 2 & 70,475 & 48 & 6.25 & 2.09--16.92 \\
+letters & religion & 18,344 & 52 & 70,475 & 66 & 0.33 & 0.17--0.65 \\
+letters & vote & 18,344 & 4 & 70,475 & 58 & 3.77 & 1.04--18.93 \\
+letters & government & 18,344 & 13 & 70,475 & 115 & 2.30 & 1.14--7.18 \\
+rest of paper & parliament & 268,319 & 111 & 936,998 & 1280 & 3.30 & 2.53--4.51 \\
+rest of paper & religion & 268,319 & 394 & 936,998 & 306 & 0.22 & 0.14--0.34 \\
+rest of paper & vote & 268,319 & 172 & 936,998 & 821 & 1.37 & 0.79--2.83 \\
+rest of paper & government & 268,319 & 299 & 936,998 & 902 & 0.86 & 0.67--1.13 \\
+\bottomrule
+\end{tabular}
+
+\subsection*{S6. Which sense of \emph{umhlaba}?}
+For every use of the land stem (\emph{mhlaba}) we look at the 10 tokens either side. Religious cues: \emph{izulu}, \emph{lizulu}, \emph{nezulu}, and words containing \emph{zulwini}, \emph{tixo}, \emph{kristu}, \emph{yesu}, \emph{msindisi}, \emph{ngcwele} (bare \emph{zulu} is excluded: \emph{kwa zulu} is Zululand). Property/political cues: words containing \emph{taitile}, \emph{mteto}, \emph{rulumente}, \emph{palamente}, \emph{mantyi}, \emph{fama}, \emph{voti}, \emph{nyulo}, \emph{rafu}, \emph{lokishi}. Most uses have neither cue. Example lines for a speaker to check are in outputs/land\_kwic.md.\\[2pt]
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Paper & Cue & Uses & Share & 95\% CI \\ \midrule
+Imvo & religious & 1408 & 0.9\% & 0.4--1.4\% \\
+Imvo & property/political & 1408 & 26.8\% & 23.8--29.7\% \\
+Isigidimi & religious & 353 & 3.4\% & 1.7--5.3\% \\
+Isigidimi & property/political & 353 & 12.7\% & 8.5--17.7\% \\
+\bottomrule
+\end{tabular}
+
+\begin{figure}[h]\centering
+\includegraphics[width=3.45in]{fig_framing.png}\hfill\includegraphics[width=2.3in]{fig_parliament_by_year.png}
+\caption*{\textbf{Figure S1} (left): profile-shift percentile of each concept among matched sets (markers as in Fig.~1, left); `too rare' = too few occurrences, `seed word' = anchor source, untestable. \textbf{Figure S2} (right): parliamentary vocabulary per million tokens; it enters Isigidimi in 1883 (light blue: twice-monthly issues).}
+\end{figure}
 
 \end{document}

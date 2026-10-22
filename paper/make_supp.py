@@ -72,9 +72,43 @@ tex = lambda ws: ", ".join("\\emph{%s}" % w for w in ws)
 lines += ["\\subsection*{S4. Anchors for the directional test}",
           "Anchors are the 15 top-PMI neighbours of each seed pair in held-out text (%s), frozen before testing. "
           "Religious (%d words; seeds \\emph{tixo}, \\emph{kristu}): %s. Political (%d words; seeds \\emph{palamente}, \\emph{voti}): %s. "
-          "Seed words cannot themselves be tested (Fig.~1, right). Political anchors include \\emph{endlu} (`in the house'), "
+          "Seed words cannot themselves be tested (Fig.~S1). Political anchors include \\emph{endlu} (`in the house'), "
           "which may favour the neutral control \\emph{house}, and \\emph{ngalomteto}, which contains the \\emph{law} stem. Glosses are unverified: two religious anchors (\\emph{ukumkanikazi}, \\emph{inkosazana}) may reflect royal rather than religious register, and several anchors on both sides (\\emph{lika}, \\emph{buka}; \\emph{nawupina}, \\emph{kwabase}, \\emph{izayo}) may be grammatical rather than topical, consistent with narrow-window PMI capturing grammar. All await speaker review." % (
               anc["derived_from"], len(anc["religious"]), tex(anc["religious"]), len(anc["political"]), tex(anc["political"])),
           "\\normalsize", ""]
+lchk = json.loads((OUT / "letters_check.json").read_text())
+ls = pd.read_csv(OUT / "letters_salience.csv")
+lines += ["\\subsection*{S5. Readers' letters versus the rest of each paper}",
+          "Letters are detected by src/12\\_letters.py: a letter opens by addressing the editor (vocative \\emph{mhleli} or \\emph{mcokeli}, "
+          "not \\emph{u/ku/ngu mhleli}, which refer to him) or by asking for insertion (\\emph{ndifakele}, \\emph{kaundifakele}), and ends at the "
+          "signature (a run of very short lines). A hand check of %d random detections found %d genuine letters; the errors were %s. "
+          "Recall was not measured. Imvo is restricted to the months in which Isigidimi has text; CIs from 4000 issue resamples; "
+          "rates are not tested against matched sets. Hits = concept uses.\\\\[2pt]" % (
+              lchk["checked"], lchk["genuine_letters"], "; ".join(lchk["false_positives"]).replace("'", "`", 1)),
+          "\\begin{tabular}{@{}llrrrrrr@{}}", "\\toprule",
+          "Part & Concept & Isig.\\ tokens & Isig.\\ hits & Imvo tokens & Imvo hits & Imvo/Isig. & 95\\% CI \\\\ \\midrule"]
+for _, r in ls.iterrows():
+    lines.append(f"{'letters' if r.part == 'letters' else 'rest of paper'} & {r.concept} & {r.tokens_isig:,} & {r.hits_isig} & "
+                 f"{r.tokens_imvo:,} & {r.hits_imvo} & {r.ratio:.2f} & {r.ci_lo:.2f}--{r.ci_hi:.2f} \\\\")
+lines += ["\\bottomrule", "\\end{tabular}", ""]
+
+sen = pd.read_csv(OUT / "land_senses.csv")
+lines += ["\\subsection*{S6. Which sense of \\emph{umhlaba}?}",
+          "For every use of the land stem (\\emph{mhlaba}) we look at the 10 tokens either side. Religious cues: \\emph{izulu}, \\emph{lizulu}, "
+          "\\emph{nezulu}, and words containing \\emph{zulwini}, \\emph{tixo}, \\emph{kristu}, \\emph{yesu}, \\emph{msindisi}, \\emph{ngcwele} "
+          "(bare \\emph{zulu} is excluded: \\emph{kwa zulu} is Zululand). Property/political cues: words containing \\emph{taitile}, \\emph{mteto}, "
+          "\\emph{rulumente}, \\emph{palamente}, \\emph{mantyi}, \\emph{fama}, \\emph{voti}, \\emph{nyulo}, \\emph{rafu}, \\emph{lokishi}. "
+          "Most uses have neither cue. Example lines for a speaker to check are in outputs/land\\_kwic.md.\\\\[2pt]",
+          "\\begin{tabular}{@{}llrrr@{}}", "\\toprule", "Paper & Cue & Uses & Share & 95\\% CI \\\\ \\midrule"]
+for _, r in sen.iterrows():
+    lines.append(f"{'Isigidimi' if r.paper == 'ISIG' else 'Imvo'} & {r.cue} & {r.uses} & {100 * r.share:.1f}\\% & "
+                 f"{100 * r.ci_lo:.1f}--{100 * r.ci_hi:.1f}\\% \\\\")
+lines += ["\\bottomrule", "\\end{tabular}", "",
+          "\\begin{figure}[h]\\centering",
+          "\\includegraphics[width=3.45in]{fig_framing.png}\\hfill\\includegraphics[width=2.3in]{fig_parliament_by_year.png}",
+          "\\caption*{\\textbf{Figure S1} (left): profile-shift percentile of each concept among matched sets (markers as in Fig.~1, left); "
+          "`too rare' = too few occurrences, `seed word' = anchor source, untestable. \\textbf{Figure S2} (right): parliamentary vocabulary "
+          "per million tokens; it enters Isigidimi in 1883 (light blue: twice-monthly issues).}",
+          "\\end{figure}", ""]
 (Path(__file__).resolve().parent / "supp.tex").write_text("\n".join(lines))
 print("wrote supp.tex")

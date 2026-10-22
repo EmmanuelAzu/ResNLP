@@ -145,6 +145,7 @@ def main():
     ap.add_argument("--window", type=int, default=None, help="override the tuned window (sensitivity run)")
     ap.add_argument("--tag", default="", help="suffix for output files, e.g. _w5")
     ap.add_argument("--segnorm", action="store_true", help="join disjunctively written forms (uku ba -> ukuba) before anything else")
+    ap.add_argument("--drop-anchor", action="append", default=[], help="remove this word from the directional anchors (robustness check)")
     args = ap.parse_args()
     D, K = (2, 2) if args.quick else (args.draws, args.perms_per_draw)
 
@@ -155,6 +156,11 @@ def main():
         cfg["window"] = args.window
     print("config:", cfg)
     anchors = json.loads((OUT / "anchors.json").read_text())
+    for w in args.drop_anchor:
+        for side in ("religious", "political"):
+            anchors[side] = [x for x in anchors[side] if x != w]
+    if args.drop_anchor:
+        print("dropped anchors:", args.drop_anchor)
 
     pages = load_pages()
     tag = args.tag + ("_segnorm" if args.segnorm else "")

@@ -115,9 +115,56 @@ def global_null():
     fig.savefig(OUT / "fig_global_null.png")
 
 
+def letters():
+    """Where does the gap live?  Rates per million tokens in readers' letters vs the rest of each
+    paper (dumbbell per row, log scale), with the Imvo/Isigidimi ratio written at the right."""
+    d = pd.read_csv(OUT / "letters_salience.csv")
+    rows = [("religion", "letters"), ("religion", "rest"), ("parliament", "letters"), ("parliament", "rest")]
+    names = {"letters": "readers' letters", "rest": "rest of paper"}
+    fig, ax = plt.subplots(figsize=(3.45, 1.85), layout="constrained")
+    for y, (c, part) in enumerate(rows[::-1]):
+        r = d[(d.concept == c) & (d.part == part)].iloc[0]
+        ax.plot([r.per_M_isig, r.per_M_imvo], [y, y], color=MUTED, lw=0.8, zorder=1)
+        ax.scatter([r.per_M_isig], [y], s=22, color=BLUE, zorder=2, edgecolor="white", lw=0.6)
+        ax.scatter([r.per_M_imvo], [y], s=22, color=ORANGE, zorder=2, edgecolor="white", lw=0.6)
+        thin = " (2 hits)" if r.hits_isig < 5 else ""
+        ax.text(1.02, y, f"{r.ratio:.2f}x [{r.ci_lo:.2f}-{r.ci_hi:.2f}]{thin}", transform=ax.get_yaxis_transform(),
+                va="center", fontsize=6, color=INK)
+    ax.set_yticks(range(4)); ax.set_yticklabels([f"{c}: {names[p]}" for c, p in rows[::-1]], fontsize=6.5)
+    ax.set_xscale("log"); ax.set_xlim(60, 5000)
+    ax.set_xticks([100, 300, 1000, 3000]); ax.set_xticklabels(["100", "300", "1000", "3000"])
+    ax.set_xlabel("uses per million tokens (log scale)", fontsize=6.5)
+    ax.axhline(1.5, color=MUTED, lw=0.4, ls=":")
+    ax.scatter([], [], s=22, color=BLUE, label="Isigidimi"); ax.scatter([], [], s=22, color=ORANGE, label="Imvo")
+    ax.legend(loc="upper left", frameon=False, fontsize=6.5, handletextpad=0.2, borderaxespad=0.2, labelspacing=0.3)
+    ax.text(1.02, 1.02, "Imvo / Isigidimi [95% CI]", transform=ax.transAxes, fontsize=6, color=MUTED, va="bottom")
+    fig.savefig(OUT / "fig_letters.png")
+
+
+def land_senses():
+    """Which sense of umhlaba?  Share of uses with a religious or a property/political word within
+    10 tokens, per paper, with issue-bootstrap 95% CIs."""
+    d = pd.read_csv(OUT / "land_senses.csv")
+    fig, ax = plt.subplots(figsize=(2.3, 1.2), layout="constrained")
+    for i, cue in enumerate(["religious", "property/political"]):
+        for dy, paper, col in ((-0.17, "ISIG", BLUE), (0.17, "IMVO", ORANGE)):
+            r = d[(d.paper == paper) & (d.cue == cue)].iloc[0]
+            ax.barh(i + dy, 100 * r.share, height=0.3, color=col, edgecolor="white", lw=0.6)
+            ax.plot([100 * r.ci_lo, 100 * r.ci_hi], [i + dy, i + dy], color=INK, lw=0.7)
+    ax.set_yticks([0, 1]); ax.set_yticklabels(["near heaven, God,\nChrist", "near title, law,\ngovernment"], fontsize=6.5)
+    ax.invert_yaxis()
+    ax.set_xlabel("% of uses of umhlaba", fontsize=6.5); ax.tick_params(labelsize=6.5)
+    from matplotlib.patches import Patch
+    ax.legend(handles=[Patch(color=BLUE, label="Isigidimi"), Patch(color=ORANGE, label="Imvo")], loc="upper right",
+              frameon=False, fontsize=6, handlelength=1, handletextpad=0.3, borderaxespad=0.1)
+    ax.set_xlim(0, 32)
+    ax.text(0.0, 1.02, "(b)", transform=ax.transAxes, fontweight="bold", va="bottom", ha="left")
+    fig.savefig(OUT / "fig_land_senses.png")
+
+
 if __name__ == "__main__":
     salience(); framing()
     yearly("religion", "fig_religion_by_year.png", {"ISIG": (1885.5, 3400), "IMVO": (1888.5, 1300)}, "(a)")
-    yearly("parliament", "fig_parliament_by_year.png", {"ISIG": (1870.5, 400), "IMVO": (1890.5, 1250)}, "(b)")
-    tokenizer(); global_null()
+    yearly("parliament", "fig_parliament_by_year.png", {"ISIG": (1870.5, 400), "IMVO": (1890.5, 1250)})
+    tokenizer(); global_null(); letters(); land_senses()
     print("figures saved")

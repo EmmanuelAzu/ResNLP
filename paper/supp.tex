@@ -58,5 +58,38 @@ religion & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 2466 & 547 & 0.22 (0.18
 \end{tabular}
 
 \subsection*{S4. Anchors for the directional test}
-Anchors are the 15 top-PMI neighbours of each seed pair in held-out text (Isigidimi 1876-83 + Imvo 1889-94), frozen before testing. Religious (15 words; seeds \emph{tixo}, \emph{kristu}): \emph{sikelela}, \emph{sindisa}, \emph{ukumkanikazi}, \emph{inkosazana}, \emph{buka}, \emph{oyingcwele}, \emph{lilizwi}, \emph{msindisi}, \emph{nelizwi}, \emph{kwelizwi}, \emph{wanga}, \emph{lika}, \emph{yesu}, \emph{izono}, \emph{yehova}. Political (15 words; seeds \emph{palamente}, \emph{voti}): \emph{emqulwini}, \emph{wonyulo}, \emph{lonyulo}, \emph{elugqatsweni}, \emph{eziqingata}, \emph{lokunyula}, \emph{kwesase}, \emph{lokuvota}, \emph{endlu}, \emph{kwamagama}, \emph{ukumela}, \emph{izayo}, \emph{ngalomteto}, \emph{nawupina}, \emph{kwabase}. Seed words cannot themselves be tested (Fig.~1, right). Political anchors include \emph{endlu} (`in the house'), which may favour the neutral control \emph{house}, and \emph{ngalomteto}, which contains the \emph{law} stem. Glosses are unverified: two religious anchors (\emph{ukumkanikazi}, \emph{inkosazana}) may reflect royal rather than religious register, and several anchors on both sides (\emph{lika}, \emph{buka}; \emph{nawupina}, \emph{kwabase}, \emph{izayo}) may be grammatical rather than topical, consistent with narrow-window PMI capturing grammar. All await speaker review.
+Anchors are the 15 top-PMI neighbours of each seed pair in held-out text (Isigidimi 1876-83 + Imvo 1889-94), frozen before testing. Religious (15 words; seeds \emph{tixo}, \emph{kristu}): \emph{sikelela}, \emph{sindisa}, \emph{ukumkanikazi}, \emph{inkosazana}, \emph{buka}, \emph{oyingcwele}, \emph{lilizwi}, \emph{msindisi}, \emph{nelizwi}, \emph{kwelizwi}, \emph{wanga}, \emph{lika}, \emph{yesu}, \emph{izono}, \emph{yehova}. Political (15 words; seeds \emph{palamente}, \emph{voti}): \emph{emqulwini}, \emph{wonyulo}, \emph{lonyulo}, \emph{elugqatsweni}, \emph{eziqingata}, \emph{lokunyula}, \emph{kwesase}, \emph{lokuvota}, \emph{endlu}, \emph{kwamagama}, \emph{ukumela}, \emph{izayo}, \emph{ngalomteto}, \emph{nawupina}, \emph{kwabase}. Seed words cannot themselves be tested (Fig.~S1). Political anchors include \emph{endlu} (`in the house'), which may favour the neutral control \emph{house}, and \emph{ngalomteto}, which contains the \emph{law} stem. Glosses are unverified: two religious anchors (\emph{ukumkanikazi}, \emph{inkosazana}) may reflect royal rather than religious register, and several anchors on both sides (\emph{lika}, \emph{buka}; \emph{nawupina}, \emph{kwabase}, \emph{izayo}) may be grammatical rather than topical, consistent with narrow-window PMI capturing grammar. All await speaker review.
 \normalsize
+
+\subsection*{S5. Readers' letters versus the rest of each paper}
+Letters are detected by src/12\_letters.py: a letter opens by addressing the editor (vocative \emph{mhleli} or \emph{mcokeli}, not \emph{u/ku/ngu mhleli}, which refer to him) or by asking for insertion (\emph{ndifakele}, \emph{kaundifakele}), and ends at the signature (a run of very short lines). A hand check of 30 random detections found 28 genuine letters; the errors were usifake umkala (horse advert: `put a bit on it'); no mhleli wepepa lama bhulu ('and the editor of the Boer paper'). Recall was not measured. Imvo is restricted to the months in which Isigidimi has text; CIs from 4000 issue resamples; rates are not tested against matched sets. Hits = concept uses.\\[2pt]
+\begin{tabular}{@{}llrrrrrr@{}}
+\toprule
+Part & Concept & Isig.\ tokens & Isig.\ hits & Imvo tokens & Imvo hits & Imvo/Isig. & 95\% CI \\ \midrule
+letters & parliament & 18,344 & 2 & 70,475 & 48 & 6.25 & 2.09--16.92 \\
+letters & religion & 18,344 & 52 & 70,475 & 66 & 0.33 & 0.17--0.65 \\
+letters & vote & 18,344 & 4 & 70,475 & 58 & 3.77 & 1.04--18.93 \\
+letters & government & 18,344 & 13 & 70,475 & 115 & 2.30 & 1.14--7.18 \\
+rest of paper & parliament & 268,319 & 111 & 936,998 & 1280 & 3.30 & 2.53--4.51 \\
+rest of paper & religion & 268,319 & 394 & 936,998 & 306 & 0.22 & 0.14--0.34 \\
+rest of paper & vote & 268,319 & 172 & 936,998 & 821 & 1.37 & 0.79--2.83 \\
+rest of paper & government & 268,319 & 299 & 936,998 & 902 & 0.86 & 0.67--1.13 \\
+\bottomrule
+\end{tabular}
+
+\subsection*{S6. Which sense of \emph{umhlaba}?}
+For every use of the land stem (\emph{mhlaba}) we look at the 10 tokens either side. Religious cues: \emph{izulu}, \emph{lizulu}, \emph{nezulu}, and words containing \emph{zulwini}, \emph{tixo}, \emph{kristu}, \emph{yesu}, \emph{msindisi}, \emph{ngcwele} (bare \emph{zulu} is excluded: \emph{kwa zulu} is Zululand). Property/political cues: words containing \emph{taitile}, \emph{mteto}, \emph{rulumente}, \emph{palamente}, \emph{mantyi}, \emph{fama}, \emph{voti}, \emph{nyulo}, \emph{rafu}, \emph{lokishi}. Most uses have neither cue. Example lines for a speaker to check are in outputs/land\_kwic.md.\\[2pt]
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Paper & Cue & Uses & Share & 95\% CI \\ \midrule
+Imvo & religious & 1408 & 0.9\% & 0.4--1.4\% \\
+Imvo & property/political & 1408 & 26.8\% & 23.8--29.7\% \\
+Isigidimi & religious & 353 & 3.4\% & 1.7--5.3\% \\
+Isigidimi & property/political & 353 & 12.7\% & 8.5--17.7\% \\
+\bottomrule
+\end{tabular}
+
+\begin{figure}[h]\centering
+\includegraphics[width=3.45in]{fig_framing.png}\hfill\includegraphics[width=2.3in]{fig_parliament_by_year.png}
+\caption*{\textbf{Figure S1} (left): profile-shift percentile of each concept among matched sets (markers as in Fig.~1, left); `too rare' = too few occurrences, `seed word' = anchor source, untestable. \textbf{Figure S2} (right): parliamentary vocabulary per million tokens; it enters Isigidimi in 1883 (light blue: twice-monthly issues).}
+\end{figure}

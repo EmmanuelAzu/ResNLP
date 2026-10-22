@@ -135,6 +135,34 @@ nol5 = [t.loc["directional delta: political concepts without land"] for t in fiv
 house5 = [t.loc["directional delta: control:house"] for t in five]
 maxc = fc[fc.measure == "profile"].sort_values("forms", ascending=False).iloc[0]
 W3 = ["no", "one", "two", "three", "four", "five"]
+
+# ---- letters vs rest, senses of umhlaba, endlu robustness ------------------------------------
+lseg = pd.read_csv(OUT / "letters_segments.csv")
+lsh = lseg.groupby("paper")[["letter_tok", "other_tok"]].sum()
+lsh = 100 * lsh.letter_tok / (lsh.letter_tok + lsh.other_tok)
+lsal = pd.read_csv(OUT / "letters_salience.csv").set_index(["part", "concept"])
+lchk = json.loads((OUT / "letters_check.json").read_text())
+lsen = pd.read_csv(OUT / "land_senses.csv").set_index(["paper", "cue"])
+ne_path = OUT / "framing_matched_tests_noendlu.csv"
+if ne_path.exists():
+    ne = pd.read_csv(ne_path).set_index("test")
+    ne_dir, ne_house = ne.loc["directional delta: all political concepts"], ne.loc["directional delta: control:house"]
+    ENDLU = (f"; without the anchor \\emph{{endlu}} (`in the house') the political lean is {ne_dir.obs:+.2f} ($p={pv(ne_dir.p)}$)"
+             f" and \\emph{{house}} {ne_house.obs:+.2f} ($p={pv(ne_house.p)}$)")
+else:
+    ENDLU = ""
+V3 = {"LETPREC": f"{lchk['genuine_letters']} of {lchk['checked']}",
+      "LETSHI": f"{lsh['ISIG']:.0f}", "LETSHM": f"{lsh['IMVO']:.0f}",
+      "SRELINV": f"{1 / sal.loc['exploratory:religion'].ratio:.1f}",
+      "LREL": f"{lsal.loc[('letters', 'religion')].ratio:.2f}", "LRELLO": f"{lsal.loc[('letters', 'religion')].ci_lo:.2f}",
+      "LRELHI": f"{lsal.loc[('letters', 'religion')].ci_hi:.2f}",
+      "RREL": f"{lsal.loc[('rest', 'religion')].ratio:.2f}", "RRELLO": f"{lsal.loc[('rest', 'religion')].ci_lo:.2f}",
+      "RRELHI": f"{lsal.loc[('rest', 'religion')].ci_hi:.2f}",
+      "LPARHITS": str(int(lsal.loc[('letters', 'parliament')].hits_isig)),
+      "LSRI": f"{100 * lsen.loc[('ISIG', 'religious')].share:.1f}", "LSRM": f"{100 * lsen.loc[('IMVO', 'religious')].share:.1f}",
+      "LSPI": f"{100 * lsen.loc[('ISIG', 'property/political')].share:.0f}", "LSPM": f"{100 * lsen.loc[('IMVO', 'property/political')].share:.0f}",
+      "ENDLUSENT": ENDLU}
+
 V2 = {
  "NJSIG": W3[sum(c.p < 0.05 for c in jac5)], "NPSIG": W3[sum(row(t, P2, pr).p < 0.05 for t in five)],
  "NBON": W3[sum(d.p < 0.01 for d in dirs5)],
@@ -178,7 +206,7 @@ V = {
  "PVLO": ordinal(100 * min(c.percentile for c in pool_cells)), "PVHI": ordinal(100 * max(c.percentile for c in pool_cells)),
  "PVPLO": pv(min(c.p for c in pool_cells)), "PVPHI": pv(max(c.p for c in pool_cells)),
  "XW": f"{wordchg('xlm-roberta-base'):.1f}".replace("-", "$-$"), "SW": f"{wordchg('serengeti'):.1f}", "MW": f"{wordchg('mbert-cased'):.1f}".replace("-", "$-$"),
- "TCI": f"{tci:.1f}", **W5, **V2,
+ "TCI": f"{tci:.1f}", **W5, **V2, **V3,
  "CLFACC": f"{clf[clf.features == 'clean'].bal_acc.mean():.2f}",
 }
 tpl = (ROOT / "paper" / "paper_template.tex").read_text()

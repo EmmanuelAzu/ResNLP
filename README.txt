@@ -24,6 +24,11 @@ RUN ORDER  (from the repository root; scripts are in src/, results go to outputs
   python src/04b_yearly_series.py      yearly rates (religion / parliament figures)
   python src/04c_era_drift.py          within-paper era drift: calibrates the held-out (era-confounded) comparison
   python src/05_fertility.py           tokenizer fertility incl. the aspiration-stripping control (needs MODERN DATA below)
+  python src/12_letters.py            split pages into readers' letters and the rest (hand-check sample: outputs/letters_sample.md)
+  python src/13_letters_salience.py   concept rates in letters vs the rest of each paper (outputs/letters_salience.csv)
+  python src/14_land_senses.py        which sense of umhlaba each paper uses (outputs/land_senses.csv, land_kwic.md)
+  python src/03_framing.py --perms-per-draw 1 --drop-anchor endlu --tag _noendlu ; python src/10_matched_tests.py _noendlu
+                                      directional test without the anchor endlu ('in the house')
   python src/05b_vocab_aspiration.py   share of vocabulary entries containing th/kh/ph, per tokenizer
   python src/06_classifier.py          grouped nested-CV classifier (supporting evidence)
   python src/07_figures.py             figures used in the write-up

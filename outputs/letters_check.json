@@ -1,0 +1,3 @@
+{"sample_seed": 3, "checked": 30, "genuine_letters": 28,
+ "false_positives": ["usifake umkala (horse advert: 'put a bit on it')", "no mhleli wepepa lama bhulu ('and the editor of the Boer paper')"],
+ "note": "Hand check of the random sample in outputs/letters_sample.md after the final segmentation rules in src/12_letters.py. Earlier rule versions scored 26/30 and 25/30 on fresh samples."}

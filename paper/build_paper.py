@@ -147,7 +147,7 @@ ne_path = OUT / "framing_matched_tests_noendlu.csv"
 if ne_path.exists():
     ne = pd.read_csv(ne_path).set_index("test")
     ne_dir, ne_house = ne.loc["directional delta: all political concepts"], ne.loc["directional delta: control:house"]
-    ENDLU = "; dropping the anchor \\emph{endlu} (`in the house') leaves both leans in place"
+    ENDLU = "; dropping the anchor \\emph{endlu} (`in the house') changes neither"
 else:
     ENDLU = ""
 ec = pd.read_csv(OUT / "editor_control.csv").set_index(["contrast", "concept"])

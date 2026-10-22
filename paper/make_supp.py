@@ -17,7 +17,7 @@ counts = Counter(w for ss in pages.sents for s in ss for w in s)
 lines = ["\\clearpage", "\\section*{Supplementary material}", "\\footnotesize",
          "\\subsection*{S1. Concepts, stems and the word forms they match (1 Nov 1884--1888, both papers)}",
          "Stems are matched as substrings of surface forms; following \\citet{schoots2023b} we inspected forms for false positives (our first \\emph{law} stem also matched \\emph{inteto}, speech, and was dropped) but did not hand-filter them, so run-together forms (e.g. \\emph{rulumenteningomsebenzi}) and missed variants remain. "
-         "All stems, forms and glosses await review by a first-language isiXhosa speaker. Political concepts were fixed before testing; religion was suggested by the classifier and is exploratory.\\\\[2pt]",
+         "All stems, forms and glosses await review by a first-language isiXhosa speaker; e.g.\\ \\emph{rulumente} is glossed `government' here but `parliament' by Schoots et al.\\ (2023a, p.~62). Political concepts were fixed before testing; religion was suggested by the classifier and is exploratory.\\\\[2pt]",
          "\\begin{tabular}{@{}p{1.9cm}p{1.6cm}p{2.0cm}p{9.6cm}@{}}", "\\toprule", "Concept & Type & Stems & Most frequent matched forms (count; number of distinct forms) \\\\ \\midrule"]
 for kind, table in (("political", THEORY), ("neutral", CONTROL), ("exploratory", EXPLORATORY)):
     for name, stems in table.items():
@@ -42,7 +42,7 @@ ordn = lambda x: f"{100 * x:.0f}"
 fp = lambda p: "$<$0.001" if p < 0.001 else f"{p:.3f}"
 lines += ["\\subsection*{S2. Secondary framing tests across settings}",
           "Percentile of the observed shift among 2000 frequency-matched word sets, and one-sided $p$ (uncorrected). "
-          "P+V = \\emph{palamente} + \\emph{voti}; P+V+R adds \\emph{rulumente} (uncertain meaning). Directional $\\Delta$: Isigidimi minus Imvo, "
+          "Jaccard = shift in a word's ten nearest neighbours (neighbour overlap; \\citealp{gonen2020}). P+V = \\emph{palamente} + \\emph{voti}; P+V+R adds \\emph{rulumente} (uncertain meaning). Directional $\\Delta$: Isigidimi minus Imvo, "
           "religious minus political similarity (in $z$-score units), political concepts, two-sided $p$ against matched sets; the last columns give the control \\emph{house}. "
           "Three settings survive Bonferroni over five ($p<0.01$): window 1, window 2, and window 2 with forms joined. Joining partly disjunctive forms (\\emph{uku ba}) leaves the global profile gap unchanged. Matched sets are re-drawn for each test; without \\emph{land} the pooled set is smaller, so lower power may contribute to the higher $p$.\\\\[2pt]",
           "\\begin{tabular}{@{}lcccccccccc@{}}", "\\toprule",

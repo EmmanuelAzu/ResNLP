@@ -50,7 +50,7 @@ def boot_rates(t, key):
 
 def pseudo_concepts(ta, tb, na, nb, target, n=NPSEUDO):
     """log2 ratios of random bags of types whose total count matches `target`."""
-    cand = [w for w in set(ta) | set(tb) if ta.get(w, 0) + tb.get(w, 0) >= 10 and not any(s in w for s in ALL_STEMS)]
+    cand = [w for w in sorted(set(ta) | set(tb)) if ta.get(w, 0) + tb.get(w, 0) >= 10 and not any(s in w for s in ALL_STEMS)]
     cnt = np.array([ta.get(w, 0) + tb.get(w, 0) for w in cand])
     ca = np.array([ta.get(w, 0) for w in cand]); cb = np.array([tb.get(w, 0) for w in cand])
     out = []

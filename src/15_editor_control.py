@@ -43,7 +43,7 @@ def matched_p(a, b, obs_log2, target):
     """Share of random word-type bags (combined count ~ target) whose |log2 ratio| >= |obs_log2|."""
     ta, tb = types[a], types[b]
     na, nb = sum(ta.values()), sum(tb.values())
-    cand = [w for w in set(ta) | set(tb) if ta.get(w, 0) + tb.get(w, 0) >= 10 and not any(x in w for x in ALL_STEMS)]
+    cand = [w for w in sorted(set(ta) | set(tb)) if ta.get(w, 0) + tb.get(w, 0) >= 10 and not any(x in w for x in ALL_STEMS)]
     cnt = np.array([ta.get(w, 0) + tb.get(w, 0) for w in cand])
     ca = np.array([ta.get(w, 0) for w in cand]); cb = np.array([tb.get(w, 0) for w in cand])
     out = []

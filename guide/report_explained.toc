@@ -1,0 +1,10 @@
+\contentsline {section}{\numberline {1}The whole report in five sentences}{1}{section.1}%
+\contentsline {section}{\numberline {2}The setting: why these two newspapers?}{2}{section.2}%
+\contentsline {section}{\numberline {3}The two big ideas: agenda versus framing}{2}{section.3}%
+\contentsline {section}{\numberline {4}Our three hypotheses}{2}{section.4}%
+\contentsline {section}{\numberline {5}Glossary: every technical term in the report}{2}{section.5}%
+\contentsline {section}{\numberline {6}What we did, step by step}{4}{section.6}%
+\contentsline {section}{\numberline {7}What we found, and what each number means}{4}{section.7}%
+\contentsline {section}{\numberline {8}How to read the figures}{5}{section.8}%
+\contentsline {section}{\numberline {9}The Discussion, simplified}{6}{section.9}%
+\contentsline {section}{\numberline {10}Questions a marker might ask (with short answers)}{6}{section.10}%

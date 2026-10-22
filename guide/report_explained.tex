@@ -19,8 +19,8 @@
 \begin{enumerate}
 \item Two isiXhosa newspapers ran side by side in 1884--88: \emph{Isigidimi}, controlled by missionaries, and \emph{Imvo}, owned by Africans.
 \item We asked: did missionary control change \emph{what} the papers wrote about, or also \emph{how} they wrote about it?
-\item \key{What} they wrote about clearly differs: Imvo talks about parliament about 3.3 times as much; Isigidimi talks about religion about 4 times as much.
-\item \key{How} they wrote is much harder to see: there are hints that Isigidimi used political words in a more religious way, but a neutral control word shows the same pattern, so we cannot claim it.
+\item \key{What} they wrote about clearly differs: Imvo talks about parliament about 3.3 times as much; Isigidimi talks about religion about 4 times as much. The religion gap appears in \key{readers' letters} too, so it comes from who wrote to each paper, not only from the editors.
+\item \key{How} they wrote is much harder to see: there are hints that Isigidimi used political words in a more religious way, but this rests on one word, \emph{umhlaba}, which the two papers use in different senses (``the earth'' versus ``land under law''), and a neutral control word shows the same pattern, so we cannot claim it.
 \item Separately, modern AI tokenizers find this old text more expensive to process, and the African-language model is hit hardest by the old spelling, which is a fairness issue.
 \end{enumerate}
 
@@ -66,6 +66,8 @@ Matched sets & Our fairness check. We build 2000 random groups of words with the
 $p$-value & The chance of seeing a difference this big if there were really no difference. Small = surprising = evidence. \\
 Bonferroni correction & If you run 15 tests, some will look ``significant'' by luck. Bonferroni makes the bar stricter: $0.05/15 \approx 0.003$. \\
 Era drift & How much a topic's rate changes \emph{within one paper} between earlier and later years. If a paper changes a lot over time on its own, a difference between papers might just be about timing. \\
+Readers' letters & Pieces sent in by readers. They open by addressing the editor (\emph{nkosi mhleli}, ``sir, editor'') and close with a signature. Comparing letters with the rest of each paper tells us whether a difference comes from the editors' own writing or from the people who wrote in. \\
+Word sense & One word can carry different meanings. \emph{Umhlaba} can mean ``the earth/world'' or ``land'' (as property). If two papers use different senses, an embedding model will place the word differently even if neither paper ``frames'' land differently. \\
 Classifier & A model trained to guess which paper an issue came from. It got 83\% balanced accuracy and pointed us to religious words, but it was trained on the same years we test, so the religion result is labelled \emph{exploratory}. \\
 \midrule
 Word embedding & A list of numbers for each word, learned from which words appear near it. Words used in similar contexts get similar numbers. We used fastText. \\
@@ -92,6 +94,8 @@ Per word vs per character & Spelling-only test: same words, so compare per word.
 \item \key{Prepare the data}: take the isiXhosa text of both papers, Nov 1884 to 1888; build ten size-matched Imvo samples.
 \item \key{Salience (H1)}: count topic words per million; compare with ratios, confidence intervals and the 2000 matched sets; check era drift using other years (Isigidimi 1876--83, Imvo 1889--94).
 \item \key{Framing (H2)}: train fastText on each paper; measure profile shift and Jaccard for each topic; compare against the shuffled null and matched sets; run the directional (religious vs political) test; repeat in five settings (window 1, 2, 5, and with run-together words joined) to see whether results hold up.
+\item \key{Letters (H1, how control worked)}: split each page into readers' letters (they start by addressing the editor, ``nkosi mhleli \dots\ kaundifakele'' = ``sir, editor \dots\ please print'', and end with a signature) and everything else; compare religion and parliament in each part. We checked 30 random detected letters by hand: 28 were real letters.
+\item \key{Senses of umhlaba (H2)}: for every use of \emph{umhlaba}, look at the 10 words around it and count religious words (heaven, God, Christ) and property/political words (title deed, law, government).
 \item \key{Tokenizers (H3)}: run three models (XLM-R, mBERT, Serengeti) on modern isiXhosa news, on the same news with old-style spelling, and on our historical text; compare costs.
 \end{enumerate}
 
@@ -107,8 +111,9 @@ Per word vs per character & Spelling-only test: same words, so compare per word.
  \end{itemize}
 \item Caution for parliament: Isigidimi's parliament rate drifts 1.8$\times$ between eras (CI up to 5.0), which overlaps the 3.3$\times$ gap. So parliament is less secure than religion.
 \item \emph{Vote} and \emph{government} change a lot over time within a paper, so we do not interpret them.
+\item \key{Letters}: readers who wrote to Isigidimi used religious words 3$\times$ as often as Imvo's letter-writers (ratio 0.33, CI 0.17--0.65); in the rest of each paper the ratio is 0.22. Parliament is too rare in Isigidimi's letters (2 uses) to judge.
 \end{itemize}
-\begin{plain}The papers clearly printed different things. Religion is the strongest, best-supported difference.\end{plain}
+\begin{plain}The papers clearly printed different things. Religion is the strongest, best-supported difference, and it is not just the editors: the two papers had different communities of writers (or chose different letters to print).\end{plain}
 
 \subsection*{H2: Framing (weak, not specific)}
 \begin{itemize}
@@ -118,7 +123,8 @@ Per word vs per character & Spelling-only test: same words, so compare per word.
 \item The directional test: political words lean towards religious words in Isigidimi in all 5 settings and pass Bonferroni in 3. \key{But}:
  \begin{itemize}
  \item it mostly depends on one word, \emph{land} (\emph{umhlaba}, which can also mean ``earth/world'', a religious-sounding meaning);
- \item the neutral control \emph{house} leans even further ($\Delta$ +0.84 to +1.51), possibly because \emph{endlu} (``in the house'') is one of the political anchors.
+ \item the neutral control \emph{house} leans even further ($\Delta$ +0.84 to +1.51), possibly because \emph{endlu} (``in the house'') is one of the political anchors;
+ \item \emph{umhlaba} sits near religious words in 3.4\% of Isigidimi's uses but 0.9\% of Imvo's, and near property/political words in 13\% versus 27\%. So the ``lean'' is probably a difference in \emph{which meaning} each paper uses, not a different slant on the same idea.
  \end{itemize}
 \item The detection floor (0.15) is larger than the global gap, so small framing differences cannot be ruled out, only large ones.
 \end{itemize}
@@ -135,9 +141,9 @@ Per word vs per character & Spelling-only test: same words, so compare per word.
 \section{How to read the figures}
 \begin{description}
 \item[Figure 1, left] Each dot is a topic. Right of the dashed line = more in Imvo; left = more in Isigidimi. Filled dots beat the matched sets at $p<0.05$. Look for parliament (far right) and religion (far left).
-\item[Figure 1, right] Each dot is how unusual a topic's framing shift is compared with matched sets (1.0 = most unusual). Political topics are not clearly above neutral controls. ``Too rare'' means too few occurrences; ``seed word'' means the word was used to build the anchors, so it cannot be tested.
+\item[Figure 1, right] Each row compares the two papers on one topic in one part of the paper. Blue dot = Isigidimi, orange = Imvo; the number on the right is the Imvo/Isigidimi ratio. Religion: blue is to the right (more religious) in both letters and the rest. Parliament: orange is to the right in both, but Isigidimi's letters have only 2 uses.
 \item[Figure 2(a)] Religious words in Isigidimi were already falling from 1876, long before Imvo existed. So Imvo's arrival did not \emph{cause} the religion gap.
-\item[Figure 2(b)] Parliamentary words appear in Isigidimi only in 1883--84 (late in Jabavu's editorship, when the paper came out twice monthly, and before the 1884 Cape election).
+\item[Figure 2(b)] How often \emph{umhlaba} appears near religious words (top) or near title/law/government words (bottom), in each paper. Isigidimi leans to the religious sense, Imvo to the legal/political sense.
 \item[Figure 2(c)] Cost compared with modern text. Left group: spelling only (only Serengeti goes up). Right group: real historical text (all go up, Serengeti most).
 \end{description}
 
@@ -145,7 +151,7 @@ Per word vs per character & Spelling-only test: same words, so compare per word.
 \begin{enumerate}
 \item \key{Answer}: the papers differ clearly in what they printed, as missionary control would predict. Whether control also changed \emph{how} contributors wrote, our data cannot show.
 \item \key{Not causal}: religious language was already declining before Imvo, and the parliament rise coincides with an editor, a publication change and an election, which we cannot separate.
-\item \key{A test for the future}: if the difference appears only in editorials, it reflects the editors' voice; if it also appears in readers' letters, the two papers had different contributors (chosen by editors or by writers' own choice of paper).
+\item \key{How control worked}: the religion gap is in readers' letters as well as the rest, so the two papers had different contributors (chosen by editors or by writers' own choice of paper; print cannot tell which).
 \item \key{Why framing is hard}: narrow windows mainly capture grammar; the lean depends on one word; a control word behaves the same.
 \item \key{Responsible NLP}: tokenizers penalise this text, especially for the African-language model; ``fixing'' old spelling would erase the very history the archive preserves (and cannot be reversed: old \emph{t} could be modern \emph{t} or \emph{th}); interpreting these patterns as cultural claims without isiXhosa speakers would be extractive (Bird, 2020).
 \item \key{Limitations}: only two papers, one time window, a missing year (1886), no editor metadata, a modern-news domain mismatch, and stems/glosses not yet reviewed by a speaker.
@@ -157,7 +163,9 @@ Per word vs per character & Spelling-only test: same words, so compare per word.
 \item[Why not trust $p$-values alone?] With many tests some will pass by luck; we use matched sets, era drift and the archive's own account instead.
 \item[Why is framing weak if the papers clearly differ?] About 300k words per paper is small for embeddings; our detection floor is above the overall gap.
 \item[Why include neutral controls?] To check that ``political'' results are not just general differences between the papers. \emph{House} showed they partly are.
-\item[What is new compared with Schoots (2023b)?] He counted root words over time; we add matched baselines, a date-matched design, an embedding framing test and a tokenizer fairness audit.
+\item[What is new compared with Schoots (2023b)?] He counted root words over time; we add matched baselines, a date-matched design, an embedding framing test, a letters-versus-rest test of how control worked, and a tokenizer fairness audit.
+\item[How do you find letters?] By their opening: they address the editor directly (\emph{nkosi mhleli}, ``sir, editor'') and ask to be printed (\emph{kaundifakele}); third-person mentions (\emph{u mhleli}, ``the editor'') are excluded. A hand check found 28 of 30 detections were real letters.
+\item[Why move two plots to the supplement?] The framing-percentile and parliament-by-year plots are still in the supplement (Figs S1--S2); the new plots answer the research question more directly.
 \item[Is this responsible?] We describe the papers, not isiXhosa people, and flag that a first-language speaker must review the word lists before any cultural claim.
 \end{description}
 \end{document}

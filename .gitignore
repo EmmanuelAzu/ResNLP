@@ -10,3 +10,9 @@ paper/*.blg
 paper/*.fls
 paper/*.fdb_latexmk
 paper/paper.pdf
+guide/*.aux
+guide/*.fdb_latexmk
+guide/*.fls
+guide/*.log
+guide/*.out
+guide/*.toc

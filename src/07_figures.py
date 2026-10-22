@@ -69,9 +69,14 @@ def yearly(concept, fname, labels, tag=""):
         g = d[(d.paper == paper) & (d.concept == concept)].set_index("year").reindex(range(1870, 1895))
         ax.fill_between(g.index, g.ci_lo, g.ci_hi, color=col, alpha=0.15, lw=0)
         ax.plot(g.index, g.per_M, "-o", color=col, lw=1.0, ms=2)
-    ax.axvspan(1883.5, 1884.75, color=BLUE, alpha=0.12, lw=0)      # Isigidimi twice monthly, Jul 1883-Sep 1884 (Schoots et al. 2023, p. 59)
+    if concept == "religion":   # editors (Schoots 2023b, p. 71): Jabavu edits Isigidimi 1881 - Oct 1884, then Imvo
+        ax.axvspan(1880.5, 1884.8, color=MUTED, alpha=0.13, lw=0)
+        ax.text(1882.65, 6300, "Jabavu", fontsize=6.5, color=INK, ha="center")
+        ax.set_ylim(top=7000)
+    else:
+        ax.axvspan(1883.5, 1884.75, color=BLUE, alpha=0.12, lw=0)  # Isigidimi twice monthly, Jul 1883-Sep 1884 (Schoots et al. 2023a, p. 59)
     ax.text(*labels["ISIG"], "Isigidimi", fontsize=7.5, color=INK)
-    ax.text(*labels["IMVO"], "Imvo", fontsize=7.5, color=INK)
+    ax.text(*labels["IMVO"], "Imvo (Jabavu)" if concept == "religion" else "Imvo", fontsize=7.5, color=INK)
     ax.set_xlim(1869, 1896); ax.set_xticks([1870, 1880, 1890]); ax.tick_params(labelsize=7.5)
     ax.set_ylabel("per million tokens", fontsize=7.5)
     ax.text(0.0, 1.02, tag, transform=ax.transAxes, fontweight="bold", va="bottom", ha="left")
@@ -88,12 +93,18 @@ def tokenizer():
     for tok, lab, m_, dx in (("serengeti", "Serengeti", "s", -0.18), ("xlm-roberta-base", "XLM-R", "o", 0.0), ("mbert-cased", "mBERT", "^", 0.18)):
         spell = 100 * (get(tok, "modern, historical spelling", "fertility") / get(tok, "modern", "fertility") - 1)
         hist = 100 * (get(tok, "Isigidimi 1884-88", "subwords_per_100_chars") / get(tok, "modern", "subwords_per_100_chars") - 1)
-        ax.plot([dx, 1 + dx], [spell, hist], ls="", marker=m_, color=INK, ms=4.5, label=lab)
+        def half(cond, col, lo, hi):   # CI half-width of the % change (both rates' bootstrap CIs, propagated)
+            a_, b_ = get(tok, "modern", col), get(tok, cond, col)
+            ha, hb = (get(tok, "modern", hi) - get(tok, "modern", lo)) / 2, (get(tok, cond, hi) - get(tok, cond, lo)) / 2
+            return 100 * np.sqrt((ha / a_) ** 2 + (hb / b_) ** 2) * b_ / a_
+        err = [half("modern, historical spelling", "fertility", "ci_lo", "ci_hi"),
+               half("Isigidimi 1884-88", "subwords_per_100_chars", "spc_ci_lo", "spc_ci_hi")]
+        ax.errorbar([dx, 1 + dx], [spell, hist], yerr=err, ls="", marker=m_, color=INK, ms=4.5, elinewidth=0.8, capsize=1.5, label=lab)
     ax.axhline(0, color=MUTED, lw=0.6)
     ax.set_xticks([0, 1]); ax.set_xticklabels(["spelling only\n(per word)", "historical text\n(per character)"], fontsize=6.5)
     ax.set_xlim(-0.5, 1.5); ax.tick_params(labelsize=7.5, axis="y")
     ax.set_ylabel("% vs modern", fontsize=7.5)
-    ax.legend(loc="upper left", frameon=False, fontsize=6.5, handletextpad=0.2, labelspacing=0.2, borderaxespad=0.1)
+    ax.legend(loc="upper left", bbox_to_anchor=(0.22, 1.0), frameon=False, fontsize=6.5, handletextpad=0.2, labelspacing=0.2, borderaxespad=0.1)
     ax.text(0.0, 1.02, "(c)", transform=ax.transAxes, fontweight="bold", va="bottom", ha="left")
     fig.savefig(OUT / "fig_tokenizer_cost.png")
 
@@ -164,7 +175,7 @@ def land_senses():
 
 if __name__ == "__main__":
     salience(); framing()
-    yearly("religion", "fig_religion_by_year.png", {"ISIG": (1885.5, 3400), "IMVO": (1888.5, 1300)}, "(a)")
+    yearly("religion", "fig_religion_by_year.png", {"ISIG": (1885.5, 3400), "IMVO": (1888.6, 1050)}, "(a)")
     yearly("parliament", "fig_parliament_by_year.png", {"ISIG": (1870.5, 400), "IMVO": (1890.5, 1250)})
     tokenizer(); global_null(); letters(); land_senses()
     print("figures saved")

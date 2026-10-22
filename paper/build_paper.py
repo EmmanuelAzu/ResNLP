@@ -151,6 +151,13 @@ if ne_path.exists():
              f"({ne_dir.obs:+.2f} and {ne_house.obs:+.2f})")
 else:
     ENDLU = ""
+ec = pd.read_csv(OUT / "editor_control.csv").set_index(["contrast", "concept"])
+ecg = lambda c, k, col: ec.loc[(c, k)][col]
+CTL, EDT, TIM = "control (same editor)", "editor (same control)", "time within Isigidimi (1881-84 vs 1876-80)"
+V4 = {"ECREL": f"{ecg(CTL, 'religion', 'ratio'):.2f}", "ECRELLO": f"{ecg(CTL, 'religion', 'ci_lo'):.2f}", "ECRELHI": f"{ecg(CTL, 'religion', 'ci_hi'):.2f}",
+      "ECPAR": f"{ecg(CTL, 'parliament', 'ratio'):.1f}", "ECPARLO": f"{ecg(CTL, 'parliament', 'ci_lo'):.1f}", "ECPARHI": f"{ecg(CTL, 'parliament', 'ci_hi'):.1f}",
+      "EDREL": f"{ecg(EDT, 'religion', 'ratio'):.2f}", "EDRELLO": f"{ecg(EDT, 'religion', 'ci_lo'):.2f}", "EDRELHI": f"{ecg(EDT, 'religion', 'ci_hi'):.2f}",
+      "ETREL": f"{ecg(TIM, 'religion', 'ratio'):.2f}"}
 V3 = {"LETPREC": f"{lchk['genuine_letters']} of {lchk['checked']}",
       "LETSHI": f"{lsh['ISIG']:.0f}", "LETSHM": f"{lsh['IMVO']:.0f}",
       "SRELINV": f"{1 / sal.loc['exploratory:religion'].ratio:.1f}",
@@ -206,7 +213,7 @@ V = {
  "PVLO": ordinal(100 * min(c.percentile for c in pool_cells)), "PVHI": ordinal(100 * max(c.percentile for c in pool_cells)),
  "PVPLO": pv(min(c.p for c in pool_cells)), "PVPHI": pv(max(c.p for c in pool_cells)),
  "XW": f"{wordchg('xlm-roberta-base'):.1f}".replace("-", "$-$"), "SW": f"{wordchg('serengeti'):.1f}", "MW": f"{wordchg('mbert-cased'):.1f}".replace("-", "$-$"),
- "TCI": f"{tci:.1f}", **W5, **V2, **V3,
+ "TCI": f"{tci:.1f}", **W5, **V2, **V3, **V4,
  "CLFACC": f"{clf[clf.features == 'clean'].bal_acc.mean():.2f}",
 }
 tpl = (ROOT / "paper" / "paper_template.tex").read_text()

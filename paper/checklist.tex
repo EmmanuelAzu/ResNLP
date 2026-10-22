@@ -4,7 +4,7 @@
 \item {\bf Claims}
     \item[] Question: Do the main claims made in the abstract and introduction accurately reflect the paper's contributions and scope?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The abstract and introduction state three hypotheses (H1 salience, H2 framing, H3 tokenizer cost) and report what was found: the religious gap holds in readers' letters as well as in the rest of each paper; and the negative results (framing is weak and non-specific; the directional lean survives correction in three of five settings, but in at most one without land, and a neutral control leans further; the lean rests on umhlaba, which the two papers use in different senses). Claims about meaning are scoped as unreviewed by a first-language speaker.
+    \item[] Justification: The abstract and introduction state three hypotheses (H1 salience, H2 framing, H3 tokenizer cost) and report what was found: of ten pre-specified political concepts only parliament differs (uncorrected); the exploratory religious gap holds in readers' letters and when the editor (Jabavu) is held constant, though changes of editor also move it; and the negative results (framing is weak and non-specific; the directional lean survives correction in three of five settings, but in at most one without land, and a neutral control leans further; the lean rests on umhlaba, which the two papers use in different senses). Claims about meaning are scoped as unreviewed by a first-language speaker.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the abstract and introduction do not include the claims made in the paper.
@@ -16,7 +16,7 @@
 \item {\bf Limitations}
     \item[] Question: Does the paper discuss the limitations of the work performed by the authors?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The Discussion ends with limitations (two newspapers, one window, 1886 Isigidimi editions missing, no editor metadata, a heuristic letter split, a modern-news domain mismatch, possible Serengeti pretraining overlap, unreviewed stems and glosses; Table S3 adds the era-confounded held-out windows) and states the detection floor of the framing test.
+    \item[] Justification: The Discussion ends with limitations (two newspapers, one window, 1886 Isigidimi editions missing, time-bound editor contrasts, a heuristic letter split, a modern-news domain mismatch, unreviewed stems and glosses; the Results flag the one-model tokenizer hypothesis, and Table S3 the era-confounded held-out windows) and states the detection floor of the framing test.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper has no limitation while the answer No means that the paper has limitations, but those are not discussed in the paper. 
@@ -94,7 +94,7 @@
 \item {\bf Experiment Statistical Significance}
     \item[] Question: Does the paper report error bars suitably and correctly defined or other appropriate information about the statistical significance of the experiments?
     \item[] Answer: \answerYes{}
-    \item[] Justification: Salience has issue-level bootstrap CIs; framing uses a permutation null (50 permutations) and 2000 frequency-matched word sets; tokenizer changes have bootstrap CIs (within about 0.5\%, stated in the Results). The 15 salience tests are uncorrected and none survives Bonferroni ($p<0.003$); the framing tests are reported uncorrected, except the directional test, which survives Bonferroni over five settings ($p<0.01$) in three, but in at most one without land, and a neutral control leans further; the paper rests its argument on robustness and corroboration. The held-out comparison is era-confounded and is presented as an era-sensitivity check, with within-paper drift (including vote's large drift) as calibration; the classifier was trained on the test window, so religion is exploratory. The letters/rest comparison and the senses of umhlaba use issue-bootstrap CIs only (not matched sets); the letter detector was checked by hand on 30 random detections (28 genuine), and its recall was not measured.
+    \item[] Justification: Salience has issue-level bootstrap CIs; framing uses a permutation null (50 permutations) and 2000 frequency-matched word sets; tokenizer changes have bootstrap CIs (within about 0.5\%, stated in the Results). The 15 salience tests are uncorrected and none survives Bonferroni ($p<0.003$); the framing tests are reported uncorrected, except the directional test, which survives Bonferroni over five settings ($p<0.01$) in three, but in at most one without land, and a neutral control leans further; the paper rests its argument on robustness and corroboration. The held-out comparison is era-confounded and is presented as an era-sensitivity check, with within-paper drift (including vote's large drift) as calibration; the classifier was trained on the test window, so religion is exploratory. The letters/rest comparison, the same-editor contrasts and the senses of umhlaba use issue-bootstrap CIs only (not matched sets); the letter detector was checked by hand on 30 random detections (28 genuine), and its recall was not measured.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that the paper does not include experiments.
@@ -135,7 +135,7 @@
 \item {\bf Broader Impacts}
     \item[] Question: Does the paper discuss both potential positive societal impacts and negative societal impacts of the work performed?
     \item[] Answer: \answerYes{}
-    \item[] Justification: The Discussion covers fairness implications (higher tokenizer cost for historical isiXhosa, worst for the African-language model; consequences for proposed machine-learning labelling of the archive) and the risk of over-reading statistical shifts as cultural meaning.
+    \item[] Justification: The Discussion covers fairness implications (higher tokenizer cost for historical isiXhosa, worst for the African-language model; the case against replacing the source with a normalised copy) and the risk of over-reading statistical shifts as cultural meaning.
     \item[] Guidelines:
     \begin{itemize}
         \item The answer NA means that there is no societal impact of the work performed.

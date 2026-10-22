@@ -21,6 +21,7 @@
 \item We asked: did missionary control change \emph{what} the papers wrote about, or also \emph{how} they wrote about it?
 \item \key{What} they wrote about clearly differs: Imvo talks about parliament about 3.3 times as much; Isigidimi talks about religion about 4 times as much. The religion gap appears in \key{readers' letters} too, so it comes from who wrote to each paper, not only from the editors.
 \item \key{How} they wrote is much harder to see: there are hints that Isigidimi used political words in a more religious way, but this rests on one word, \emph{umhlaba}, which the two papers use in different senses (``the earth'' versus ``land under law''), and a neutral control word shows the same pattern, so we cannot claim it.
+\item \key{Holding the editor constant}: Jabavu edited Isigidimi (1881--84) and then Imvo. When he moved, his paper's religious vocabulary fell to a third, so control matters even with the same editor. But when Gqoba took over Isigidimi, its religious vocabulary rose 1.45$\times$, so the editor matters too.
 \item Separately, modern AI tokenizers find this old text more expensive to process, and the African-language model is hit hardest by the old spelling, which is a fairness issue.
 \end{enumerate}
 
@@ -159,6 +160,8 @@ Per word vs per character & Spelling-only test: same words, so compare per word.
 
 \section{Questions a marker might ask (with short answers)}
 \begin{description}
+\item[Doesn't comparing two papers mix up control with editor, town and audience?] Yes, and the paper says so. That is why we also compare Jabavu with himself: Jabavu-at-Isigidimi (mission) against Jabavu-at-Imvo (free). The result that would have refuted control is Jabavu writing the same in both; he did not.
+\item[Why did religion lead the abstract before, and now politics?] Religion was chosen by a classifier on the same years, so it is exploratory. The pre-registered result is that of ten political concepts only parliament differs: Imvo was not more political in vocabulary overall.
 \item[Why not just compare all years?] Imvo only exists from Nov 1884; comparing different years would mix up ``which paper'' with ``which era''.
 \item[Why not trust $p$-values alone?] With many tests some will pass by luck; we use matched sets, era drift and the archive's own account instead.
 \item[Why is framing weak if the papers clearly differ?] About 300k words per paper is small for embeddings; our detection floor is above the overall gap.

@@ -104,11 +104,28 @@ for _, r in sen.iterrows():
     lines.append(f"{'Isigidimi' if r.paper == 'ISIG' else 'Imvo'} & {r.cue} & {r.uses} & {100 * r.share:.1f}\\% & "
                  f"{100 * r.ci_lo:.1f}--{100 * r.ci_hi:.1f}\\% \\\\")
 lines += ["\\bottomrule", "\\end{tabular}", "",
-          "\\begin{figure}[h]\\centering",
-          "\\includegraphics[width=3.45in]{fig_framing.png}\\hfill\\includegraphics[width=2.3in]{fig_parliament_by_year.png}",
-          "\\caption*{\\textbf{Figure S1} (left): profile-shift percentile of each concept among matched sets (markers as in Fig.~1, left); "
-          "`too rare' = too few occurrences, `seed word' = anchor source, untestable. \\textbf{Figure S2} (right): parliamentary vocabulary "
-          "per million tokens; it enters Isigidimi in 1883 (light blue: twice-monthly issues).}",
-          "\\end{figure}", ""]
+          ]
+ec = pd.read_csv(OUT / "editor_control.csv")
+lines += ["\\subsection*{S7. Same editor, different control; same control, different editor}",
+          "Cells (editors after Schoots, 2023b, p.~71): Jabavu edits Isigidimi (Jan 1881--Oct 1884); Jabavu edits Imvo (Nov 1884--1888); "
+          "Gqoba edits Isigidimi (Nov 1884--1888); earlier editors of Isigidimi (1876--80). Ratios of rates per million tokens; 95\\% CIs from 4000 "
+          "issue resamples (src/15\\_editor\\_control.py). Every contrast is also a contrast in time.\\\\[2pt]",
+          "\\begin{tabular}{@{}lrrrrrr@{}}", "\\toprule",
+          "Concept & \\multicolumn{2}{c}{Jabavu: Imvo / Isigidimi} & \\multicolumn{2}{c}{Isigidimi: Gqoba / Jabavu} & \\multicolumn{2}{c}{Isigidimi: 1881--84 / 1876--80} \\\\",
+          " & ratio & 95\\% CI & ratio & 95\\% CI & ratio & 95\\% CI \\\\ \\midrule"]
+for c in ec.concept.unique():
+    cells = []
+    for lab in ("control (same editor)", "editor (same control)", "time within Isigidimi (1881-84 vs 1876-80)"):
+        r = ec[(ec.concept == c) & (ec.contrast == lab)].iloc[0]
+        cells.append(f"{r.ratio:.2f} & {r.ci_lo:.2f}--{r.ci_hi:.2f}")
+    lines.append(f"{c} & " + " & ".join(cells) + " \\\\")
+lines += ["\\bottomrule", "\\end{tabular}", "",
+          "\\renewcommand{\\thefigure}{S\\arabic{figure}}\\setcounter{figure}{0}",
+          "\\begin{figure}[h]\\centering\\includegraphics[width=3.45in]{fig_framing.png}",
+          "\\caption{Profile-shift percentile of each concept among matched sets (markers as in Fig.~1, left); "
+          "`too rare' = too few occurrences, `seed word' = anchor source, untestable.}\\end{figure}",
+          "\\begin{figure}[h]\\centering\\includegraphics[width=2.3in]{fig_parliament_by_year.png}",
+          "\\caption{Parliamentary vocabulary per million tokens; it enters Isigidimi in 1883 (light blue: twice-monthly issues, "
+          "Schoots et al., 2023a, p.~59).}\\end{figure}", ""]
 (Path(__file__).resolve().parent / "supp.tex").write_text("\n".join(lines))
 print("wrote supp.tex")

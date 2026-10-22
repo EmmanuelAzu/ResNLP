@@ -26,6 +26,7 @@ RUN ORDER  (from the repository root; scripts are in src/, results go to outputs
   python src/05_fertility.py           tokenizer fertility incl. the aspiration-stripping control (needs MODERN DATA below)
   python src/12_letters.py            split pages into readers' letters and the rest (hand-check sample: outputs/letters_sample.md)
   python src/13_letters_salience.py   concept rates in letters vs the rest of each paper (outputs/letters_salience.csv)
+  python src/15_editor_control.py    same editor (Jabavu) under mission vs African control; same control, different editor (outputs/editor_control.csv)
   python src/14_land_senses.py        which sense of umhlaba each paper uses (outputs/land_senses.csv, land_kwic.md)
   python src/03_framing.py --perms-per-draw 1 --drop-anchor endlu --tag _noendlu ; python src/10_matched_tests.py _noendlu
                                       directional test without the anchor endlu ('in the house')

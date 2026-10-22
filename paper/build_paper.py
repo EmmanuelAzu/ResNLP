@@ -147,8 +147,7 @@ ne_path = OUT / "framing_matched_tests_noendlu.csv"
 if ne_path.exists():
     ne = pd.read_csv(ne_path).set_index("test")
     ne_dir, ne_house = ne.loc["directional delta: all political concepts"], ne.loc["directional delta: control:house"]
-    ENDLU = (f"; dropping the anchor \\emph{{endlu}} (`in the house') leaves both leans in place "
-             f"({ne_dir.obs:+.2f} and {ne_house.obs:+.2f})")
+    ENDLU = "; dropping the anchor \\emph{endlu} (`in the house') leaves both leans in place"
 else:
     ENDLU = ""
 ec = pd.read_csv(OUT / "editor_control.csv").set_index(["contrast", "concept"])
@@ -157,7 +156,11 @@ CTL, EDT, TIM = "control (same editor)", "editor (same control)", "time within I
 V4 = {"ECREL": f"{ecg(CTL, 'religion', 'ratio'):.2f}", "ECRELLO": f"{ecg(CTL, 'religion', 'ci_lo'):.2f}", "ECRELHI": f"{ecg(CTL, 'religion', 'ci_hi'):.2f}",
       "ECPAR": f"{ecg(CTL, 'parliament', 'ratio'):.1f}", "ECPARLO": f"{ecg(CTL, 'parliament', 'ci_lo'):.1f}", "ECPARHI": f"{ecg(CTL, 'parliament', 'ci_hi'):.1f}",
       "EDREL": f"{ecg(EDT, 'religion', 'ratio'):.2f}", "EDRELLO": f"{ecg(EDT, 'religion', 'ci_lo'):.2f}", "EDRELHI": f"{ecg(EDT, 'religion', 'ci_hi'):.2f}",
-      "ETREL": f"{ecg(TIM, 'religion', 'ratio'):.2f}"}
+      "ETREL": f"{ecg(TIM, 'religion', 'ratio'):.2f}",
+      "ECRELP": pv(ecg(CTL, 'religion', 'matched_p')), "ECPARP": pv(ecg(CTL, 'parliament', 'matched_p')),
+      "EDRELP": pv(ecg(EDT, 'religion', 'matched_p')), "ETRELP": pv(ecg(TIM, 'religion', 'matched_p')),
+      "ETPAR": f"{ecg(TIM, 'parliament', 'ratio'):.0f}", "ETVOTE": f"{ecg(TIM, 'vote', 'ratio'):.0f}",
+      "ETPOLP": pv(max(ecg(TIM, 'parliament', 'matched_p'), ecg(TIM, 'vote', 'matched_p')))}
 V3 = {"LETPREC": f"{lchk['genuine_letters']} of {lchk['checked']}",
       "LETSHI": f"{lsh['ISIG']:.0f}", "LETSHM": f"{lsh['IMVO']:.0f}",
       "SRELINV": f"{1 / sal.loc['exploratory:religion'].ratio:.1f}",

@@ -109,15 +109,16 @@ ec = pd.read_csv(OUT / "editor_control.csv")
 lines += ["\\subsection*{S7. Same editor, different control; same control, different editor}",
           "Cells (editors after Schoots, 2023b, p.~71): Jabavu edits Isigidimi (Jan 1881--Oct 1884); Jabavu edits Imvo (Nov 1884--1888); "
           "Gqoba edits Isigidimi (Nov 1884--1888); earlier editors of Isigidimi (1876--80). Ratios of rates per million tokens; 95\\% CIs from 4000 "
-          "issue resamples (src/15\\_editor\\_control.py). Every contrast is also a contrast in time.\\\\[2pt]",
-          "\\begin{tabular}{@{}lrrrrrr@{}}", "\\toprule",
-          "Concept & \\multicolumn{2}{c}{Jabavu: Imvo / Isigidimi} & \\multicolumn{2}{c}{Isigidimi: Gqoba / Jabavu} & \\multicolumn{2}{c}{Isigidimi: 1881--84 / 1876--80} \\\\",
-          " & ratio & 95\\% CI & ratio & 95\\% CI & ratio & 95\\% CI \\\\ \\midrule"]
+          "issue resamples; $p$: two-sided, against 2000 matched sets of random words (src/15\\_editor\\_control.py). Every contrast is also a contrast in time; "
+          "\\emph{rule} has only 9 uses in Jabavu's Isigidimi, so its large ratios are not interpreted.\\\\[2pt]",
+          "\\begin{tabular}{@{}lrrrrrrrrr@{}}", "\\toprule",
+          "Concept & \\multicolumn{3}{c}{Jabavu: Imvo / Isigidimi} & \\multicolumn{3}{c}{Isigidimi: Gqoba / Jabavu} & \\multicolumn{3}{c}{Isigidimi: 1881--84 / 1876--80} \\\\",
+          " & ratio & 95\\% CI & $p$ & ratio & 95\\% CI & $p$ & ratio & 95\\% CI & $p$ \\\\ \\midrule"]
 for c in ec.concept.unique():
     cells = []
     for lab in ("control (same editor)", "editor (same control)", "time within Isigidimi (1881-84 vs 1876-80)"):
         r = ec[(ec.concept == c) & (ec.contrast == lab)].iloc[0]
-        cells.append(f"{r.ratio:.2f} & {r.ci_lo:.2f}--{r.ci_hi:.2f}")
+        cells.append(f"{r.ratio:.2f} & {r.ci_lo:.2f}--{r.ci_hi:.2f} & " + ("$<$0.001" if r.matched_p < 0.001 else f"{r.matched_p:.3f}"))
     lines.append(f"{c} & " + " & ".join(cells) + " \\\\")
 lines += ["\\bottomrule", "\\end{tabular}", "",
           "\\renewcommand{\\thefigure}{S\\arabic{figure}}\\setcounter{figure}{0}",

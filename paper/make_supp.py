@@ -121,6 +121,27 @@ for c in ec.concept.unique():
         cells.append(f"{r.ratio:.2f} & {r.ci_lo:.2f}--{r.ci_hi:.2f} & " + ("$<$0.001" if r.matched_p < 0.001 else f"{r.matched_p:.3f}"))
     lines.append(f"{c} & " + " & ".join(cells) + " \\\\")
 lines += ["\\bottomrule", "\\end{tabular}", "",
+          ]
+tg = pd.read_csv(OUT / "tuning_grid.csv")
+abl = pd.read_csv(OUT / "ablation_ft_vs_w2v.csv")
+best = tg.loc[tg.groupby("window").stability.idxmax()].sort_values("window")
+hp = json.loads((OUT / "hparams.json").read_text())
+lines += ["\\subsection*{S8. Hyper-parameter search for the embeddings}",
+          "fastText skip-gram, tuned on text outside the test window (Isigidimi 1876--83, Imvo 1889--94) so that tuning never sees the "
+          "compared years. Criterion: seed stability, the mean top-10 nearest-neighbour overlap between two runs that differ only in "
+          "random seed \\citep{antoniak2018}; unstable embeddings would turn noise into apparent shifts. %d settings over dimension "
+          "(%s), window (%s) and epochs (%s), searched in rounds that extended the grid past each optimum. Chosen: dimension %d, "
+          "window %d, %d epochs. Stability is highest at the narrowest window, which favours grammar over topic; the paper therefore "
+          "also reports windows 2 and 5 (Table S2). Best setting per window:\\\\[2pt]" % (
+              len(tg), ", ".join(map(str, sorted(tg.vector_size.unique()))), ", ".join(map(str, sorted(tg.window.unique()))),
+              ", ".join(map(str, sorted(tg.epochs.unique()))), hp["vector_size"], hp["window"], hp["epochs"]),
+          "\\begin{tabular}{@{}rrrrrr@{}}", "\\toprule",
+          "Window & Dimension & Epochs & Isigidimi 1876--83 & Imvo 1889--94 & Mean stability \\\\ \\midrule"]
+for _, r in best.iterrows():
+    lines.append(f"{int(r.window)} & {int(r.vector_size)} & {int(r.epochs)} & {r.stab_isig_1876_83:.3f} & {r.stab_imvo_1889_94:.3f} & {r.stability:.3f} \\\\")
+w2v, ft = abl[abl.model == "w2v"].stability.mean(), abl[abl.model == "ft"].stability.mean()
+lines += ["\\bottomrule", "\\end{tabular}\\\\[2pt]",
+          f"At the chosen setting, word2vec reaches a stability of {w2v:.2f} against fastText's {ft:.2f}, so fastText is used throughout.", "",
           "\\renewcommand{\\thefigure}{S\\arabic{figure}}\\setcounter{figure}{0}",
           "\\begin{figure}[h]\\centering\\includegraphics[width=3.45in]{fig_framing.png}",
           "\\caption{Profile-shift percentile of each concept among matched sets (markers as in Fig.~1, left); "

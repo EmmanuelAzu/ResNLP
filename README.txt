@@ -40,7 +40,7 @@ RUN ORDER  (from the repository root; scripts are in src/, results go to outputs
   python src/03_framing.py --segnorm   word-joining control (outputs/*_segnorm.*); run 10_matched_tests.py with the argument _segnorm
   python src/03_framing.py --window 5 --tag _w5 [--segnorm]   window-5 sensitivity (outputs/*_w5*); then 10_matched_tests.py _w5 / _w5_segnorm
   python paper/make_checklist.py       fill the NeurIPS checklist from the course template (paper/checklist.tex)
-  python paper/make_supp.py            supplementary tables S1-S7 and figures S1-S2 (paper/supp.tex)
+  python paper/make_supp.py            supplementary tables S1-S8 and figures S1-S2 (paper/supp.tex)
   python paper/build_paper.py          write paper/paper.tex from paper_template.tex, taking every number from outputs/
   (cd paper && pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper)
 

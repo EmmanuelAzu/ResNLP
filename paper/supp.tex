@@ -109,6 +109,20 @@ religion & 0.34 & 0.24--0.47 & 0.028 & 1.45 & 1.06--1.98 & 0.130 & 0.31 & 0.23--
 \bottomrule
 \end{tabular}
 
+\subsection*{S8. Hyper-parameter search for the embeddings}
+fastText skip-gram, tuned on text outside the test window (Isigidimi 1876--83, Imvo 1889--94) so that tuning never sees the compared years. Criterion: seed stability, the mean top-10 nearest-neighbour overlap between two runs that differ only in random seed \citep{antoniak2018}; unstable embeddings would turn noise into apparent shifts. 34 settings over dimension (50, 100, 200, 300, 400), window (1, 2, 3, 5, 8) and epochs (10, 20, 30), searched in rounds that extended the grid past each optimum. Chosen: dimension 400, window 1, 20 epochs. Stability is highest at the narrowest window, which favours grammar over topic; the paper therefore also reports windows 2 and 5 (Table S2). Best setting per window:\\[2pt]
+\begin{tabular}{@{}rrrrrr@{}}
+\toprule
+Window & Dimension & Epochs & Isigidimi 1876--83 & Imvo 1889--94 & Mean stability \\ \midrule
+1 & 400 & 20 & 0.844 & 0.814 & 0.829 \\
+2 & 300 & 20 & 0.823 & 0.798 & 0.810 \\
+3 & 300 & 20 & 0.810 & 0.799 & 0.805 \\
+5 & 400 & 20 & 0.798 & 0.796 & 0.797 \\
+8 & 200 & 10 & 0.758 & 0.755 & 0.757 \\
+\bottomrule
+\end{tabular}\\[2pt]
+At the chosen setting, word2vec reaches a stability of 0.64 against fastText's 0.83, so fastText is used throughout.
+
 \renewcommand{\thefigure}{S\arabic{figure}}\setcounter{figure}{0}
 \begin{figure}[h]\centering\includegraphics[width=3.45in]{fig_framing.png}
 \caption{Profile-shift percentile of each concept among matched sets (markers as in Fig.~1, left); `too rare' = too few occurrences, `seed word' = anchor source, untestable.}\end{figure}

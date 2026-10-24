@@ -161,7 +161,7 @@ V4 = {"ECREL": f"{ecg(CTL, 'religion', 'ratio'):.2f}", "ECRELLO": f"{ecg(CTL, 'r
       "EDRELP": pv(ecg(EDT, 'religion', 'matched_p')), "ETRELP": pv(ecg(TIM, 'religion', 'matched_p')),
       "ETPAR": f"{ecg(TIM, 'parliament', 'ratio'):.0f}", "ETVOTE": f"{ecg(TIM, 'vote', 'ratio'):.0f}",
       "ETPOLP": pv(max(ecg(TIM, 'parliament', 'matched_p'), ecg(TIM, 'vote', 'matched_p')))}
-V3 = {"LETPREC": f"{lchk['genuine_letters']} of {lchk['checked']}",
+V3 = {"NTUNE": str(len(pd.read_csv(OUT / "tuning_grid.csv"))), "LETPREC": f"{lchk['genuine_letters']} of {lchk['checked']}",
       "LETSHI": f"{lsh['ISIG']:.0f}", "LETSHM": f"{lsh['IMVO']:.0f}",
       "SRELINV": f"{1 / sal.loc['exploratory:religion'].ratio:.1f}",
       "LREL": f"{lsal.loc[('letters', 'religion')].ratio:.2f}", "LRELLO": f"{lsal.loc[('letters', 'religion')].ci_lo:.2f}",

@@ -18,7 +18,7 @@ import pandas as pd
 from common import EXPLORATORY, OUT, THEORY, load_pages
 
 CELLS = {"J-mission": ("ISIG", "1881-01-01", "1884-10-31"), "J-free": ("IMVO", "1884-11-01", "1888-12-31"),
-         "G-mission": ("ISIG", "1884-11-01", "1888-12-31"), "early-mission": ("ISIG", "1876-01-01", "1880-12-31")}
+         "G-mission": ("ISIG", "1884-11-01", "1888-12-31"), "early-mission": ("ISIG", "1876-01-01", "1880-12-31")}   # Makiwane (Schoots 2023b, p. 71)
 CONCEPTS = {**{k: v for k, v in THEORY.items()}, "religion": EXPLORATORY["religion"]}
 PAIRS = [("J-free", "J-mission", "control (same editor)"), ("G-mission", "J-mission", "editor (same control)"),
          ("J-mission", "early-mission", "time within Isigidimi (1881-84 vs 1876-80)")]

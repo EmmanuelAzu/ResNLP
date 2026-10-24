@@ -108,7 +108,7 @@ lines += ["\\bottomrule", "\\end{tabular}", "",
 ec = pd.read_csv(OUT / "editor_control.csv")
 lines += ["\\subsection*{S7. Same editor, different control; same control, different editor}",
           "Cells (editors after Schoots, 2023b, p.~71): Jabavu edits Isigidimi (Jan 1881--Oct 1884); Jabavu edits Imvo (Nov 1884--1888); "
-          "Gqoba edits Isigidimi (Nov 1884--1888); earlier editors of Isigidimi (1876--80). Ratios of rates per million tokens; 95\\% CIs from 4000 "
+          "Gqoba edits Isigidimi (Nov 1884--1888); Makiwane edits Isigidimi (1876--80; Stewart until 1876). Ratios of rates per million tokens; 95\\% CIs from 4000 "
           "issue resamples; $p$: two-sided, against 2000 matched sets of random words (src/15\\_editor\\_control.py). Every contrast is also a contrast in time; "
           "\\emph{rule} has only 9 uses in Jabavu's Isigidimi, so its large ratios are not interpreted.\\\\[2pt]",
           "\\begin{tabular}{@{}lrrrrrrrrr@{}}", "\\toprule",

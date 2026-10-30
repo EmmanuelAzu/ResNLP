@@ -152,6 +152,31 @@ for _, r in best.iterrows():
 w2v, ft = abl[abl.model == "w2v"].stability.mean(), abl[abl.model == "ft"].stability.mean()
 lines += ["\\bottomrule", "\\end{tabular}\\\\[2pt]",
           f"At the chosen setting, word2vec reaches a stability of {w2v:.2f} against fastText's {ft:.2f}, so fastText is used throughout.", "",
+          ]
+fe = pd.read_csv(OUT / "fertility.csv")
+conds = ["modern", "modern, historical spelling", "modern politics/business", "Isigidimi 1884-88", "Imvo 1884-88 (draw)"]
+labels = {"modern": "Modern news", "modern, historical spelling": "Modern news, old spelling",
+          "modern politics/business": "Modern news, politics/business only", "Isigidimi 1884-88": "Isigidimi 1884--88",
+          "Imvo 1884-88 (draw)": "Imvo 1884--88 (matched draw)"}
+lines += ["\\subsection*{S9. Tokenizer cost}",
+          "Each condition is a random sample of about 100{,}000 words. Modern text is the isiXhosa section of MasakhaNEWS \\citep{adelani2023}. "
+          "The old-spelling condition is the same modern sample with the aspiration marks of modern orthography removed by fixed rules "
+          "(\\emph{th}$\\to$\\emph{t}, \\emph{kh}$\\to$\\emph{k}, \\emph{ph}$\\to$\\emph{p}, \\emph{rh}$\\to$\\emph{r}, \\emph{ch}$\\to$\\emph{c}, "
+          "\\emph{qh}$\\to$\\emph{q}, \\emph{xh}$\\to$\\emph{x}; src/05\\_fertility.py), so only spelling changes and the words stay the same: "
+          "it is compared per word. Historical text differs in word division, so it is compared per 100 characters. The politics/business "
+          "sample checks genre within modern news: its cost is close to all modern news, while both 1880s papers cost more, so the historical "
+          "penalty is not simply a news-topic effect, though 1880s and modern newspapers still differ in genre. 95\\% CIs from bootstrap "
+          "resampling are within $\\pm$0.01 subwords per word.\\\\[2pt]",
+          "\\begin{tabular}{@{}lrrrrrrr@{}}", "\\toprule",
+          "Condition & Words & \\multicolumn{2}{c}{XLM-R} & \\multicolumn{2}{c}{Serengeti} & \\multicolumn{2}{c}{mBERT} \\\\",
+          " & & per word & per 100 ch. & per word & per 100 ch. & per word & per 100 ch. \\\\ \\midrule"]
+for c in conds:
+    row = [labels[c], f"{int(fe[(fe.condition == c)].words.iloc[0]):,}"]
+    for tok in ("xlm-roberta-base", "serengeti", "mbert-cased"):
+        r = fe[(fe.condition == c) & (fe.tokenizer == tok)].iloc[0]
+        row += [f"{r.fertility:.3f}", f"{r.subwords_per_100_chars:.2f}"]
+    lines.append(" & ".join(row) + " \\\\")
+lines += ["\\bottomrule", "\\end{tabular}", "",
           "\\renewcommand{\\thefigure}{S\\arabic{figure}}\\setcounter{figure}{0}",
           "\\begin{figure}[h]\\centering\\includegraphics[width=3.45in]{fig_framing.png}",
           "\\caption{Profile-shift percentile of each concept among matched sets (markers as in Fig.~1, left); "

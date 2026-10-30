@@ -123,6 +123,20 @@ Window & Dimension & Epochs & Isigidimi 1876--83 & Imvo 1889--94 & Mean stabilit
 \end{tabular}\\[2pt]
 At the chosen setting, word2vec reaches a stability of 0.64 against fastText's 0.83, so fastText is used throughout.
 
+\subsection*{S9. Tokenizer cost}
+Each condition is a random sample of about 100{,}000 words. Modern text is the isiXhosa section of MasakhaNEWS \citep{adelani2023}. The old-spelling condition is the same modern sample with the aspiration marks of modern orthography removed by fixed rules (\emph{th}$\to$\emph{t}, \emph{kh}$\to$\emph{k}, \emph{ph}$\to$\emph{p}, \emph{rh}$\to$\emph{r}, \emph{ch}$\to$\emph{c}, \emph{qh}$\to$\emph{q}, \emph{xh}$\to$\emph{x}; src/05\_fertility.py), so only spelling changes and the words stay the same: it is compared per word. Historical text differs in word division, so it is compared per 100 characters. The politics/business sample checks genre within modern news: its cost is close to all modern news, while both 1880s papers cost more, so the historical penalty is not simply a news-topic effect, though 1880s and modern newspapers still differ in genre. 95\% CIs from bootstrap resampling are within $\pm$0.01 subwords per word.\\[2pt]
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+Condition & Words & \multicolumn{2}{c}{XLM-R} & \multicolumn{2}{c}{Serengeti} & \multicolumn{2}{c}{mBERT} \\
+ & & per word & per 100 ch. & per word & per 100 ch. & per word & per 100 ch. \\ \midrule
+Modern news & 100,003 & 2.613 & 35.28 & 1.867 & 25.21 & 3.040 & 41.05 \\
+Modern news, old spelling & 100,003 & 2.555 & 35.56 & 1.909 & 26.57 & 2.937 & 40.88 \\
+Modern news, politics/business only & 88,389 & 2.673 & 35.21 & 1.888 & 24.88 & 3.116 & 41.06 \\
+Isigidimi 1884--88 & 100,013 & 2.259 & 36.71 & 1.743 & 28.33 & 2.569 & 41.75 \\
+Imvo 1884--88 (matched draw) & 100,006 & 2.240 & 36.92 & 1.738 & 28.65 & 2.533 & 41.75 \\
+\bottomrule
+\end{tabular}
+
 \renewcommand{\thefigure}{S\arabic{figure}}\setcounter{figure}{0}
 \begin{figure}[h]\centering\includegraphics[width=3.45in]{fig_framing.png}
 \caption{Profile-shift percentile of each concept among matched sets (markers as in Fig.~1, left); `too rare' = too few occurrences, `seed word' = anchor source, untestable.}\end{figure}

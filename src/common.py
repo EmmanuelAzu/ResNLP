@@ -98,15 +98,18 @@ def normalise_rows(m: np.ndarray) -> np.ndarray:
 
 
 # Concept stems (matched as substrings of surface forms; old orthography has no aspiration
-# marks, e.g. umteto not umthetho, rulumente not rhulumente).
-THEORY = {"parliament": ["palamente"], "vote": ["voti"], "government": ["rulumente"],
+# marks, e.g. umteto not umthetho, rulumente not rhulumente).  Spelling variants found in the data
+# are included: Imvo usually writes government as "rulumeni", Isigidimi as "rulumente"; Christians
+# are written both "amakristu" and "amakrestu".  English words (vote, government, Christ...) are
+# deliberately not included.
+THEORY = {"parliament": ["palamente"], "vote": ["voti"], "government": ["rulumente", "rulumeni"],
           "rule": ["mbuso"], "law": ["mteto"], "rights": ["lungelo"],
           "country": ["lizwe"], "land": ["mhlaba"], "freedom": ["kululek"], "humanity": ["buntu"]}
 CONTROL = {"time": ["xesha"], "house": ["ndlu"], "rain": ["mvula"], "cattle": ["nkomo"]}
 
 
 # Exploratory concept: suggested by the classifier's top features, NOT pre-specified.
-EXPLORATORY = {"religion": ["tixo", "kristu"]}
+EXPLORATORY = {"religion": ["tixo", "kristu", "krestu"]}
 
 
 # ---- word-division normalisation ---------------------------------------------------------------

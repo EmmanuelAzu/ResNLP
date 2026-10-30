@@ -3,11 +3,34 @@ What missionary control left in the language of two 1880s isiXhosa newspapers
 Question: did missionary control show in WHAT the papers printed (salience), in HOW they used
 words (framing), and does this history still shape how modern tokenizers read the text?
 
+CONTENTS
+  src/        analysis code (numbered in run order)
+  paper/      scripts and LaTeX source that build the report from outputs/
+  outputs/    every result the report uses (CSV/JSON/figures), so the report can be rebuilt
+              without rerunning the analysis
+  NeurIPS_2024_checklist.zip   course checklist template, read by paper/make_checklist.py
+
 REQUIREMENTS
   Python 3.10+ (developed on 3.13).  pip install -r requirements.txt
-  The isiXhosa newspaper data ships in the repository root as TxtLangFiles1870-1894_TB.zip.
+  LaTeX (pdflatex + bibtex, e.g. TeX Live) only to rebuild the PDF.
+  DATA: put the course-provided TxtLangFiles1870-1894_TB.zip (the IsiXhosa Intellectual
+  Traditions text files) in this folder, next to README.txt.  It is not included here.
   Step 05 needs internet access once: it downloads modern isiXhosa news (MasakhaNEWS, xho)
   and the tokenizers from the Hugging Face Hub. Everything else runs offline.
+
+QUICK START
+  1. Rebuild the report from the saved results (about a minute, no data needed):
+       python paper/make_checklist.py && python paper/make_supp.py && python paper/build_paper.py
+       cd paper && pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper
+  2. Reproduce the main results from the raw data (about 10 minutes on 4 CPU cores):
+       python src/01_prepare_data.py
+       python src/04_salience.py ; python src/04b_yearly_series.py ; python src/04c_era_drift.py
+       python src/12_letters.py ; python src/13_letters_salience.py ; python src/14_land_senses.py
+       python src/15_editor_control.py ; python src/07_figures.py
+     then step 1 again.  These reproduce every salience, letters, editor and word-sense number
+     exactly (fixed seeds).
+  3. The full pipeline, including embedding training and the tokenizer runs, follows below
+     (a few CPU hours in total).
 
 RUN ORDER  (from the repository root; scripts are in src/, results go to outputs/)
   python src/01_prepare_data.py        build data/pages.csv.gz (cleaned, one row per page)

@@ -11,19 +11,29 @@ sys.path.insert(0, str(ROOT / "src"))
 from common import CONTROL, EXPLORATORY, OUT, THEORY, load_pages  # noqa: E402
 
 esc = lambda s: s.replace("_", "\\_")
-pages = load_pages()
-counts = Counter(w for ss in pages.sents for s in ss for w in s)
+# Table S1 needs word counts from the raw data; they are cached in outputs/stem_forms.csv so the
+# supplement can be rebuilt without the data (e.g. by a marker who only has the code and outputs).
+S1_CACHE = OUT / "stem_forms.csv"
+try:
+    pages = load_pages()
+    counts = Counter(w for ss in pages.sents for s in ss for w in s)
+    s1 = []
+    for kind, table in (("political", THEORY), ("neutral", CONTROL), ("exploratory", EXPLORATORY)):
+        for name, stems in table.items():
+            forms = Counter({w: c for w, c in counts.items() if any(s in w for s in stems)})
+            s1.append({"concept": name, "kind": kind, "stems": ", ".join(stems), "n_forms": len(forms),
+                       "top_forms": ", ".join(f"{w} ({c})" for w, c in forms.most_common(7))})
+    pd.DataFrame(s1).to_csv(S1_CACHE, index=False)
+except FileNotFoundError:
+    s1 = pd.read_csv(S1_CACHE).to_dict("records")
 
 lines = ["\\clearpage", "\\section*{Supplementary material}", "\\footnotesize",
          "\\subsection*{S1. Concepts, stems and the word forms they match (1 Nov 1884--1888, both papers)}",
          "Stems are matched as substrings of surface forms; following \\citet{schoots2023b} we inspected forms for false positives (our first \\emph{law} stem also matched \\emph{inteto}, speech, and was dropped) but did not hand-filter them, so run-together forms (e.g. \\emph{rulumenteningomsebenzi}) and missed variants remain. "
          "All stems, forms and glosses await review by a first-language isiXhosa speaker; e.g.\\ \\emph{rulumente} is glossed `government' here but `parliament' by Schoots et al.\\ (2023a, p.~62). Political concepts were fixed before testing; religion was suggested by the classifier and is exploratory.\\\\[2pt]",
          "\\begin{tabular}{@{}p{1.9cm}p{1.6cm}p{2.0cm}p{9.6cm}@{}}", "\\toprule", "Concept & Type & Stems & Most frequent matched forms (count; number of distinct forms) \\\\ \\midrule"]
-for kind, table in (("political", THEORY), ("neutral", CONTROL), ("exploratory", EXPLORATORY)):
-    for name, stems in table.items():
-        forms = Counter({w: c for w, c in counts.items() if any(s in w for s in stems)})
-        top = ", ".join(f"{w} ({c})" for w, c in forms.most_common(7))
-        lines.append(f"{name} & {kind} & {', '.join(stems)} & {top}; {len(forms)} forms \\\\")
+for r in s1:
+    lines.append(f"{r['concept']} & {r['kind']} & {r['stems']} & {r['top_forms']}; {r['n_forms']} forms \\\\")
 lines += ["\\bottomrule", "\\end{tabular}", ""]
 
 SETTINGS = [("window 1 (tuned)", ""), ("window 1, forms joined", "_segnorm"), ("window 2", "window2/%s"), ("window 2, forms joined", "window2/%s_segnorm"),

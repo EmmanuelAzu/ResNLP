@@ -29,17 +29,17 @@
 
 \section{Abstract}
 {\bf \looseness=-1
-From 1884 the missionary \emph{Isigidimi sama-Xosa} and the African-owned \emph{Imvo Zabantsundu} ran side by side. Did missionary control change \emph{what} they printed, or \emph{how} they used words? Imvo was not more political: of ten political topics chosen in advance, only parliament differs, and not after correction. Religion, an exploratory topic, differs most: Isigidimi uses it four times as often, also in readers' letters and under the same editor. How political words were used barely differs. Old spelling costs only the African-language tokenizer more. The evidence fits control shaping what the papers printed, not how they wrote.}
+From 1884 the missionary \emph{Isigidimi sama-Xosa} and the African-owned \emph{Imvo Zabantsundu} ran side by side. Did missionary control change \emph{what} they printed, or \emph{how} they used words? Imvo was not more political: of ten political topics chosen in advance, only parliament differs, and not after correction. Religion, an exploratory topic, differs most: Isigidimi uses it almost four times as often, also in readers' letters and under the same editor (also uncorrected). How political words were used barely differs. Old spelling costs only the African-language tokenizer more. The evidence fits control shaping what the papers printed; any effect on how they wrote is below what we can detect.}
 
 \section{Introduction and Background}\label{Intro}
 \looseness=-1
-\textbf{Where did missionary control leave its trace in the language of the earliest isiXhosa press?} The IsiXhosa Intellectual Traditions archive \citep{schoots2023} lets us ask this. \emph{Isigidimi sama-Xosa} was a missionary paper. \emph{Imvo Zabantsundu} was founded in 1884 by Isigidimi's former editor, J.\,T.~Jabavu, as the first African-owned isiXhosa paper, free ``from any missionary control'' \citep[p.~55]{schoots2023}. After 1884 both papers had African editors, Gqoba and Jabavu \citep[p.~71]{schoots2023b}. Comparing the papers compares control, but also two editors, places and readerships. So we also compare Jabavu with himself: he edited Isigidimi from 1881 to 1884 and Imvo afterwards.
+\textbf{Where did missionary control leave its trace in the language of the earliest isiXhosa press?} The IsiXhosa Intellectual Traditions archive \citep{schoots2023} lets us ask this. \emph{Isigidimi sama-Xosa} was a missionary paper. \emph{Imvo Zabantsundu} was founded in 1884 by Isigidimi's former editor, J.\,T.~Jabavu, as the first African-owned isiXhosa paper, free ``from any missionary control'' \citep[p.~55]{schoots2023}. After 1884 both papers had African editors, Gqoba and Jabavu \citep[p.~71]{schoots2023b}. But comparing the papers also compares two editors, places and readerships, so we also compare Jabavu with himself: he edited Isigidimi from 1881 to 1884 and Imvo afterwards.
 
 \begin{figure*}[t]
 \centering
 \includegraphics[width=3.0in]{fig_salience.png}\hfill
 \includegraphics[width=3.15in]{fig_letters.png}
-\caption{What the papers printed. Left: how often Imvo uses each topic relative to Isigidimi (ratio with 95\% CI; filled: beats random word sets at $p<0.05$, uncorrected). Right: the religious gap also appears in readers' letters.}
+\caption{What the papers printed. Left: Imvo's rate relative to Isigidimi's, per topic (95\% CI; filled: beats random word sets, $p<0.05$ uncorrected). Right: the religious gap also appears in letters.}
 \label{fig:agenda}
 \end{figure*}
 \begin{figure*}[t]
@@ -47,19 +47,18 @@ From 1884 the missionary \emph{Isigidimi sama-Xosa} and the African-owned \emph{
 \includegraphics[width=2.1in]{fig_religion_by_year.png}\hfill
 \includegraphics[width=2.1in]{fig_land_senses.png}\hfill
 \includegraphics[width=2.1in]{fig_tokenizer_cost.png}
-\caption{(a) Religious words per million; grey: years Jabavu edited Isigidimi before moving to Imvo; Gqoba edited Isigidimi from late 1884. (b) How often \emph{umhlaba} appears near religious or legal words (95\% CI). (c) Extra subword pieces compared with modern text (95\% CIs are smaller than the markers).}
+\caption{(a) Religious words per million; grey: Jabavu edits Isigidimi, then Imvo; Gqoba edits Isigidimi from late 1884. (b) \emph{Umhlaba} near religious or legal words. (c) Extra subword pieces against modern text (CIs smaller than markers).}
 \label{fig:how}
 \end{figure*}
 
-Communication research distinguishes what a paper covers, \emph{agenda-setting} \citep{mccombs1972}, from how it presents it, \emph{framing} \citep{entman1993}. We measure coverage as \textbf{salience}: how often a topic's words appear. We study framing with word embeddings, which place each word by its neighbours \citep{hamilton2016}. Most such studies use modern news \citep{card2015,field2018}; for these papers, \citet{schoots2023b} counted root words over time. We add controlled comparisons, the same-editor test and a letters-versus-rest split, and ask whether this history still affects how machines read the archive \citep{petrov2023,rust2021}. \textbf{H1}: the papers differ in how often they use political and religious words. \textbf{H2}: Isigidimi uses political words in more religious contexts. \textbf{H3}: old text and spelling cost tokenizers more.
+Communication research distinguishes what a paper covers, \emph{agenda-setting} \citep{mccombs1972}, from how it presents it, \emph{framing} \citep{entman1993}. We measure coverage as \textbf{salience}: how often a topic's words appear. We study framing with word embeddings, which place each word by its neighbours \citep{hamilton2016}. Most such studies use modern news \citep{card2015,field2018}; \citet{schoots2023b} counted root words in these papers. We add controlled comparisons, a same-editor test and a letters-versus-rest split, and ask whether this history affects how machines read the archive \citep{petrov2023,rust2021}. \textbf{H1}: the papers differ in how often they use political and religious words. \textbf{H2}: Isigidimi uses political words in more religious contexts. \textbf{H3}: old text and spelling cost tokenizers more.
 
 \begin{table}[t]
 \centering\footnotesize
 \begin{tabular}{@{}p{1.18in}p{2.02in}@{}}
 \toprule
 \textbf{Threat} & \textbf{Response} \\ \midrule
-Different years & Nov 1884--1888 only; month-matched draws \\
-Imvo 4.6$\times$ larger & Ten Imvo samples of Isigidimi's size \\
+Different years, sizes & Nov 1884--88; ten month- and size-matched draws \\
 Frequency effects & 2000 matched random word sets \citep{monroe2008} \\
 Change over time & Each paper's own drift in other years \\
 Unstable embeddings & Tune for seed stability; average ten runs \\
@@ -75,33 +74,33 @@ One paper per side & Same editor in both; place, audience unfixed \\
 \looseness=-1
 \textbf{Data.} We use the archive's human-corrected transcriptions, which were not spell-checked \citep[p.~59]{schoots2023}, from November 1884 to 1888: 286{,}663 words of Isigidimi and 1.31 million of Imvo (safeguards in Table~\ref{tab:design}).
 
-\textbf{Salience.} Each topic is a set of word stems, adapted from \citet{schoots2023b} (Table S1). We fixed ten political topics in advance, plus four neutral controls. Religion (\emph{tixo}, \emph{kristu}) is exploratory: a classifier trained on the same years suggested it (logistic regression, 0.83 balanced accuracy; chance 0.50), though the archive's authors also expect it \citep[p.~57]{schoots2023}. We compare rates per million words. Bootstrap confidence intervals test whether the rates differ; matched random word sets ask the stricter question: does it differ more than random words of the same frequency? For the same-editor contrast, Jabavu's Isigidimi runs from January 1881 to October 1884.
+\textbf{Salience.} Each topic is a set of word stems, adapted from \citet{schoots2023b}, including spelling variants such as Imvo's \emph{rulumeni} for \emph{rulumente}, `government' (Table S1). We fixed ten political topics in advance, plus four neutral controls. Religion (\emph{tixo}, \emph{kristu}) is exploratory: a classifier trained on the same years suggested it (logistic regression, issue-grouped nested cross-validation, 0.83 balanced accuracy; chance 0.50), though the archive's authors also expect it \citep[p.~57]{schoots2023}. For rates per million words, bootstrap confidence intervals over whole issues test whether the rates differ; matched random word sets ask the stricter question: does it differ more than random words of the same frequency? For the same-editor contrast, Jabavu's Isigidimi runs January 1881--October 1884.
 
-\textbf{Letters.} A reader's letter opens by addressing the editor (\emph{nkosi mhleli \dots\ kaundifakele}, `sir, editor \dots\ please print') and ends with a signature. In a hand check, 28 of 30 detected letters were genuine (Table S5).
+\textbf{Letters.} A reader's letter opens by addressing the editor (\emph{nkosi mhleli \dots\ kaundifakele}, `sir, editor \dots\ please print'). In a hand check, 28 of 30 detected letters were genuine (Table S5).
 
-\textbf{Framing.} Embeddings capture a word's meaning, grammar and topic, so they are only a rough proxy for framing in Entman's sense. We train fastText embeddings \citep{bojanowski2017}, tuning 34 settings (Table S8) on other years for stability across random seeds, since unstable embeddings create false shifts \citep{antoniak2018}. The chosen narrow window favours grammar, so we also report wider ones. A word's \emph{shift} measures how differently it relates to 500 common words in each paper \citep{hamilton2016b}; shuffling issues between the papers gives the level expected by chance \citep{dubossarsky2017}. A directional test, the part aimed at framing, asks whether political words sit closer to religious or to political words (Table S4). We also count religious and legal words near \emph{umhlaba}.
+\textbf{Framing.} Embeddings capture a word's meaning, grammar and topic, so they are only a rough proxy for framing in Entman's sense. We train fastText embeddings \citep{bojanowski2017}, tuning 34 settings (Table S8) on other years for stability across random seeds, since unstable embeddings create false shifts \citep{antoniak2018}. This narrow window favours grammar, so we also report wider ones. A word's \emph{shift} measures how differently it relates to 500 common words in each paper \citep{hamilton2016b}; shuffling issues between the papers gives the level expected by chance \citep{dubossarsky2017}. A directional test, the part aimed at framing, asks whether political words sit closer to religious or political words (Table S4). We also count religious and legal words near \emph{umhlaba}.
 
 \textbf{Tokenizers.} We count the subword pieces that XLM-R \citep{conneau2020}, Serengeti \citep{adebara2023} and mBERT \citep{devlin2019} need for modern news \citep{adelani2023}, for the same news in old spelling, and for our historical text.
 
 \section{Results}
 \looseness=-1
-\textbf{H1: different topics, but not more politics.} Of the ten political topics, only parliament differs: Imvo uses it 3.3 times as often ($p=0.018$; Fig.~\ref{fig:agenda}, left). Law, vote, rights, land and government do not differ. Religion differs most: Isigidimi uses it 4.2 times as often ($p=0.019$). Neither result survives correction for 15 tests. The religious gap appears in readers' letters as well as in the rest of each paper (Fig.~\ref{fig:agenda}, right). It also holds under one editor: Jabavu's Imvo used religious words a third as often as Jabavu's Isigidimi ($p=0.028$). Under Gqoba, Isigidimi did not fall further ($p=0.130$). Before Imvo existed, Isigidimi's religious words were already falling, while parliament and vote rose sharply (Fig.~\ref{fig:how}a; Table S7).
+\textbf{H1: different topics, but not more politics.} Of the ten political topics, only parliament beats random words: Imvo uses it 3.3 times as often ($p=0.016$; Fig.~\ref{fig:agenda}, left). Imvo uses law, rule and government more too, but not beyond random words; vote, rights and land do not differ. Religion differs most: Isigidimi uses it 3.8 times as often ($p=0.019$). Neither result survives correction for 15 tests. The religious gap appears in letters as well as the rest of each paper (Fig.~\ref{fig:agenda}, right). Under one editor, Jabavu's Imvo used religious words a third as often as his Isigidimi ($p=0.025$). Under Gqoba, Isigidimi's rate was 1.38 times Jabavu's (CI 1.03--1.83, $p=0.168$): no further fall, though the interval is wide. Before Imvo existed, Isigidimi's religious words were already falling, while parliament rose 50-fold and vote 12-fold ($p\leq0.004$; Fig.~\ref{fig:how}a; Table S7).
 
-\textbf{H2: little difference in how words are used.} Overall word use differs (shift 0.348 vs 0.230 by chance), but no topic stands out: parliament shifts no more than the neutral control \emph{cattle} (Fig.~S1). Political words do sit closer to religious words in Isigidimi, in all five settings and in three after correction (Table S2). But this depends on one word, \emph{land} (\emph{umhlaba}), and the neutral control \emph{house} shows the same lean; dropping the anchor \emph{endlu} (`in the house') changes neither. The papers also use \emph{umhlaba} differently: Isigidimi puts it near religious words in 3.4\% of uses, Imvo in 0.9\% (Fig.~\ref{fig:how}b). Finally, a single word must shift by 0.15 to be detected, more than the whole gap between the papers (0.118).
+\textbf{H2: little difference in how words are used.} Overall word use differs (mean shift 0.348, against 0.230 when issues are shuffled), but no topic stands out: parliament shifts no more than the neutral control \emph{cattle} (Fig.~S1). Political words do sit closer to religious words in Isigidimi in all five settings (windows 1, 2 and 5, with and without joined word forms), and in three after correction (Table S2, with neighbour overlap; \citealp{gonen2020}). But this depends on one word, \emph{land} (\emph{umhlaba}), and the neutral control \emph{house} shows the same lean; dropping the anchor \emph{endlu} changes neither. The papers also use \emph{umhlaba} differently: Isigidimi puts it near religious words in 3.4\% of uses, Imvo in 0.9\% (Fig.~\ref{fig:how}b). A single word must shift by 0.15 to be detected, more than the whole gap between the papers (0.118).
 
-\textbf{H3: historical text costs more.} Our historical text needs 12.4\%, 4.1\% and 1.7\% more subword pieces per character with Serengeti, XLM-R and mBERT; old spelling alone raises only Serengeti's cost (Fig.~\ref{fig:how}c).
+\textbf{H3: historical text costs more.} Our historical text needs 12.4\%, 4.1\% and 1.7\% more subword pieces per character with Serengeti, XLM-R and mBERT; old spelling alone (per word) raises only Serengeti's cost (Fig.~\ref{fig:how}c).
 
 \section{Discussion}
 \looseness=-1
-\textbf{Is it control, or just time? (H1).} Religious words were falling in Isigidimi anyway, so we combine two comparisons with different blind spots. Imvo against Gqoba's Isigidimi holds the years fixed; Jabavu's two papers hold the editor fixed. Both show the gap, and the second uses years the classifier never saw, partly replicating the religion finding. If the gap were only the falling trend, Isigidimi would have kept falling after 1884; it did not. Had Jabavu's Imvo been as religious as his Isigidimi, control would be refuted; it was not. The argument rests on these two comparisons agreeing, not on their uncorrected $p$-values. We cannot say whether Jabavu was right to leave; leaving brought less religion, not clearly more politics.
+\textbf{Is it control, or just time? (H1).} Religious words were falling in Isigidimi anyway, so we combine two comparisons with different blind spots. Imvo against Gqoba's Isigidimi holds the years fixed; Jabavu's two papers hold the editor fixed. Both show the gap, and the second uses years the classifier never saw, partly replicating the religion finding. If the gap were only the falling trend, Isigidimi would have kept falling after 1884; we find no further fall. Had Jabavu's Imvo been as religious as his Isigidimi, control would be refuted; it was not. The argument rests on these two comparisons agreeing, not on their uncorrected $p$-values. For Jabavu, leaving brought less religion, not clearly more politics.
 
 The gap is not only the editors' voice, or the sections each paper ran. Isigidimi's letter-writers used religious words three times as often as Imvo's, so each paper drew on, or chose, different writers. One wrote to Isigidimi: \emph{ilizwi alizanga ukuba silipate, lize ukuba lisipate} (`the Word did not come for us to carry it; it came to carry [or rule] us'; 1884; our gloss).
 
-\textbf{What the embeddings show (H2).} The framing signal looks like a difference in meaning, not slant: Isigidimi more often uses \emph{umhlaba} for the earth, Imvo for land under law, which alone would move the word in each model. The detection floor rules out large framing differences, but not small ones.
+\textbf{What the embeddings show (H2).} The framing signal looks like a difference in meaning, not slant: Isigidimi more often uses \emph{umhlaba} for the earth, Imvo for land under law, which alone would move the word in each model. The detection floor rules out large framing differences, not small ones.
 
-\textbf{Responsible NLP (H3).} This history still affects today's tools: written isiXhosa took shape in the mission press (cf.\ \citealp{gilmour2007}), and its old spelling penalises only the model built for African languages. Serengeti's vocabulary has twice XLM-R's share of \emph{th}, \emph{kh} and \emph{ph} pieces (1.9\% vs 0.9\%), which may explain this. A modern-spelling copy can help tools but must not replace the original, as the conversion loses information (old \emph{t} can be \emph{t} or \emph{th}). We describe two papers, not isiXhosa speakers; cultural claims without speakers' review would be extractive \citep{bird2020}.
+\textbf{Responsible NLP (H3).} History still affects today's tools: written isiXhosa took shape in the mission press (cf.\ \citealp{gilmour2007}), and its old spelling penalises only the model built for African languages. Serengeti's vocabulary has twice XLM-R's share of \emph{th}, \emph{kh} and \emph{ph} pieces (1.9\% vs 0.9\%), a possible reason. A modern-spelling copy can help tools but must not replace the original: conversion loses information (old \emph{t} can be \emph{t} or \emph{th}). We describe two papers, not isiXhosa speakers; cultural claims without speakers would be extractive \citep{bird2020}.
 
-\textbf{Limitations and conclusion.} Two papers, one period, a missing year, an incomplete editor comparison, an automatic letter split, unreviewed translations. Still, the evidence fits control shaping what the papers printed, letters included; any effect on how they wrote is too small to detect.
+\textbf{Limitations and conclusion.} Two papers, one period, a missing year (1886), no African-owned paper under Gqoba, an automatic letter split, unreviewed translations. Still, the evidence fits control shaping what the papers printed; any effect on how they wrote is below what we can detect.
 
 \bibliographystyle{apacite}
 \setlength{\bibleftmargin}{.125in}
@@ -335,7 +334,7 @@ Stems are matched as substrings of surface forms; following \citet{schoots2023b}
 Concept & Type & Stems & Most frequent matched forms (count; number of distinct forms) \\ \midrule
 parliament & political & palamente & palamente (1754), ipalamente (47), palamenteni (22), epalamente (14), bapalamente (1), nepalamente (1), yepalamente (1); 11 forms \\
 vote & political & voti & ivoti (301), voti (217), evotini (136), abavoti (98), ngevoti (55), levoti (22), nevoti (22); 115 forms \\
-government & political & rulumente & rulumente (1882), rulumenteni (7), urulumente (5), serulumente (1), rulumenteningomsebenzi (1), zikarulumente (1), rulumenteayiko (1); 8 forms \\
+government & political & rulumente, rulumeni & rulumente (1882), rulumeni (1336), rulumenteni (7), urulumente (5), urulumeni (3), rulumenini (2), serulumente (1); 14 forms \\
 rule & political & mbuso & zombuso (169), umbuso (76), mbuso (60), yombuso (42), kombuso (37), lombuso (28), kulombuso (23); 43 forms \\
 law & political & mteto & umteto (724), lomteto (475), mteto (406), ngomteto (167), ngumteto (94), komteto (76), nomteto (76); 82 forms \\
 rights & political & lungelo & amalungelo (315), ilungelo (288), lungelo (113), nelungelo (54), namalungelo (50), lilungelo (39), elilungelo (37); 115 forms \\
@@ -347,7 +346,7 @@ time & neutral & xesha & ixesha (787), ngexesha (364), xesha (298), amaxesha (24
 house & neutral & ndlu & indlu (719), izindlu (328), kwindlu (276), ndlu (234), yendlu (227), ngendlu (133), nendlu (130); 193 forms \\
 rain & neutral & mvula & imvula (267), mvula (31), yemvula (23), ezimvula (17), lemvula (16), yimvula (14), zimvula (10); 45 forms \\
 cattle & neutral & nkomo & inkomo (555), zenkomo (258), nkomo (193), yenkomo (93), nenkomo (75), ngenkomo (35), lenkomo (33); 79 forms \\
-religion & exploratory & tixo, kristu & tixo (684), kristu (207), makristu (7), kristukazi (7), mkristu (3), amakristu (2), lobukristu (1); 16 forms \\
+religion & exploratory & tixo, kristu, krestu & tixo (684), kristu (207), krestu (118), makristu (7), kristukazi (7), makrestu (6), mkrestu (5); 32 forms \\
 \bottomrule
 \end{tabular}
 
@@ -372,15 +371,15 @@ Concept & Comparison & First & Second & Ratio (95\% CI) \\ \midrule
 parliament & Isigidimi: later / earlier era & 214 & 394 & 1.84 (0.96--4.98) \\
 parliament & Imvo: later / earlier era & 1320 & 758 & 0.57 (0.50--0.66) \\
 parliament & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 214 & 758 & 3.54 (1.98--9.58) \\
-government & Isigidimi: later / earlier era & 1667 & 1088 & 0.65 (0.50--0.85) \\
-government & Imvo: later / earlier era & 1210 & 452 & 0.37 (0.31--0.45) \\
-government & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 1667 & 452 & 0.27 (0.22--0.34) \\
+government & Isigidimi: later / earlier era & 2197 & 1095 & 0.50 (0.39--0.64) \\
+government & Imvo: later / earlier era & 2234 & 1649 & 0.74 (0.67--0.81) \\
+government & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 2197 & 1649 & 0.75 (0.65--0.88) \\
 vote & Isigidimi: later / earlier era & 72 & 614 & 8.55 (3.51--18.94) \\
 vote & Imvo: later / earlier era & 799 & 921 & 1.15 (0.88--1.51) \\
 vote & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 72 & 921 & 12.82 (7.85--25.92) \\
-religion & Isigidimi: later / earlier era & 2466 & 1556 & 0.63 (0.46--0.84) \\
-religion & Imvo: later / earlier era & 362 & 547 & 1.51 (1.15--2.03) \\
-religion & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 2466 & 547 & 0.22 (0.18--0.28) \\
+religion & Isigidimi: later / earlier era & 2541 & 1678 & 0.66 (0.50--0.86) \\
+religion & Imvo: later / earlier era & 445 & 612 & 1.38 (1.08--1.76) \\
+religion & Imvo 1889-94 / Isigidimi 1876-83 (held-out) & 2541 & 612 & 0.24 (0.20--0.30) \\
 \bottomrule
 \end{tabular}
 
@@ -394,13 +393,13 @@ Letters are detected by src/12\_letters.py: a letter opens by addressing the edi
 \toprule
 Part & Concept & Isig.\ tokens & Isig.\ hits & Imvo tokens & Imvo hits & Imvo/Isig. & 95\% CI \\ \midrule
 letters & parliament & 18,344 & 2 & 70,475 & 48 & 6.25 & 2.09--16.92 \\
-letters & religion & 18,344 & 52 & 70,475 & 66 & 0.33 & 0.17--0.65 \\
+letters & religion & 18,344 & 57 & 70,475 & 77 & 0.35 & 0.19--0.69 \\
 letters & vote & 18,344 & 4 & 70,475 & 58 & 3.77 & 1.04--18.93 \\
-letters & government & 18,344 & 13 & 70,475 & 115 & 2.30 & 1.14--7.18 \\
+letters & government & 18,344 & 13 & 70,475 & 161 & 3.22 & 1.67--9.62 \\
 rest of paper & parliament & 268,319 & 111 & 936,998 & 1280 & 3.30 & 2.53--4.51 \\
-rest of paper & religion & 268,319 & 394 & 936,998 & 306 & 0.22 & 0.14--0.34 \\
+rest of paper & religion & 268,319 & 424 & 936,998 & 370 & 0.25 & 0.17--0.37 \\
 rest of paper & vote & 268,319 & 172 & 936,998 & 821 & 1.37 & 0.79--2.83 \\
-rest of paper & government & 268,319 & 299 & 936,998 & 902 & 0.86 & 0.67--1.13 \\
+rest of paper & government & 268,319 & 301 & 936,998 & 1906 & 1.81 & 1.47--2.28 \\
 \bottomrule
 \end{tabular}
 
@@ -422,17 +421,17 @@ Cells (editors after Schoots, 2023b, p.~71): Jabavu edits Isigidimi (Jan 1881--O
 \toprule
 Concept & \multicolumn{3}{c}{Jabavu: Imvo / Isigidimi} & \multicolumn{3}{c}{Isigidimi: Gqoba / Jabavu} & \multicolumn{3}{c}{Isigidimi: 1881--84 / 1876--80} \\
  & ratio & 95\% CI & $p$ & ratio & 95\% CI & $p$ & ratio & 95\% CI & $p$ \\ \midrule
-parliament & 1.69 & 1.23--2.54 & 0.082 & 0.50 & 0.34--0.80 & 0.044 & 49.86 & 14.59--403.58 & $<$0.001 \\
-vote & 3.07 & 1.98--5.10 & 0.019 & 2.36 & 1.04--4.55 & 0.033 & 11.63 & 4.42--104.17 & 0.004 \\
-government & 0.85 & 0.65--1.13 & 0.523 & 0.77 & 0.56--1.04 & 0.279 & 0.88 & 0.65--1.18 & 0.608 \\
-rule & 19.47 & 9.52--76.87 & 0.002 & 8.28 & 3.61--31.65 & 0.010 & 0.38 & 0.09--1.36 & 0.210 \\
-law & 1.36 & 1.07--1.71 & 0.223 & 0.80 & 0.54--1.17 & 0.374 & 1.31 & 0.97--1.77 & 0.345 \\
-rights & 0.93 & 0.76--1.16 & 0.798 & 0.82 & 0.59--1.12 & 0.459 & 2.91 & 2.09--4.10 & 0.010 \\
-country & 1.08 & 0.92--1.28 & 0.763 & 1.13 & 0.91--1.42 & 0.601 & 0.74 & 0.59--0.92 & 0.255 \\
-land & 1.10 & 0.91--1.34 & 0.702 & 0.95 & 0.70--1.29 & 0.848 & 0.94 & 0.76--1.16 & 0.805 \\
-freedom & 0.68 & 0.51--0.91 & 0.410 & 0.95 & 0.64--1.39 & 0.902 & 1.52 & 1.01--2.37 & 0.399 \\
-humanity & 0.97 & 0.58--1.88 & 0.961 & 1.88 & 0.97--3.87 & 0.207 & 0.97 & 0.44--2.03 & 0.958 \\
-religion & 0.34 & 0.24--0.47 & 0.028 & 1.45 & 1.06--1.98 & 0.130 & 0.31 & 0.23--0.42 & $<$0.001 \\
+parliament & 1.69 & 1.23--2.54 & 0.088 & 0.50 & 0.33--0.79 & 0.043 & 49.86 & 14.41--405.79 & $<$0.001 \\
+vote & 3.07 & 1.98--5.23 & 0.017 & 2.36 & 1.07--4.61 & 0.034 & 11.63 & 4.32--98.99 & 0.004 \\
+government & 1.21 & 0.99--1.49 & 0.387 & 0.59 & 0.44--0.77 & 0.043 & 0.78 & 0.61--1.01 & 0.289 \\
+rule & 19.47 & 9.46--77.40 & 0.001 & 8.28 & 3.57--31.56 & 0.009 & 0.38 & 0.09--1.32 & 0.228 \\
+law & 1.36 & 1.08--1.72 & 0.235 & 0.80 & 0.53--1.17 & 0.376 & 1.31 & 0.98--1.76 & 0.314 \\
+rights & 0.93 & 0.76--1.16 & 0.808 & 0.82 & 0.58--1.13 & 0.480 & 2.91 & 2.05--4.12 & 0.006 \\
+country & 1.08 & 0.92--1.29 & 0.773 & 1.13 & 0.90--1.41 & 0.596 & 0.74 & 0.59--0.92 & 0.243 \\
+land & 1.10 & 0.91--1.34 & 0.689 & 0.95 & 0.70--1.28 & 0.853 & 0.94 & 0.76--1.16 & 0.815 \\
+freedom & 0.68 & 0.51--0.92 & 0.443 & 0.95 & 0.64--1.38 & 0.899 & 1.52 & 1.01--2.42 & 0.408 \\
+humanity & 0.97 & 0.59--1.90 & 0.959 & 1.88 & 0.98--3.88 & 0.227 & 0.97 & 0.45--1.96 & 0.967 \\
+religion & 0.37 & 0.27--0.50 & 0.025 & 1.38 & 1.03--1.83 & 0.168 & 0.35 & 0.26--0.47 & $<$0.001 \\
 \bottomrule
 \end{tabular}
 

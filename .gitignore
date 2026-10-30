@@ -16,3 +16,4 @@ guide/*.fls
 guide/*.log
 guide/*.out
 guide/*.toc
+outputs/log_*.txt
